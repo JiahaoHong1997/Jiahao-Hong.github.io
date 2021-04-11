@@ -135,7 +135,8 @@
   <entry>
     <title>动态规划(Dynamic Programming)算法框架</title>
     <url>/2021/04/11/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(Dynamic-Programming)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/</url>
-    <content><![CDATA[<h2 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h2><h3 id="动态规划-DP-思维框架"><a href="#动态规划-DP-思维框架" class="headerlink" title="动态规划(DP)思维框架"></a>动态规划(DP)思维框架</h3><p>&emsp;&emsp;首先引用<a class="link"   href="https://labuladong.gitbook.io/algo/" >📋《labuladong的算法小抄》<i class="fas fa-external-link-alt"></i></a>中对动态规划问题的分析。</p>
+    <content><![CDATA[<p>&emsp;&emsp;在本文的开头，我想对比一下贪心算法和动态规划的区别和联系。动态规划和贪心算法都是用来求最优化问题，且二者都必须具有最有子结构。贪心算法可以解决的问题，动态规划都能解决，可以说，贪心算法是动态规划的一个特例。贪心算法和动态规划<strong>最大的不同</strong>在于，它并不是首先寻找子问题的最优解，然后在其中进行选择，而是首先做一次贪心选择——在当时（局部）看来最有选择——然后求解选出的子问题，从而不必费心求解所有可能相关的子问题。动态规划具有两个性质：1）重叠子问题；2）<em><em><em>最优子结构*<strong>。贪心算法具有的两个性质：1）贪心选择性质；2）</strong></em>最优子结构</em>*</em>。动态规划就是为了消除其重叠子问题而设计的。<strong>其实贪心算法是一种特殊的动态规划，由于其具有贪心选择性质，保证了子问题只会被计算一次，不会被多次计算，因此贪心算法其实是最简单的动态规划。</strong></p>
+<h2 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h2><h3 id="动态规划-DP-思维框架"><a href="#动态规划-DP-思维框架" class="headerlink" title="动态规划(DP)思维框架"></a>动态规划(DP)思维框架</h3><p>&emsp;&emsp;首先引用<a class="link"   href="https://labuladong.gitbook.io/algo/" >📋《labuladong的算法小抄》<i class="fas fa-external-link-alt"></i></a>中对动态规划问题的分析。</p>
 <p>&emsp;&emsp;<strong>动态规划问题的一般形式就是求最值</strong>。动态规划其实是运筹学的一种最优化方法，只不过在计算机问题上应用比较多，比如说让你求<strong>最长</strong>递增子序列呀，<strong>最小</strong>编辑距离等等。既然目标是求最值，那么<strong>DP的核心问题就是穷举</strong>。动态规划的穷举是很特别的，它存在以下三要素：</p>
 <ul>
 <li><strong>重叠子问题</strong>：如果暴力穷举的话效率会极其低下，所以需要「备忘录」或者「DP table」来优化穷举过程，避免不必要的计算。</li>
@@ -147,6 +148,37 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化 base case</span></span><br><span class="line">dp[<span class="number">0</span>][<span class="number">0</span>][...] = base</span><br><span class="line"><span class="comment">// 进行状态转移</span></span><br><span class="line"><span class="keyword">for</span> 状态<span class="number">1</span> in 状态<span class="number">1</span>的所有取值：</span><br><span class="line">    <span class="keyword">for</span> 状态<span class="number">2</span> in 状态<span class="number">2</span>的所有取值：</span><br><span class="line">        <span class="keyword">for</span> ...</span><br><span class="line">            dp[状态<span class="number">1</span>][状态<span class="number">2</span>][...] = 求最值(选择<span class="number">1</span>，选择<span class="number">2.</span>..)</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;下面通过斐波那契数列问题和凑零钱问题来详解动态规划的基本原理。前者主要是让你明白什么是重叠子问题（斐波那契数列没有求最值，所以严格来说不是动态规划问题），后者主要举集中于如何列出状态转移方程。</p>
+<h3 id="动态规划杀手锏"><a href="#动态规划杀手锏" class="headerlink" title="动态规划杀手锏"></a>动态规划杀手锏</h3><h4 id="动态规划需要注意的要点："><a href="#动态规划需要注意的要点：" class="headerlink" title="动态规划需要注意的要点："></a>动态规划需要注意的要点：</h4><ul>
+<li><p>“问5”法则判断问题是否是动态规划，例如最优解，最小或者最大等等；</p>
+</li>
+<li><p>如果判断属于动态规划的话，接下来我们可以根据“问4”法则求解：</p>
+</li>
+<li><ul>
+<li>状态（小规模问题的数学表示）</li>
+<li>状态转移方程（大规模问题如何转化为更小的问题）</li>
+<li>最小状态（最小规模的问题）</li>
+<li>要求的返回值是什么</li>
+</ul>
+</li>
+</ul>
+<h4 id="杀手锏"><a href="#杀手锏" class="headerlink" title="杀手锏"></a>杀手锏</h4><p><strong>1）建模：</strong></p>
+<ul>
+<li><p><strong>最优子结构</strong></p>
+</li>
+<li><p><strong>状态转移方程</strong></p>
+</li>
+<li><p><strong>边界</strong></p>
+</li>
+</ul>
+<p><strong>2）实现：</strong></p>
+<ul>
+<li><p><strong>暴力递归</strong></p>
+</li>
+<li><p><strong>备忘录法（从上倒下，非全二叉树，hash保存！）</strong></p>
+</li>
+<li><p><strong>自底而上（迭代实现）</strong></p>
+</li>
+</ul>
 <h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><p>1.暴力递归</p>
 <p>斐波那契数列的数学形式就是递归的，写成代码就是这样：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fib</span><span class="params">(N <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> N == <span class="number">1</span> || N==<span class="number">2</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> fib(N<span class="number">-1</span>)+fib(N<span class="number">-2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -208,7 +240,17 @@
 
 <p>&emsp;&emsp;这个技巧就是所谓的「<strong>状态压缩</strong>」，如果我们发现每次状态转移只需要 DP table 中的一部分，那么可以尝试用状态压缩来缩小 DP table 的大小，只记录必要的数据，上述例子就相当于把DP table 的大小从 <code>n</code> 缩小到 2。后续的动态规划章节中我们还会看到这样的例子，一般来说是把一个二维的 DP table 压缩成一维，即把空间复杂度从 O(n^2) 压缩到 O(n)。</p>
 <p>&emsp;&emsp;至于动态规划的另一个重要特性「最优子结构」，下面会涉及。斐波那契数列的例子严格来说不算动态规划，因为没有涉及求最值，以上旨在说明重叠子问题的消除方法，演示得到最优解法逐步求精的过程。下面，看第二个例子，凑零钱问题。</p>
-<h3 id="凑零钱问题"><a href="#凑零钱问题" class="headerlink" title="凑零钱问题"></a>凑零钱问题</h3>]]></content>
+<h3 id="凑零钱问题"><a href="#凑零钱问题" class="headerlink" title="凑零钱问题"></a>凑零钱问题</h3><p>&emsp;&emsp;给你 <code>k</code> 种面值的硬币，面值分别为 <code>c1, c2 ... ck</code>，每种硬币的数量无限，再给一个总金额 <code>amount</code>，问你<strong>最少</strong>需要几枚硬币凑出这个金额，如果不可能凑出，算法返回 -1 。算法的函数签名如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// coins 中是可选硬币面值，amount 是目标金额</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coinChange</span><span class="params">(coins []<span class="keyword">int</span>, amount <span class="keyword">int</span>)</span> <span class="title">int</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;这个问题是动态规划问题，因为它具有「最优子结构」的。<strong>要符合「最优子结构」，子问题间必须互相独立</strong>。为什么说它符合最优子结构呢？比如你想求 <code>amount = 11</code> 时的最少硬币数（原问题），如果你知道凑出 <code>amount = 10</code> 的最少硬币数（子问题），你只需要把子问题的答案加一（再选一枚面值为 1 的硬币）就是原问题的答案。因为硬币的数量是没有限制的，所以子问题之间没有相互制，是互相独立的。</p>
+<p>1.暴力递归</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>1.<a class="link"   href="https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/dong-tai-gui-hua-ji-ben-ji-qiao/dong-tai-gui-hua-xiang-jie-jin-jie" >动态规划解题套路框架<i class="fas fa-external-link-alt"></i></a></p>
+<p>2.<a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB">动态规划和贪心算法的区别</a></p>
+<p>3.<a class="link"   href="https://www.jianshu.com/p/99327f542c8a" >【数据结构】贪心算法和动态规划<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
       <categories>
         <category>算法和数据结构</category>
       </categories>
