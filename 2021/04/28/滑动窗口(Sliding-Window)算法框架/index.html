@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            滑动窗口(Sliding Window)算法框架 |
+        
+        Less Is More
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":null},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Less Is More
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">滑动窗口(Sliding Window)算法框架</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-28 14:47:30
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>&emsp;&emsp;滑动窗口主要应用于子串问题，遇到这类问题不要犹豫，直接考虑使用滑动窗口。作为双指针类问题最难掌握的技巧，其设计思路其实非常简单，就是通过两个指针维护一个窗口，通过前后指针的不断向前滑动，然后更新答案。该算法的大致逻辑如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">left := <span class="number">0</span></span><br><span class="line">right := <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> right &lt; s.size() &#123;</span><br><span class="line">  <span class="comment">// 增大窗口</span></span><br><span class="line">  window.add(s[right])</span><br><span class="line">  right++</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> window needs shrink &#123;</span><br><span class="line">    <span class="comment">// 缩小窗口</span></span><br><span class="line">    window.remove(s[left])</span><br><span class="line">    left++</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这个算法技巧的时间复杂度是 O(N)，比字符串暴力算法要高效得多。其实困扰大家的，不是算法的思路，而是各种细节问题。比如说如何向窗口中添加新元素，如何缩小窗口，在窗口滑动的哪个阶段更新结果。即便你明白了这些细节，也容易出 bug，找 bug 还不知道怎么找，真的挺让人心烦的。</p>
+<h2 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h2><h3 id="滑动窗口算法代码框架"><a href="#滑动窗口算法代码框架" class="headerlink" title="滑动窗口算法代码框架"></a>滑动窗口算法代码框架</h3><p>&emsp;&emsp;废话少说，直接上代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">slidingwindow</span><span class="params">(s <span class="keyword">string</span>, t <span class="keyword">string</span>)</span></span> &#123; <span class="comment">// s是主串，t是子串</span></span><br><span class="line">  need := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">byte</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(t))  <span class="comment">// need用于记录t子串对字符的实际要求</span></span><br><span class="line">  window := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">byte</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(t)) <span class="comment">// window用于检测当前窗口内满足t子串的要求字符的实际情况</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(t); i++ &#123;</span><br><span class="line">    need[t[i]] = <span class="number">1</span>  <span class="comment">// 数量可以是任意数字，根据题目实际需求</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> (</span><br><span class="line">  	left = <span class="number">0</span> <span class="comment">// 窗口左边界</span></span><br><span class="line">    right = <span class="number">0</span> <span class="comment">// 窗口右边界</span></span><br><span class="line">    valid = <span class="number">0</span> <span class="comment">// 满足条件的字符个数</span></span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> right &lt; <span class="built_in">len</span>(s) &#123;</span><br><span class="line">    <span class="comment">// c是要移入窗口的字符</span></span><br><span class="line">    c := s[right]</span><br><span class="line">    <span class="comment">// 右移窗口</span></span><br><span class="line">    right++</span><br><span class="line">    <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*** debug 输出的位置 ***/</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;window: [%d, %d)\n&quot;</span>, left, right);</span><br><span class="line">    <span class="comment">/********************/</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 判断左侧窗口是否要收缩</span></span><br><span class="line">    <span class="keyword">for</span> window needs shrink &#123;</span><br><span class="line">      <span class="comment">// d 是将移出窗口的字符</span></span><br><span class="line">      d := s[left]</span><br><span class="line">      <span class="comment">// 左移窗口</span></span><br><span class="line">      left++</span><br><span class="line">      <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="最小覆盖子串"><a href="#最小覆盖子串" class="headerlink" title="最小覆盖子串"></a>最小覆盖子串</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://gblobscdn.gitbook.com/assets%2F-MZLBWp7285NJbpNV7Kv%2Fsync%2F3d5d2bc76cee1f2190a7dd4fcd17445164dc7273.png?alt=media"
+                      alt="avatar"
+                ></p>
+<p>就是说要在 <code>S</code>(source) 中找到包含 <code>T</code>(target) 中全部字母的一个子串，且这个子串一定是所有可能子串中最短的。</p>
+<p>如果我们使用暴力解法，代码大概是这样的：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">  <span class="keyword">for</span> j:=i+<span class="number">1</span>; j&lt;<span class="built_in">len</span>(s); j++ &#123;</span><br><span class="line">    <span class="keyword">if</span> s[i:j] 包含t中的所有字母 &#123;</span><br><span class="line">      更新答案</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路很直接，但是显然，这个算法的复杂度肯定大于 O(N^2) 了。</p>
+<p><strong>滑动窗口算法的思路是这样</strong>：</p>
+<p>1、我们在字符串 <code>S</code> 中使用双指针中的左右指针技巧，初始化 <code>left = right = 0</code>，把索引<strong>左闭右开</strong>区间 <code>[left, right)</code> 称为一个「窗口」。</p>
+<p>2、我们先不断地增加 <code>right</code> 指针扩大窗口 <code>[left, right)</code>，直到窗口中的字符串符合要求（包含了 <code>T</code> 中的所有字符）。</p>
+<p>3、此时，我们停止增加 <code>right</code>，转而不断增加 <code>left</code> 指针缩小窗口 <code>[left, right)</code>，直到窗口中的字符串不再符合要求（不包含 <code>T</code> 中的所有字符了）。同时，每次增加 <code>left</code>，我们都要更新一轮结果。</p>
+<p>4、重复第 2 和第 3 步，直到 <code>right</code> 到达字符串 <code>S</code> 的尽头。</p>
+<p>这个思路其实也不难，<strong>第 2 步相当于在寻找一个「可行解」，然后第 3 步在优化这个「可行解」，最终找到最优解，</strong>也就是最短的覆盖子串。左右指针轮流前进，窗口大小增增减减，窗口不断向右滑动，这就是「滑动窗口」这个名字的来历。</p>
+<p>下面画图理解一下，<code>needs</code> 和 <code>window</code> 相当于计数器，分别记录 <code>T</code> 中字符出现次数和「窗口」中的相应字符的出现次数。</p>
+<p>初始状态：</p>
+<p>![image-20210429193510364](/Users/hongjiahao/Library/Application Support/typora-user-images/image-20210429193510364.png)</p>
+<p>增加 <code>right</code>，直到窗口 <code>[left, right]</code> 包含了 <code>T</code> 中所有字符：</p>
+<p>![image-20210429193608894](/Users/hongjiahao/Library/Application Support/typora-user-images/image-20210429193608894.png)</p>
+<p>现在开始增加 <code>left</code>，缩小窗口 <code>[left, right]</code>。</p>
+<p>![image-20210429193630917](/Users/hongjiahao/Library/Application Support/typora-user-images/image-20210429193630917.png)</p>
+<p>直到窗口中的字符串不再符合要求，<code>left</code> 不再继续移动。</p>
+<p>![image-20210429194033697](/Users/hongjiahao/Library/Application Support/typora-user-images/image-20210429194033697.png)</p>
+<p>之后重复上述过程，先移动 <code>right</code>，再移动 <code>left</code>…… 直到 <code>right</code> 指针到达字符串 <code>S</code> 的末端，算法结束。</p>
+<p><strong>现在开始套模板，只需要思考以下四个问题</strong>：</p>
+<p>1、当移动 <code>right</code> 扩大窗口，即加入字符时，应该更新哪些数据？</p>
+<p>2、什么条件下，窗口应该暂停扩大，开始移动 <code>left</code> 缩小窗口？</p>
+<p>3、当移动 <code>left</code> 缩小窗口，即移出字符时，应该更新哪些数据？</p>
+<p>4、我们要的结果应该在扩大窗口时还是缩小窗口时进行更新？</p>
+<p>如果一个字符进入窗口，应该增加 <code>window</code> 计数器；如果一个字符将移出窗口的时候，应该减少 <code>window</code> 计数器；当 <code>valid</code> 满足 <code>need</code> 时应该收缩窗口；应该在收缩窗口的时候更新最终结果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minWindow</span><span class="params">(s <span class="keyword">string</span>, t <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    need := <span class="keyword">map</span>[<span class="keyword">byte</span>]<span class="keyword">int</span>&#123;&#125; <span class="comment">// 根据t子串记录实际的需求</span></span><br><span class="line">    window := <span class="keyword">map</span>[<span class="keyword">byte</span>]<span class="keyword">int</span>&#123;&#125; <span class="comment">// 记录窗口内满足要求的字符的情况</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(t); i++ &#123; <span class="comment">// 将子串t中字符的实际需求用need来记录</span></span><br><span class="line">        need[t[i]]++</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">var</span> (</span><br><span class="line">  	    left = <span class="number">0</span></span><br><span class="line">        right = <span class="number">0</span></span><br><span class="line">        valid = <span class="number">0</span></span><br><span class="line">        start = <span class="number">0</span> <span class="comment">// 记录最小覆盖子串的起始索引</span></span><br><span class="line">        length = <span class="built_in">len</span>(s)+<span class="number">1</span> <span class="comment">//记录最小覆盖子串的长度</span></span><br><span class="line">    )</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> right &lt; <span class="built_in">len</span>(s) &#123;</span><br><span class="line">        <span class="comment">// 加入窗口</span></span><br><span class="line">        c := s[right]</span><br><span class="line">        <span class="comment">// 右移窗口</span></span><br><span class="line">        right++</span><br><span class="line">    </span><br><span class="line">        <span class="comment">// 检查c是否在need的需求中，若在则加入window(进行窗口内数据的一系列更新)</span></span><br><span class="line">        <span class="keyword">if</span> _, ok := need[c]; ok &#123;</span><br><span class="line">          window[c]++     </span><br><span class="line">          <span class="comment">// 若字符c的个数已经满足了need中的要求</span></span><br><span class="line">    	    <span class="keyword">if</span> window[c] == need[c] &#123;</span><br><span class="line">      	        valid++</span><br><span class="line">    	    &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// fmt.Printf(&quot;window1: [%d, %d)\n&quot;, left, right)  // debug专用</span></span><br><span class="line">        <span class="comment">// 当window内的所有字符都满足了需求，判断左侧窗口是否要收缩</span></span><br><span class="line">        <span class="keyword">for</span> valid == <span class="built_in">len</span>(need) &#123;</span><br><span class="line">            <span class="keyword">if</span> right - left &lt; length &#123;</span><br><span class="line">                start = left</span><br><span class="line">                length = right - left</span><br><span class="line">            &#125;</span><br><span class="line">      </span><br><span class="line">            <span class="comment">// d 是将移出窗口的字符</span></span><br><span class="line">            d := s[left]</span><br><span class="line">            <span class="comment">// 左边界右移缩小窗口</span></span><br><span class="line">            left++</span><br><span class="line">            <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">            <span class="keyword">if</span> _, ok := need[d]; ok &#123;</span><br><span class="line">                <span class="keyword">if</span> window[d] == need[d] &#123;</span><br><span class="line">                    valid--</span><br><span class="line">                &#125;</span><br><span class="line">                window[d]--</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// fmt.Printf(&quot;window2: [%d, %d)\n&quot;, left, right)  // debug专用      </span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> length == <span class="built_in">len</span>(s)+<span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> s[start:start+length]</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：滑动窗口(Sliding Window)算法框架</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2021-04-28 14:47:30</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2021/04/28/滑动窗口(Sliding-Window)算法框架/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/04/11/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(Dynamic-Programming)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">动态规划(Dynamic Programming)算法框架</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">算法框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%AE%97%E6%B3%95%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.</span> <span class="nav-text">滑动窗口算法代码框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2"><span class="nav-number">2.1.</span> <span class="nav-text">最小覆盖子串</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.2/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/ Relative)","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":150,"height":260},"mobile":{"show":false},"react":{"opacityDefault":0.7}});</script></body>
+</html>
