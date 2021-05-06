@@ -372,28 +372,28 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/Users/hongjiahao/blog/source/_posts/image/image-20210429193510364.png"
+                     data-src="%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/image-20210429193510364.png"
                       alt="image-20210429193510364"
                 ></p>
 <p>增加 <code>right</code>，直到窗口 <code>[left, right]</code> 包含了 <code>T</code> 中所有字符：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/Users/hongjiahao/blog/source/_posts/image/image-20210429193608894.png"
+                     data-src="%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/image-20210429193608894.png"
                       alt="image-20210429193608894"
                 ></p>
 <p>现在开始增加 <code>left</code>，缩小窗口 <code>[left, right]</code>。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/Users/hongjiahao/blog/source/_posts/image/image-20210429193630917.png"
+                     data-src="%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/image-20210429193630917.png"
                       alt="image-20210429193630917"
                 ></p>
 <p>直到窗口中的字符串不再符合要求，<code>left</code> 不再继续移动。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/Users/hongjiahao/blog/source/_posts/image/image-20210429194033697.png"
+                     data-src="%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/image-20210429194033697.png"
                       alt="image-20210429194033697"
                 ></p>
 <p>之后重复上述过程，先移动 <code>right</code>，再移动 <code>left</code>…… 直到 <code>right</code> 指针到达字符串 <code>S</code> 的末端，算法结束。</p>
