@@ -350,7 +350,7 @@
 <h2 id="实际案例"><a href="#实际案例" class="headerlink" title="实际案例"></a>实际案例</h2><h3 id="最小路径和"><a href="#最小路径和" class="headerlink" title="最小路径和"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-path-sum/">最小路径和<i class="fas fa-external-link-alt"></i></a></h3><p>&emsp;&emsp;给定一个包含非负整数的 <code>m*n</code> 网格 <code>grid</code> ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
 <p><strong>说明：</strong>每次只能向下或者向右移动一步。</p>
 <p><strong>示例 1：</strong></p>
-<p><img lazyload src="/images/loading.svg" data-src="Xnip2021-05-08_14-30-08.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="Xnip2021-05-08_14-30-08.jpeg" alt="avatar"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：grid &#x3D; [[1,3,1],[1,5,1],[4,2,1]]</span><br><span class="line">输出：7</span><br><span class="line">解释：因为路径 1→3→1→1→1 的总和最小。</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
@@ -371,7 +371,7 @@
 
 <h3 id="接雨水"><a href="#接雨水" class="headerlink" title="接雨水"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/trapping-rain-water/">接雨水<i class="fas fa-external-link-alt"></i></a></h3><p>&emsp;&emsp;给定 <em>n</em> 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。</p>
 <p><strong>示例 1：</strong></p>
-<p><img lazyload src="/images/loading.svg" data-src="Xnip2021-05-08_14-29-01.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="rainwatertrap.png" alt="rainwatertrap"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：height &#x3D; [0,1,0,2,1,0,1,3,2,1,2,1]</span><br><span class="line">输出：6</span><br><span class="line">解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。</span><br></pre></td></tr></table></figure>
 
 <p>算法思路：对于下标 <em>i</em>，下雨后水能到达的最大高度等于下标 <em>i</em> 两边的最大高度的最小值，下标 <em>i</em> 处能接的雨水量等于下标 <em>i</em> 处的水能到达的最大高度减去 *height[i]*。</p>
