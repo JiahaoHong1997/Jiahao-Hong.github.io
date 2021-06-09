@@ -260,6 +260,19 @@
 <p>&emsp;&emsp;http<code> 是协议。它表明了浏览器必须使用何种协议。它通常都是HTTP协议或是HTTP协议的安全版，即HTTPS。Web需要它们二者之一，但浏览器也知道如何处理其他协议，比如</code>mailto:（打开邮件客户端）或者 ``ftp:（处理文件传输），所以当你看到这些协议时，不必惊讶。</p>
 <div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-09_14-18-06.jpg" width="50%" height="50%"></div>
 
+<p>&emsp;&emsp;<code>www.example.com</code> 是域名。 它表明正在请求哪个Web服务器。或者，可以直接使用<a class="link" target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/IP_Address">IP address<i class="fas fa-external-link-alt"></i></a>, 但是因为它不太方便，所以它不经常在网络上使用。</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-09_14-36-49.jpg" width="50%" height="50%"></div>
+
+<p>&emsp;&emsp;<code>:80</code> 是端口。 它表示用于访问Web服务器上的资源的技术“门”。如果Web服务器使用HTTP协议的标准端口（HTTP为80，HTTPS为443）来授予其资源的访问权限，则通常会被忽略。否则是强制性的。</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-09_14-52-10.jpg" width="50%" height="50%"></div>
+
+<p>&emsp;&emsp;<code>/path/to/myfile.html</code> 是网络服务器上资源的路径。在Web的早期阶段，像这样的路径表示Web服务器上的物理文件位置。如今，它主要是由没有任何物理现实的Web服务器处理的抽象。</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-09_14-53-21.jpg" width="50%" height="50%"></div>
+
+<p>&emsp;&emsp;<code>?key1=value1&amp;key2=value2</code> 是提供给网络服务器的额外参数。 这些参数是用 <code>&amp; </code>符号分隔的键/值对列表。在返回资源之前，Web服务器可以使用这些参数来执行额外的操作。每个Web服务器都有自己关于参数的规则，唯一可靠的方式来知道特定Web服务器是否处理参数是通过询问Web服务器所有者。</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-09_14-55-04.jpg" width="50%" height="50%"></div>
+
+<p>&emsp;&emsp;<code>#SomewhereInTheDocument</code> 是资源本身的另一部分的锚点. 锚点表示资源中的一种“书签”，给浏览器显示位于该“加书签”位置的内容的方向。例如，在HTML文档上，浏览器将滚动到定义锚点的位置;在视频或音频文档上，浏览器将尝试转到锚代表的时间。值得注意的是，＃后面的部分（也称为片段标识符）从来没有发送到请求的服务器。</p>
 
         </div>
 
@@ -284,6 +297,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/06/10/2021-06-10-Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89sort%E5%87%BD%E6%95%B0/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Go语言中自定义sort函数</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
