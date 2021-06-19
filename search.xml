@@ -561,7 +561,38 @@
 
 
 
-<h4 id="在-D-天内送达包裹的能力"><a href="#在-D-天内送达包裹的能力" class="headerlink" title="在 D 天内送达包裹的能力"></a><a class="link" href="https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/">在 D 天内送达包裹的能力<i class="fas fa-external-link-alt"></i></a></h4><h4 id="搜索二维矩阵"><a href="#搜索二维矩阵" class="headerlink" title="搜索二维矩阵"></a><a class="link" href="https://leetcode-cn.com/problems/search-a-2d-matrix/">搜索二维矩阵<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;编写一个高效的算法来判断 <code>m x n</code> 矩阵中，是否存在一个目标值。该矩阵具有如下特性：</p>
+<h4 id="在-D-天内送达包裹的能力"><a href="#在-D-天内送达包裹的能力" class="headerlink" title="在 D 天内送达包裹的能力"></a><a class="link" href="https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/">在 D 天内送达包裹的能力<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;传送带上的包裹必须在 D 天内从一个港口运送到另一个港口。</p>
+<p>&emsp;&emsp;传送带上的第 i 个包裹的重量为 weights[i]。每一天，我们都会按给出重量的顺序往传送带上装载包裹。我们装载的重量不会超过船的最大运载重量。</p>
+<p>&emsp;&emsp;返回能在 D 天内将传送带上的所有包裹送达的船的最低运载能力。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：weights &#x3D; [1,2,3,4,5,6,7,8,9,10], D &#x3D; 5</span><br><span class="line">输出：15</span><br><span class="line">解释：</span><br><span class="line">船舶最低载重 15 就能够在 5 天内送达所有包裹，如下所示：</span><br><span class="line">第 1 天：1, 2, 3, 4, 5</span><br><span class="line">第 2 天：6, 7</span><br><span class="line">第 3 天：8</span><br><span class="line">第 4 天：9</span><br><span class="line">第 5 天：10</span><br><span class="line"></span><br><span class="line">请注意，货物必须按照给定的顺序装运，因此使用载重能力为 14 的船舶并将包装分成 (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) 是不允许的。 </span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：weights &#x3D; [3,2,2,4,1,4], D &#x3D; 3</span><br><span class="line">输出：6</span><br><span class="line">解释：</span><br><span class="line">船舶最低载重 6 就能够在 3 天内送达所有包裹，如下所示：</span><br><span class="line">第 1 天：3, 2</span><br><span class="line">第 2 天：2, 4</span><br><span class="line">第 3 天：1, 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：weights &#x3D; [1,2,3,1,1], D &#x3D; 4</span><br><span class="line">输出：3</span><br><span class="line">解释：</span><br><span class="line">第 1 天：1</span><br><span class="line">第 2 天：2</span><br><span class="line">第 3 天：3</span><br><span class="line">第 4 天：1, 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 &lt;&#x3D; D &lt;&#x3D; weights.length &lt;&#x3D; 5 * 104</span><br><span class="line">1 &lt;&#x3D; weights[i] &lt;&#x3D; 500</span><br></pre></td></tr></table></figure>
+
+<p>算法思路：</p>
+<p>&emsp;&emsp;假设当船的运载能力为 <code>x</code> 时，我们可以在 <code>days</code> 天内运送完所有包裹，那么只要运载能力大于 <code>x</code>，我们同样可以在 <code>days</code> 天内运送完所有包裹：我们只需要使用运载能力为 <code>x</code> 时的运送方法即可。</p>
+<p>&emsp;&emsp;这样一来，我们就得到了一个非常重要的结论：</p>
+<p>存在一个运载能力的「下限」$$x _\text { ans }$$，使得当 <code>x</code> ≥ $$x _\text { ans }$$时，我们可以在 <code>days</code> 天内运送完所有包裹；当 <code>x</code>&lt;<br>$$x _\text { ans }$$时，我们无法在 <code>days</code> 天内运送完所有包裹。</p>
+<p>&emsp;&emsp;同时，$$x _\text { ans }$$即为我们需要求出的答案。因此，我们就可以使用二分查找的方法找出 $$x _\text { ans }$$的值。在二分查找的每一步中，我们实际上需要解决一个判定问题：给定船的运载能力 <code>x</code>，我们是否可以在 <code>days</code> 天内运送完所有包裹呢？这个判定问题可以通过贪心的方法来解决：</p>
+<p>&emsp;&emsp;由于我们必须按照数组 <code>weights</code> 中包裹的顺序进行运送，因此我们从数组 <code>weights</code> 的首元素开始遍历，将连续的包裹都安排在同一天进行运送。当这批包裹的重量大于运载能力 <code>x</code> 时，我们就需要将最后一个包裹拿出来，安排在新的一天，并继续往下遍历。当我们遍历完整个数组后，就得到了最少需要运送的天数。</p>
+<p>&emsp;&emsp;我们将「最少需要运送的天数」与 <code>days</code> 进行比较，就可以解决这个判定问题。当其小于等于 <code>days</code> 时，我们就忽略二分的右半部分区间；当其大于 <code>days</code> 时，我们就忽略二分的左半部分区间。</p>
+<p><strong>细节</strong></p>
+<p>二分查找的初始左右边界应当如何计算呢？</p>
+<p>对于左边界而言，由于我们不能「拆分」一个包裹，因此船的运载能力不能小于所有包裹中最重的那个的重量，即左边界为数组 <code>weights</code> 中元素的最大值。</p>
+<p>对于右边界而言，船的运载能力也不会大于所有包裹的重量之和，即右边界为数组 <code>weights</code> 中元素的和。</p>
+<p>我们从上述左右边界开始进行二分查找，就可以保证找到最终的答案。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">shipWithinDays</span><span class="params">(weights []<span class="keyword">int</span>, days <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    left := weights[<span class="number">0</span>]</span><br><span class="line">    right := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(weights); i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> weights[i] &gt; left &#123;  <span class="comment">// 设置运载能力左边界为货物中最大重量</span></span><br><span class="line">            left = weights[i]</span><br><span class="line">        &#125;</span><br><span class="line">        right += weights[i]			<span class="comment">// 设置运载能力有边界为货物总重量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> check <span class="function"><span class="keyword">func</span><span class="params">(<span class="built_in">cap</span> <span class="keyword">int</span>)</span> <span class="title">bool</span></span></span><br><span class="line">    check = <span class="function"><span class="keyword">func</span><span class="params">(<span class="built_in">cap</span> <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">        temp := <span class="number">0</span> <span class="comment">// 一天内运送货物重量的累积</span></span><br><span class="line">        day := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _, v := <span class="keyword">range</span> weights &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">cap</span> &lt; temp+v &#123;  <span class="comment">// 超过🚢的运载能力，天数+1</span></span><br><span class="line">                day++</span><br><span class="line">                temp = <span class="number">0</span></span><br><span class="line">            &#125;</span><br><span class="line">            temp += v</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> temp != <span class="number">0</span> &#123;</span><br><span class="line">            day++</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> day&lt;=days &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt; right &#123; <span class="comment">// 二分查找满足运送天数的🚢运载能力的左边界</span></span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> check(mid) &#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="搜索二维矩阵"><a href="#搜索二维矩阵" class="headerlink" title="搜索二维矩阵"></a><a class="link" href="https://leetcode-cn.com/problems/search-a-2d-matrix/">搜索二维矩阵<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;编写一个高效的算法来判断 <code>m x n</code> 矩阵中，是否存在一个目标值。该矩阵具有如下特性：</p>
 <ul>
 <li>每行中的整数从左到右按升序排列。</li>
 <li>每行的第一个整数大于前一行的最后一个整数。</li>
@@ -590,6 +621,32 @@
 
 
 
+<h4 id="搜索二维矩阵-II"><a href="#搜索二维矩阵-II" class="headerlink" title="搜索二维矩阵 II"></a><a class="link" href="https://leetcode-cn.com/problems/search-a-2d-matrix-ii/">搜索二维矩阵 II<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;编写一个高效的算法来搜索 <code>*m* x *n*</code> 矩阵 <code>matrix</code> 中的一个目标值 <code>target</code> 。该矩阵具有以下特性：</p>
+<ul>
+<li>每行的元素从左到右升序排列。</li>
+<li>每列的元素从上到下升序排列。</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<p><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_16-40-38.jpg" alt="avatar"></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">输入：matrix = [[<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">15</span>],[<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">12</span>,<span class="number">19</span>],[<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">16</span>,<span class="number">22</span>],[<span class="number">10</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">17</span>,<span class="number">24</span>],[<span class="number">18</span>,<span class="number">21</span>,<span class="number">23</span>,<span class="number">26</span>,<span class="number">30</span>]], target = <span class="number">5</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<p><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_16-42-30.jpg" alt="avatar"></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">输入：matrix = [[<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">15</span>],[<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">12</span>,<span class="number">19</span>],[<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">16</span>,<span class="number">22</span>],[<span class="number">10</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">17</span>,<span class="number">24</span>],[<span class="number">18</span>,<span class="number">21</span>,<span class="number">23</span>,<span class="number">26</span>,<span class="number">30</span>]], target = <span class="number">20</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">m == matrix.length</span><br><span class="line">n == matrix[i].length</span><br><span class="line"><span class="number">1</span> &lt;= n, m &lt;= <span class="number">300</span></span><br><span class="line"><span class="number">-109</span> &lt;= matix[i][j] &lt;= <span class="number">109</span></span><br><span class="line">每行的所有元素从左到右升序排列</span><br><span class="line">每列的所有元素从上到下升序排列</span><br><span class="line"><span class="number">-109</span> &lt;= target &lt;= <span class="number">109</span></span><br></pre></td></tr></table></figure>
+
+<p>算法思路：</p>
+<p>&emsp;&emsp;不同于上一题每一行的第一个元素大于前一行的第一个元素，本题要暴力搜索的话需要对每一行进行二分查找。可以考虑先确定目标数可能存在于哪几行内，对这几行进行搜索即可。</p>
+<ul>
+<li>对每行的最后一个元素进行二分查找，寻找<code>target</code>的左边界，可以确定起始行号</li>
+<li>对每一行第一个元素进行二分查找，寻找<code>target</code>的左边界，可以确定终止行号</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">searchMatrix</span><span class="params">(matrix [][]<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    r, c := <span class="built_in">len</span>(matrix)<span class="number">-1</span>,<span class="built_in">len</span>(matrix[<span class="number">0</span>])<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    row1 := <span class="number">0</span></span><br><span class="line">    row2 := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> matrix[r][c] &lt; target &#123; <span class="comment">// 如果最后一个元素小于target，直接返回false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> matrix[r][c] == target &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        left,right := <span class="number">0</span>,r</span><br><span class="line">        <span class="keyword">for</span> left&lt;right &#123;</span><br><span class="line">            mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> matrix[mid][c] == target &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> matrix[mid][c] &gt; target &#123;</span><br><span class="line">                right = mid</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        row2 = left <span class="comment">// 起始行号=左边界+1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> matrix[r][<span class="number">0</span>] &lt; target &#123;</span><br><span class="line">        row1 = r</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> matrix[r][<span class="number">0</span>] == target &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        left,right := <span class="number">0</span>,r</span><br><span class="line">        <span class="keyword">for</span> left&lt;right &#123;</span><br><span class="line">            mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> matrix[mid][<span class="number">0</span>] == target &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> matrix[mid][<span class="number">0</span>] &gt; target &#123;</span><br><span class="line">                right = mid</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        row1 = left<span class="number">-1</span> <span class="comment">// 终止行号=左边界</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fmt.Println(row2)</span></span><br><span class="line">    <span class="comment">// fmt.Println(row1)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> row2&gt;row1 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> row2 &lt;= row1 &#123;  <span class="comment">// 对可能的行内进行二分查找</span></span><br><span class="line">        left,right := <span class="number">0</span>,c</span><br><span class="line">        <span class="keyword">for</span> left&lt;=right &#123;</span><br><span class="line">            mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> matrix[row2][mid] == target &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> matrix[row2][mid] &lt; target &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                 right = mid<span class="number">-1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        row2++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h4 id="在排序数组中查找元素的第一个和最后一个位置"><a href="#在排序数组中查找元素的第一个和最后一个位置" class="headerlink" title="在排序数组中查找元素的第一个和最后一个位置"></a><a class="link" href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">在排序数组中查找元素的第一个和最后一个位置<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;给定一个按照升序排列的整数数组 <code>nums</code>，和一个目标值 <code>target</code>。找出给定目标值在数组中的开始位置和结束位置。如果数组中不存在目标值 <code>target</code>，返回 <code>[-1, -1]</code>。</p>
 <p><strong>进阶：</strong></p>
 <p>你可以设计并实现时间复杂度为 <code>O(log n)</code> 的算法解决此问题吗?</p>
@@ -609,6 +666,54 @@
 <li>数组只有一个元素，若该元素=target，返回<code>[0,0]</code>；否则，返回<code>[-1,-1]</code></li>
 </ul>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">searchRange</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">1</span> &amp;&amp; nums[<span class="number">0</span>] == target &#123;</span><br><span class="line">        <span class="keyword">return</span> []<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">0</span>&#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">len</span>(nums) == <span class="number">1</span> &amp;&amp; nums[<span class="number">0</span>] != target) || <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []<span class="keyword">int</span>&#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    left := <span class="number">0</span></span><br><span class="line">    right := <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">    ret := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt; right &#123; <span class="comment">// 找左边界</span></span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> nums[left] == target &#123;</span><br><span class="line">        ret = <span class="built_in">append</span>(ret, left)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  <span class="comment">// 找不到target，其左边界是数组中最大的比它小的数</span></span><br><span class="line">        <span class="keyword">return</span> []<span class="keyword">int</span>&#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt; right &#123;    <span class="comment">// 找右边界</span></span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 因为在找左边界的时候已经判断过该数组中是否存在target，能到这一步肯定是存在的。不用顾虑第一个数大 于target的情况</span></span><br><span class="line">    <span class="keyword">if</span> nums[left] == target &#123; <span class="comment">// 右边界是数组第一个数</span></span><br><span class="line">        ret = <span class="built_in">append</span>(ret,left)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 右边界是其他数</span></span><br><span class="line">        ret = <span class="built_in">append</span>(ret, left<span class="number">-1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="两数之和类题目"><a href="#两数之和类题目" class="headerlink" title="两数之和类题目"></a>两数之和类题目</h3><h4 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a><a class="link" href="https://leetcode-cn.com/problems/two-sum/">两数之和<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target  的那两个整数，并返回它们的数组下标。</p>
+<p>&emsp;&emsp;你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
+<p>&emsp;&emsp;你可以按任意顺序返回答案。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [2,7,11,15], target &#x3D; 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] &#x3D;&#x3D; 9 ，返回 [0, 1] 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [3,2,4], target &#x3D; 6</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [3,3], target &#x3D; 6</span><br><span class="line">输出：[0,1]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2 &lt;&#x3D; nums.length &lt;&#x3D; 104</span><br><span class="line">-109 &lt;&#x3D; nums[i] &lt;&#x3D; 109</span><br><span class="line">-109 &lt;&#x3D; target &lt;&#x3D; 109</span><br><span class="line">只会存在一个有效答案</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	  sort.Ints(nums)  <span class="comment">// 给数组排序</span></span><br><span class="line">  	l, r := <span class="number">0</span>, <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">  	ret := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">if</span> <span class="built_in">len</span>(nums)&lt;<span class="number">2</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> ret</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">for</span> l &lt; r &#123;</span><br><span class="line">     		<span class="keyword">if</span> nums[l]&gt;target &#123;</span><br><span class="line">        		<span class="keyword">break</span></span><br><span class="line">      	&#125;</span><br><span class="line">      	<span class="keyword">if</span> nums[l]+nums[r] == target &#123;</span><br><span class="line">        		ret = <span class="built_in">append</span>(ret,l,r)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[l]+nums[r] &gt; target &#123;</span><br><span class="line">          	r--</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	l++</span><br><span class="line">        &#125;</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>本题也可使用map来做</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">    <span class="keyword">for</span> index, value := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        another := target - value</span><br><span class="line">        _, ok := m[another]</span><br><span class="line">        <span class="keyword">if</span> ok &#123;</span><br><span class="line">            <span class="keyword">return</span> []<span class="keyword">int</span>&#123;index, m[another]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        m[value] = index      </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="三数之和"><a href="#三数之和" class="headerlink" title="三数之和"></a><a class="link" href="https://leetcode-cn.com/problems/3sum/">三数之和<i class="fas fa-external-link-alt"></i></a></h4><p>给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。</p>
+<p><strong>注意：</strong>答案中不可以包含重复的三元组。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [-1,0,1,2,-1,-4]</span><br><span class="line">输出：[[-1,-1,2],[-1,0,1]]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; []</span><br><span class="line">输出：[]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [0]</span><br><span class="line">输出：[]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 &lt;&#x3D; nums.length &lt;&#x3D; 3000</span><br><span class="line">-105 &lt;&#x3D; nums[i] &lt;&#x3D; 105</span><br></pre></td></tr></table></figure>
+
+
+
+<p>算法思路：</p>
+<p>&emsp;&emsp;整体思路和两数之和非常像，不过是通过遍历数组固定第一个数，后两个数使用双指针的方式进行查找。注意的是不能输出重复的三元组，所以在遍历的要判断一下是否和之前的数相等，相等则跳过该数。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">threeSum</span><span class="params">(nums []<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums)&lt;<span class="number">3</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">3</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> nums[<span class="number">0</span>]+nums[<span class="number">1</span>]+nums[<span class="number">2</span>]==<span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> [][]<span class="keyword">int</span>&#123;nums&#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sort.Ints(nums)  <span class="comment">// 排序数组</span></span><br><span class="line">    res := [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k:=<span class="number">0</span>; k&lt;<span class="built_in">len</span>(nums)<span class="number">-2</span>; k++ &#123;</span><br><span class="line">        <span class="keyword">if</span> nums[k] &gt; <span class="number">0</span> &#123; <span class="comment">// 如果最小的数都大于0，直接结束循环</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> k&gt;<span class="number">0</span> &amp;&amp; nums[k] == nums[k<span class="number">-1</span>] &#123; <span class="comment">// 为避免重复，跳过已经出现的数</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        tmp := nums[k]</span><br><span class="line">        i,j := k+<span class="number">1</span>,<span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">        <span class="keyword">for</span> i&lt;j &#123;</span><br><span class="line">            <span class="keyword">if</span> tmp+nums[i]+nums[j] == <span class="number">0</span> &#123;</span><br><span class="line">                res = <span class="built_in">append</span>(res,[]<span class="keyword">int</span>&#123;tmp,nums[i],nums[j]&#125;)</span><br><span class="line">                i++</span><br><span class="line">                j--</span><br><span class="line">                <span class="keyword">for</span> i&lt;j &amp;&amp; nums[i] == nums[i<span class="number">-1</span>] &#123; <span class="comment">// 为避免重复，跳过已经出现的数</span></span><br><span class="line">                    i++</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> i&lt;j &amp;&amp; nums[j] == nums[j+<span class="number">1</span>] &#123; <span class="comment">// 为避免重复，跳过已经出现的数</span></span><br><span class="line">                    j--</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> tmp+nums[i]+nums[j] &gt; <span class="number">0</span> &#123;</span><br><span class="line">                j--</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                i++</span><br><span class="line">            &#125;           </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -660,8 +765,71 @@
       </tags>
   </entry>
   <entry>
+    <title>HTTP协议详解</title>
+    <url>/2021/06/17/HTTP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>本文主要参考来源<a class="link" href="https://learnku.com/docs/build-web-application-with-golang/031-web-working-mode/3168">《Go Web编程》<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="HTTP协议介绍"><a href="#HTTP协议介绍" class="headerlink" title="HTTP协议介绍"></a>HTTP协议介绍</h2><p>&emsp;&emsp;HTTP协议是一种让web服务器与浏览器(客户端)通过网络发送和接收数据的协议。它建立在TCP之上，默认采用TCP的80端口。浏览器(客户端)每发出一个请求，服务器响应这个请求。在HTTP中，浏览器(客户端)总是通过建立连接并发送一个HTTP请求来发起一个事务，服务端不能主动去和客户端联系，也不能给客户端发送一个回调连接。客户端与服务器端都可以提前终结一个连接。例如，当浏览器下载一个文件时，可以通过“停止键”来中断文件的下载，关闭与服务器的TCP连接。</p>
+<p>&emsp;&emsp;HTTP协议是无状态的，同一个客户端的这次请求和上次请求是没有关系的，对于HTTP服务器来说，它并不知道这两个请求是否来自同一个客户端。为了解决这个问题，web程序引入了cookie机制来维护连接的可持续状态。</p>
+<h2 id="HTTP请求包-浏览器信息"><a href="#HTTP请求包-浏览器信息" class="headerlink" title="HTTP请求包(浏览器信息)"></a>HTTP请求包(浏览器信息)</h2><p>&emsp;&emsp;请求包(Request)的结构包含3个部分：Request line(请求行)、Request header(请求头)、body(主体)。header 和 body 之间有个空行，请求包的例子所示:</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">GET /domains/example/ HTTP/<span class="number">1.1</span>      <span class="comment">// 请求行: 请求方法 请求 URI HTTP 协议/协议版本</span></span><br><span class="line">Host：www.iana.org               <span class="comment">// 服务端的主机名</span></span><br><span class="line">User-Agent：Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">6.1</span>) AppleWebKit/<span class="number">537.4</span> (KHTML, like Gecko) Chrome/<span class="number">22.0</span><span class="number">.1229</span><span class="number">.94</span> Safari/<span class="number">537.4</span>          <span class="comment">// 浏览器信息</span></span><br><span class="line">Accept：text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,*<span class="comment">/*;q=0.8  // 客户端能接收的 mine</span></span><br><span class="line"><span class="comment">Accept-Encoding：gzip,deflate,sdch       // 是否支持流压缩</span></span><br><span class="line"><span class="comment">Accept-Charset：UTF-8,*;q=0.5        // 客户端字符编码集</span></span><br><span class="line"><span class="comment">// 空行,用于分割请求头和消息体</span></span><br><span class="line"><span class="comment">// 消息体,请求资源参数,例如 POST 传递的参数</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;HTTP 协议定义了很多与服务器交互的请求方法，最基本的有 4 种，分别是 GET, POST, PUT, DELETE。一个 URL 地址用于描述一个网络上的资源，而 HTTP 中的 GET, POST, PUT, DELETE 就对应着对这个资源的查，增，改，删 4 个操作。我们最常见的就是 GET 和 POST 了。GET 一般用于获取 / 查询资源信息，而 POST 一般用于更新资源信息。</p>
+<p>&emsp;&emsp;通过 fiddler 抓包可以看到如下请求信息:</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_10-48-21.jpg" width="70%" height="70%"></div>
+
+<p>&emsp;&emsp;fiddler 抓取的 GET 信息:</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_11-05-48.jpg" width="70%" height="70%"></div>
+
+<p>&emsp;&emsp;GET 和 POST 的区别:</p>
+<ol>
+<li>我们可以看到 GET 请求消息体为空，POST 请求带有消息体。</li>
+<li>GET 提交的数据会放在 URL 之后，以 <code>?</code> 分割 URL 和传输数据，参数之间以 <code>&amp;</code>相连，如 <code>EditPosts.aspx?name=test1&amp;id=123456</code>。POST 方法是把提交的数据放在 HTTP 包的 body 中。</li>
+<li>GET 提交的数据大小有限制（因为浏览器对 URL 的长度有限制），而 POST 方法提交的数据没有限制。</li>
+<li>GET 方式提交数据，会带来安全问题，比如一个登录页面，通过 GET 方式提交数据时，用户名和密码将出现在 URL 上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</li>
+</ol>
+<h2 id="HTTP-响应包（服务器信息）"><a href="#HTTP-响应包（服务器信息）" class="headerlink" title="HTTP 响应包（服务器信息）"></a>HTTP 响应包（服务器信息）</h2><p>&emsp;&emsp;我们再来看看 HTTP 的 response 包，他的结构如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK                     <span class="comment">// 状态行</span></span><br><span class="line">Server: nginx/<span class="number">1.0</span><span class="number">.8</span>                 <span class="comment">// 服务器使用的 WEB 软件名及版本</span></span><br><span class="line">Date: Tue, <span class="number">30</span> Oct <span class="number">2012</span> <span class="number">04</span>:<span class="number">14</span>:<span class="number">25</span> GMT     <span class="comment">// 发送时间</span></span><br><span class="line">Content-Type: text/html             <span class="comment">// 服务器发送信息的类型</span></span><br><span class="line">Transfer-Encoding: chunked          <span class="comment">// 表示发送 HTTP 包是分段发的</span></span><br><span class="line">Connection: keep-alive              <span class="comment">// 保持连接状态</span></span><br><span class="line">Content-Length: <span class="number">90</span>                  <span class="comment">// 主体内容长度</span></span><br><span class="line"><span class="comment">// 空行 用来分割消息头和主体</span></span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>... <span class="comment">// 消息体</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;Response 包中的第一行叫做状态行，由 HTTP 协议版本号， 状态码， 状态消息三部分组成。</p>
+<p>&emsp;&emsp;状态码用来告诉 HTTP 客户端，HTTP 服务器是否产生了预期的 Response。HTTP/1.1 协议中定义了 5 类状态码， 状态码由三位数字组成，第一个数字定义了响应的类别:</p>
+<ul>
+<li>1XX 提示信息 - 表示请求已被成功接收，继续处理</li>
+<li>2XX 成功 - 表示请求已被成功接收，理解，接受</li>
+<li>3XX 重定向 - 要完成请求必须进行更进一步的处理</li>
+<li>4XX 客户端错误 - 请求有语法错误或请求无法实现</li>
+<li>5XX 服务器端错误 - 服务器未能实现合法的请求</li>
+</ul>
+<p>&emsp;&emsp;我们看下面这个图展示了详细的返回信息，左边可以看到有很多的资源返回码，200 是常用的，表示正常信息，302 表示跳转。response header 里面展示了详细的信息。</p>
+<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_11-23-14.jpg" width="70%" height="70%"></div>
+
+
+
+<h2 id="HTTP-协议是无状态的和-Connection-keep-alive-的区别"><a href="#HTTP-协议是无状态的和-Connection-keep-alive-的区别" class="headerlink" title="HTTP 协议是无状态的和 Connection: keep-alive 的区别"></a>HTTP 协议是无状态的和 Connection: keep-alive 的区别</h2><p>&emsp;&emsp;无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。从另一方面讲，打开一个服务器上的网页和你之前打开这个服务器上的网页之间没有任何联系。</p>
+<p>&emsp;&emsp;&emsp;&emsp;HTTP 是一个无状态的面向连接的协议，无状态不代表 HTTP 不能保持 TCP 连接，更不能代表 HTTP 使用的是 UDP 协议（面对无连接）。</p>
+<p>&emsp;&emsp;&emsp;&emsp;从 HTTP/1.1 起，默认都开启了 Keep-Alive 保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的 TCP 连接。</p>
+<p>&emsp;&emsp;&emsp;&emsp;Keep-Alive 不会永久保持连接，它有一个保持时间，可以在不同服务器软件（如 Apache）中设置这个时间。</p>
+]]></content>
+      <categories>
+        <category>web开发</category>
+      </categories>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gin框架源码解析</title>
+    <url>/2021/05/25/Gin%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Go框架</category>
+      </categories>
+      <tags>
+        <tag>源码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go语言中自定义sort函数</title>
-    <url>/2021/06/10/2021-06-10-Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89sort%E5%87%BD%E6%95%B0/</url>
+    <url>/2021/06/10/%E8%AF%AD%E8%A8%80%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89sort%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h2 id="sort库基本介绍"><a href="#sort库基本介绍" class="headerlink" title="sort库基本介绍"></a>sort库基本介绍</h2><p>&emsp;&emsp;该包实现了四种基本的排序算法：插入排序、归并排序、堆排序和快速排序。 但是这四种排序方法是不公开的，它们只被用于 sort 包内部使用。所以在对数据集合排序时不必考虑应当选择哪一种排序方法，只要实现了 sort.Interface 定义的三个方法：获取数据集合长度的 Len() 方法、比较两个元素大小的 Less() 方法和交换两个元素位置的 Swap() 方法，就可以顺利对数据集合进行排序。sort 包会根据实际数据自动选择高效的排序算法。  除此之外，为了方便对常用数据类型的操作，sort 包提供了对[]int 切片、[]float64 切片和[]string 切片完整支持，主要包括：</p>
 <ul>
 <li>对基本数据类型切片的排序支持</li>
@@ -816,69 +984,6 @@
       </categories>
       <tags>
         <tag>源码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Gin框架源码解析</title>
-    <url>/2021/05/25/2021-05-25-Gin%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Go框架</category>
-      </categories>
-      <tags>
-        <tag>源码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTTP协议详解</title>
-    <url>/2021/06/17/HTTP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<p>本文主要参考来源<a class="link" href="https://learnku.com/docs/build-web-application-with-golang/031-web-working-mode/3168">《Go Web编程》<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="HTTP协议介绍"><a href="#HTTP协议介绍" class="headerlink" title="HTTP协议介绍"></a>HTTP协议介绍</h2><p>&emsp;&emsp;HTTP协议是一种让web服务器与浏览器(客户端)通过网络发送和接收数据的协议。它建立在TCP之上，默认采用TCP的80端口。浏览器(客户端)每发出一个请求，服务器响应这个请求。在HTTP中，浏览器(客户端)总是通过建立连接并发送一个HTTP请求来发起一个事务，服务端不能主动去和客户端联系，也不能给客户端发送一个回调连接。客户端与服务器端都可以提前终结一个连接。例如，当浏览器下载一个文件时，可以通过“停止键”来中断文件的下载，关闭与服务器的TCP连接。</p>
-<p>&emsp;&emsp;HTTP协议是无状态的，同一个客户端的这次请求和上次请求是没有关系的，对于HTTP服务器来说，它并不知道这两个请求是否来自同一个客户端。为了解决这个问题，web程序引入了cookie机制来维护连接的可持续状态。</p>
-<h2 id="HTTP请求包-浏览器信息"><a href="#HTTP请求包-浏览器信息" class="headerlink" title="HTTP请求包(浏览器信息)"></a>HTTP请求包(浏览器信息)</h2><p>&emsp;&emsp;请求包(Request)的结构包含3个部分：Request line(请求行)、Request header(请求头)、body(主体)。header 和 body 之间有个空行，请求包的例子所示:</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">GET /domains/example/ HTTP/<span class="number">1.1</span>      <span class="comment">// 请求行: 请求方法 请求 URI HTTP 协议/协议版本</span></span><br><span class="line">Host：www.iana.org               <span class="comment">// 服务端的主机名</span></span><br><span class="line">User-Agent：Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">6.1</span>) AppleWebKit/<span class="number">537.4</span> (KHTML, like Gecko) Chrome/<span class="number">22.0</span><span class="number">.1229</span><span class="number">.94</span> Safari/<span class="number">537.4</span>          <span class="comment">// 浏览器信息</span></span><br><span class="line">Accept：text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,*<span class="comment">/*;q=0.8  // 客户端能接收的 mine</span></span><br><span class="line"><span class="comment">Accept-Encoding：gzip,deflate,sdch       // 是否支持流压缩</span></span><br><span class="line"><span class="comment">Accept-Charset：UTF-8,*;q=0.5        // 客户端字符编码集</span></span><br><span class="line"><span class="comment">// 空行,用于分割请求头和消息体</span></span><br><span class="line"><span class="comment">// 消息体,请求资源参数,例如 POST 传递的参数</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;HTTP 协议定义了很多与服务器交互的请求方法，最基本的有 4 种，分别是 GET, POST, PUT, DELETE。一个 URL 地址用于描述一个网络上的资源，而 HTTP 中的 GET, POST, PUT, DELETE 就对应着对这个资源的查，增，改，删 4 个操作。我们最常见的就是 GET 和 POST 了。GET 一般用于获取 / 查询资源信息，而 POST 一般用于更新资源信息。</p>
-<p>&emsp;&emsp;通过 fiddler 抓包可以看到如下请求信息:</p>
-<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_10-48-21.jpg" width="70%" height="70%"></div>
-
-<p>&emsp;&emsp;fiddler 抓取的 GET 信息:</p>
-<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_11-05-48.jpg" width="70%" height="70%"></div>
-
-<p>&emsp;&emsp;GET 和 POST 的区别:</p>
-<ol>
-<li>我们可以看到 GET 请求消息体为空，POST 请求带有消息体。</li>
-<li>GET 提交的数据会放在 URL 之后，以 <code>?</code> 分割 URL 和传输数据，参数之间以 <code>&amp;</code>相连，如 <code>EditPosts.aspx?name=test1&amp;id=123456</code>。POST 方法是把提交的数据放在 HTTP 包的 body 中。</li>
-<li>GET 提交的数据大小有限制（因为浏览器对 URL 的长度有限制），而 POST 方法提交的数据没有限制。</li>
-<li>GET 方式提交数据，会带来安全问题，比如一个登录页面，通过 GET 方式提交数据时，用户名和密码将出现在 URL 上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</li>
-</ol>
-<h2 id="HTTP-响应包（服务器信息）"><a href="#HTTP-响应包（服务器信息）" class="headerlink" title="HTTP 响应包（服务器信息）"></a>HTTP 响应包（服务器信息）</h2><p>&emsp;&emsp;我们再来看看 HTTP 的 response 包，他的结构如下：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK                     <span class="comment">// 状态行</span></span><br><span class="line">Server: nginx/<span class="number">1.0</span><span class="number">.8</span>                 <span class="comment">// 服务器使用的 WEB 软件名及版本</span></span><br><span class="line">Date: Tue, <span class="number">30</span> Oct <span class="number">2012</span> <span class="number">04</span>:<span class="number">14</span>:<span class="number">25</span> GMT     <span class="comment">// 发送时间</span></span><br><span class="line">Content-Type: text/html             <span class="comment">// 服务器发送信息的类型</span></span><br><span class="line">Transfer-Encoding: chunked          <span class="comment">// 表示发送 HTTP 包是分段发的</span></span><br><span class="line">Connection: keep-alive              <span class="comment">// 保持连接状态</span></span><br><span class="line">Content-Length: <span class="number">90</span>                  <span class="comment">// 主体内容长度</span></span><br><span class="line"><span class="comment">// 空行 用来分割消息头和主体</span></span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>... <span class="comment">// 消息体</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;Response 包中的第一行叫做状态行，由 HTTP 协议版本号， 状态码， 状态消息三部分组成。</p>
-<p>&emsp;&emsp;状态码用来告诉 HTTP 客户端，HTTP 服务器是否产生了预期的 Response。HTTP/1.1 协议中定义了 5 类状态码， 状态码由三位数字组成，第一个数字定义了响应的类别:</p>
-<ul>
-<li>1XX 提示信息 - 表示请求已被成功接收，继续处理</li>
-<li>2XX 成功 - 表示请求已被成功接收，理解，接受</li>
-<li>3XX 重定向 - 要完成请求必须进行更进一步的处理</li>
-<li>4XX 客户端错误 - 请求有语法错误或请求无法实现</li>
-<li>5XX 服务器端错误 - 服务器未能实现合法的请求</li>
-</ul>
-<p>&emsp;&emsp;我们看下面这个图展示了详细的返回信息，左边可以看到有很多的资源返回码，200 是常用的，表示正常信息，302 表示跳转。response header 里面展示了详细的信息。</p>
-<div align="center"><img lazyload src="/images/loading.svg" data-src="Xnip2021-06-17_11-23-14.jpg" width="70%" height="70%"></div>
-
-
-
-<h2 id="HTTP-协议是无状态的和-Connection-keep-alive-的区别"><a href="#HTTP-协议是无状态的和-Connection-keep-alive-的区别" class="headerlink" title="HTTP 协议是无状态的和 Connection: keep-alive 的区别"></a>HTTP 协议是无状态的和 Connection: keep-alive 的区别</h2><p>&emsp;&emsp;无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。从另一方面讲，打开一个服务器上的网页和你之前打开这个服务器上的网页之间没有任何联系。</p>
-<p>&emsp;&emsp;&emsp;&emsp;HTTP 是一个无状态的面向连接的协议，无状态不代表 HTTP 不能保持 TCP 连接，更不能代表 HTTP 使用的是 UDP 协议（面对无连接）。</p>
-<p>&emsp;&emsp;&emsp;&emsp;从 HTTP/1.1 起，默认都开启了 Keep-Alive 保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的 TCP 连接。</p>
-<p>&emsp;&emsp;&emsp;&emsp;Keep-Alive 不会永久保持连接，它有一个保持时间，可以在不同服务器软件（如 Apache）中设置这个时间。</p>
-]]></content>
-      <categories>
-        <category>web开发</category>
-      </categories>
-      <tags>
-        <tag>基础知识</tag>
       </tags>
   </entry>
 </search>
