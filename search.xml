@@ -733,16 +733,32 @@
 
 
 
+<h3 id="反转数组"><a href="#反转数组" class="headerlink" title="反转数组"></a>反转数组</h3><h4 id="反转字符串"><a href="#反转字符串" class="headerlink" title="反转字符串"></a><a class="link" href="https://leetcode-cn.com/problems/reverse-string/">反转字符串<i class="fas fa-external-link-alt"></i></a></h4><p>编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 char[] 的形式给出。</p>
+<p>不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题。</p>
+<p>你可以假设数组中的所有字符都是 ASCII 码表中的可打印字符。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：[&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;l&quot;,&quot;o&quot;]</span><br><span class="line">输出：[&quot;o&quot;,&quot;l&quot;,&quot;l&quot;,&quot;e&quot;,&quot;h&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：[&quot;H&quot;,&quot;a&quot;,&quot;n&quot;,&quot;n&quot;,&quot;a&quot;,&quot;h&quot;]</span><br><span class="line">输出：[&quot;h&quot;,&quot;a&quot;,&quot;n&quot;,&quot;n&quot;,&quot;a&quot;,&quot;H&quot;]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reverseString</span><span class="params">(s []<span class="keyword">byte</span>)</span></span>  &#123;</span><br><span class="line">    l,r := <span class="number">0</span>,<span class="built_in">len</span>(s)<span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> l&lt;r &#123;</span><br><span class="line">        s[l],s[r] = s[r],s[l]</span><br><span class="line">        l++</span><br><span class="line">        r--</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<h4 id="补充：剑指-Offer-24-反转链表"><a href="#补充：剑指-Offer-24-反转链表" class="headerlink" title="补充：剑指 Offer 24. 反转链表"></a>补充：<a class="link" href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/">剑指 Offer 24. 反转链表<i class="fas fa-external-link-alt"></i></a></h4><p>&emsp;&emsp;定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure>
+
+<p>解题思路：</p>
+<p>假设链表为 1→2→3→∅，我们想要把它改成 ∅←1←2←3。</p>
+<p>在遍历链表时，将当前节点的 next 指针改为指向前一个节点。由于节点没有引用其前一个节点，因此必须事先存储其前一个节点。在更改引用之前，还需要存储后一个节点。最后返回新的头引用。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reverseList</span><span class="params">(head *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> head == <span class="literal">nil</span> || head.Next == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> head</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> head.Next.Next == <span class="literal">nil</span> &#123;</span><br><span class="line">        p := head.Next</span><br><span class="line">        p.Next = head</span><br><span class="line">        head.Next = <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">return</span> p</span><br><span class="line">    &#125;</span><br><span class="line">    first,second,third := head,head.Next,head.Next.Next</span><br><span class="line">    first.Next = <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">for</span> third.Next != <span class="literal">nil</span> &#123;</span><br><span class="line">        second.Next = first</span><br><span class="line">        first = second</span><br><span class="line">        second = third</span><br><span class="line">        third = third.Next</span><br><span class="line">    &#125;</span><br><span class="line">    third.Next = second</span><br><span class="line">    second.Next = first</span><br><span class="line">    <span class="keyword">return</span> third</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
+<h3 id="滑动窗口算法"><a href="#滑动窗口算法" class="headerlink" title="滑动窗口算法"></a>滑动窗口算法</h3><p>&emsp;&emsp;这个类型的题目是很有难度的，有专门的文章进行介绍。<a href="https://jiahaohong1997.github.io/2021/04/28/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/">滑动窗口(Sliding Window)算法框架</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a class="link" href="https://labuladong.gitbook.io/algo/mu-lu-ye-1/mu-lu-ye-3/shuang-zhi-zhen-ji-qiao">双指针技巧总结<i class="fas fa-external-link-alt"></i></a></p>
 ]]></content>
       <categories>
         <category>算法和数据结构</category>
