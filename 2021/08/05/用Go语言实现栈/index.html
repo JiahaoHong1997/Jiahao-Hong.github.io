@@ -9,7 +9,7 @@
     
     <title>
         
-            在O(1)时间内删除或查找任意元素 |
+            用Go语言实现栈 |
         
         Hao&#39;s Blog
     </title>
@@ -186,7 +186,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">在O(1)时间内删除或查找任意元素</span>
+            <span class="title-hover-animation">用Go语言实现栈</span>
         </div>
 
         
@@ -204,7 +204,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-06-20 15:03:00
+        <i class="fas fa-edit"></i>&nbsp;2021-08-05 20:42:00
     </span>
     
         <span class="article-categories article-meta-item">
@@ -212,7 +212,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                        <a href="/categories/Go%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">Go语言数据结构</a>&nbsp;
                     </li>
                 
             </ul>
@@ -224,7 +224,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E6%95%B0%E7%BB%84/">数组</a>&nbsp;
+                        <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%88/">自定义栈</a>&nbsp;
                     </li>
                 
             </ul>
@@ -247,33 +247,32 @@
         
 
         <div class="article-content markdown-body">
-            <p>&emsp;&emsp;本文会介绍两道比较有技巧性的算法与数据结构题，都是和随机读取元素相关的。这些问题的技巧性子阿宇如何将哈希表和数组结合起来，使得数组的删除操作时间复杂度变成O(1)。</p>
-<h2 id="实现随机集合"><a href="#实现随机集合" class="headerlink" title="实现随机集合"></a>实现随机集合</h2><p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/insert-delete-getrandom-o1/">O(1) 时间插入、删除和获取随机元素<i class="fas fa-external-link-alt"></i></a></p>
-<p>设计一个支持在<em>平均</em> 时间复杂度 <strong>O(1)</strong> 下，执行以下操作的数据结构。</p>
-<ol>
-<li>insert(val)：当元素 val 不存在时，向集合中插入该项。</li>
-<li>remove(val)：元素 val 存在时，从集合中移除该项。</li>
-<li>getRandom：随机返回现有集合中的一项。每个元素应该有相同的概率被返回。</li>
-</ol>
-<p><strong>示例 :</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 初始化一个空的集合。</span><br><span class="line">RandomizedSet randomSet &#x3D; new RandomizedSet();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 向集合中插入 1 。返回 true 表示 1 被成功地插入。</span><br><span class="line">randomSet.insert(1);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 返回 false ，表示集合中不存在 2 。</span><br><span class="line">randomSet.remove(2);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。</span><br><span class="line">randomSet.insert(2);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; getRandom 应随机返回 1 或 2 。</span><br><span class="line">randomSet.getRandom();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。</span><br><span class="line">randomSet.remove(1);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 2 已在集合中，所以返回 false 。</span><br><span class="line">randomSet.insert(2);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。</span><br><span class="line">randomSet.getRandom();</span><br></pre></td></tr></table></figure>
+            <h2 id="自定义栈的功能"><a href="#自定义栈的功能" class="headerlink" title="自定义栈的功能"></a>自定义栈的功能</h2><p>&emsp;&emsp;本文旨在通过Go语言来实现一个自定义的栈，其功能包括入栈、出栈、栈容量查询、栈内元素个数查询、栈顶元素查询、是否空栈查询。</p>
+<h2 id="栈的初始化"><a href="#栈的初始化" class="headerlink" title="栈的初始化"></a>栈的初始化</h2><p>首先创建一个能保存数据的结构体：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Stack []<span class="keyword">interface</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这里声明Stack为空接口类型的切片（Go语言之中的切片可以理解为一个长度可变的数组）。由于Go语言所有类型都实现了空接口，因此任意类型的值都可以存储在Stack之中。</p>
+<h2 id="栈的长度及容量"><a href="#栈的长度及容量" class="headerlink" title="栈的长度及容量"></a>栈的长度及容量</h2><p>&emsp;&emsp;由于Stack的底层数据类型是一个切片，我们可以为其实现<code>Len()</code>和<code>Cap()</code>方法用来获取其长度和容量（Go语言之中首字母大写的方法为包外可访问的，类似于Java或者C++之中类的public方法）。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stack Stack)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span> &#123;  <span class="comment">// 栈的长度</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">len</span>(stack)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stack Stack)</span> <span class="title">Cap</span><span class="params">()</span> <span class="title">int</span></span> &#123;  <span class="comment">// 栈的容量</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">cap</span>(stack)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p>本题的难点在于两点：</p>
-<p>**1、插入，删除，获取随机元素这三个操作的时间复杂度必须都是 O(1)**。</p>
-<p><strong>2、**</strong><code>getRandom</code>** <strong>方法返回的元素必须等概率返回随机元素</strong>，也就是说，如果集合里面有 <code>n</code> 个元素，每个元素被返回的概率必须是 <code>1/n</code>。</p>
-<p>我们先来分析一下：对于插入，删除，查找这几个操作，哪种数据结构的时间复杂度是 O(1)？</p>
-<p><code>HashSet</code> 肯定算一个对吧。哈希集合的底层原理就是一个大数组，我们把元素通过哈希函数映射到一个索引上；如果用拉链法解决哈希冲突，那么这个索引可能连着一个链表或者红黑树。</p>
-<p>那么请问对于这样一个标准的 <code>HashSet</code>，你能否在 O(1) 的时间内实现 <code>getRandom</code> 函数？</p>
-<p>其实是不能的，因为根据刚才说到的底层实现，元素是被哈希函数「分散」到整个数组里面的，更别说还有拉链法等等解决哈希冲突的机制，基本做不到 O(1) 时间等概率随机获取元素。</p>
-<p>根据上面的分析，对于 <code>getRandom</code> 方法，如果想「等概率」且「在 O(1) 的时间」取出元素，一定要满足：<strong>底层用数组实现，且数组必须是紧凑的</strong>。</p>
-<p>这样我们就可以直接生成随机数作为索引，从数组中取出该随机索引对应的元素，作为随机元素。</p>
-<p><strong>但如果用数组存储元素的话，插入，删除的时间复杂度怎么可能是 O(1) 呢</strong>？</p>
-<p>可以做到！对数组尾部进行插入和删除操作不会涉及数据搬移，时间复杂度是 O(1)。</p>
-<p><strong>所以，如果我们想在 O(1) 的时间删除数组中的某一个元素</strong> **<code>val</code>**<strong>，可以先把这个元素交换到数组的尾部，然后再</strong> <strong><code>pop</code></strong> <strong>掉</strong>。</p>
-<p>交换两个元素必须通过索引进行交换对吧，那么我们需要一个哈希表 <code>m</code> 来记录每个元素值对应的索引。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RandomizedSet <span class="keyword">struct</span> &#123;</span><br><span class="line">    nums []<span class="keyword">int</span></span><br><span class="line">    m    <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span> <span class="title">RandomizedSet</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> RandomizedSet&#123;<span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>),<span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>,<span class="number">0</span>)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Inserts a value to the set. Returns true if the set did not already contain the specified element. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *RandomizedSet)</span> <span class="title">Insert</span><span class="params">(val <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> _,ok := this.m[val];ok &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    this.nums = <span class="built_in">append</span>(this.nums,val) <span class="comment">// 在数组末尾插入val</span></span><br><span class="line">    this.m[val] = <span class="built_in">len</span>(this.nums)<span class="number">-1</span>    <span class="comment">// 将val作为key加入到map中，其value是其在数组中的索引</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Removes a value from the set. Returns true if the set contained the specified element. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *RandomizedSet)</span> <span class="title">Remove</span><span class="params">(val <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> _,ok := this.m[val];!ok &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    index := this.m[val]</span><br><span class="line">    this.nums[index] = this.nums[<span class="built_in">len</span>(this.nums)<span class="number">-1</span>]  <span class="comment">// 将数组最后一个元素移动到index的位置</span></span><br><span class="line">    this.m[this.nums[index]] = index                <span class="comment">// 更新移动后元素在map中的value值</span></span><br><span class="line">    <span class="built_in">delete</span>(this.m, val)															<span class="comment">// 删除val健值对</span></span><br><span class="line">    this.nums = this.nums[:<span class="built_in">len</span>(this.nums)<span class="number">-1</span>]        <span class="comment">// pop数组最后一个元素</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Get a random element from the set. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *RandomizedSet)</span> <span class="title">GetRandom</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	i := rand.Intn(<span class="built_in">len</span>(this.nums))    <span class="comment">// i取从0到len(this.nums)-1的随机数</span></span><br><span class="line">    <span class="keyword">return</span> this.nums[i]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your RandomizedSet object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * obj := Constructor();</span></span><br><span class="line"><span class="comment"> * param_1 := obj.Insert(val);</span></span><br><span class="line"><span class="comment"> * param_2 := obj.Remove(val);</span></span><br><span class="line"><span class="comment"> * param_3 := obj.GetRandom();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h2 id="查询是否是空栈"><a href="#查询是否是空栈" class="headerlink" title="查询是否是空栈"></a>查询是否是空栈</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stack Stack)</span> <span class="title">IsEmpty</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">len</span>(stack) == <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="栈的关键方法的实现（Push-、Pop-、Top-）"><a href="#栈的关键方法的实现（Push-、Pop-、Top-）" class="headerlink" title="栈的关键方法的实现（Push()、Pop()、Top()）"></a>栈的关键方法的实现（Push()、Pop()、Top()）</h2><p>&emsp;&emsp;<code>Push()</code>方法的接收器为一个Stack类型的指针（Go指针的写法与C/C++类似，类型前面加上*号）。Go语言的所有方法参数都是值传递，接收器实际也是作为方法的一个参数传递进入方法的。如果传递一切片或者数组进方法，实际是将切片或数组的值拷贝了一份传入了方法之中，此时在方法之中对该切片或数组做的操作都不会影响方法之外的原始值。如果想要方法之中的操作影响到方法外的原始值，则应该使用指针作为参数，对指针的操作会直接反应到内存之中的原始值上去。在这里我们希望更改原始值（往原始的<code>stack</code>之中添加数据）， 所以接收器是一个指针。方法的参数是一个<code>interface&#123;&#125;</code>类型的值，也就是说该方法可以接受任意类型作为参数。方法的实现使用了内建函数<code>append()</code>，往切片对尾部中添加新值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stack *Stack)</span> <span class="title">Push</span><span class="params">(value <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">  *stack = <span class="built_in">append</span>(*stack, value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;<code>Top()</code>方法返回一个任意类型的值以及一个<code>error</code>（是的没错，Go语言的方法可以返回多个值）。当stack为空时，返回一个空值和一个<code>error</code>类型的值（这里使用<code>errors</code>包的<code>New()</code>函数创建）。当stack不为空时，返回底层切片的最后一个值和一个空的<code>error</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stack Stack)</span> <span class="title">Top</span><span class="params">()</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;,error)</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, errors.New(<span class="string">&quot;Out of index, len is 0&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> stack[<span class="built_in">len</span>(stack) - <span class="number">1</span>], <span class="literal">nil</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;<code>Pop()</code>方法的接收器同样是一个Stack的指针。其中<code>theStack[:len(theStack) - 1]</code>这种写法，是Go中取子切片的方法，<code>:</code>两边是起始index和结束index。起始index为0时可以省略。结束的index也可以省略，省略时结束index为切片的<code>len()</code>值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stack *Stack)</span> <span class="title">Pop</span><span class="params">()</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;,error)</span></span> &#123;</span><br><span class="line">  theStack := *stack</span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(theStack == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, error.New(<span class="string">&quot;Out of index, len is 0&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  value := theStack[<span class="built_in">len</span>(theStack)<span class="number">-1</span>]</span><br><span class="line">  *stack = theStack[:<span class="built_in">len</span>(theStack)<span class="number">-1</span>]</span><br><span class="line">  <span class="keyword">return</span> value, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
         </div>
@@ -282,11 +281,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：在O(1)时间内删除或查找任意元素</li>
+        <li>Post title：用Go语言实现栈</li>
         <li>Post author：洪笳淏</li>
-        <li>Create time：2021-06-20 15:03:00</li>
+        <li>Create time：2021-08-05 20:42:00</li>
         <li>
-            Post link：https://jiahaohong1997.github.io/2021/06/20/在O(1)时间内删除或查找任意元素/
+            Post link：https://jiahaohong1997.github.io/2021/08/05/用Go语言实现栈/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -300,29 +299,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/08/05/%E7%94%A8Go%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E6%A0%88/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">用Go语言实现栈</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/06/17/HTTP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/"
+                           href="/2021/06/20/%E5%9C%A8O(1)%E6%97%B6%E9%97%B4%E5%86%85%E5%88%A0%E9%99%A4%E6%88%96%E6%9F%A5%E6%89%BE%E4%BB%BB%E6%84%8F%E5%85%83%E7%B4%A0/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">HTTP协议详解</span>
+                                <span class="post-nav-title-item">在O(1)时间内删除或查找任意元素</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -507,7 +491,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%9A%8F%E6%9C%BA%E9%9B%86%E5%90%88"><span class="nav-number">1.</span> <span class="nav-text">实现随机集合</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%88%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">自定义栈的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">栈的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E9%95%BF%E5%BA%A6%E5%8F%8A%E5%AE%B9%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">栈的长度及容量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%98%AF%E5%90%A6%E6%98%AF%E7%A9%BA%E6%A0%88"><span class="nav-number">4.</span> <span class="nav-text">查询是否是空栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E5%85%B3%E9%94%AE%E6%96%B9%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88Push-%E3%80%81Pop-%E3%80%81Top-%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">栈的关键方法的实现（Push()、Pop()、Top()）</span></a></li></ol>
     </div>
 </div>
         </aside>
