@@ -6,7 +6,7 @@
   <link href="http://jiahaohong1997.github.io/atom.xml" rel="self"/>
   
   <link href="http://jiahaohong1997.github.io/"/>
-  <updated>2021-08-05T13:05:04.241Z</updated>
+  <updated>2021-08-20T03:45:17.414Z</updated>
   <id>http://jiahaohong1997.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>递归算法解决二叉树问题</title>
+    <link href="http://jiahaohong1997.github.io/2021/08/18/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%E8%A7%A3%E5%86%B3%E4%BA%8C%E5%8F%89%E6%A0%91%E9%97%AE%E9%A2%98/"/>
+    <id>http://jiahaohong1997.github.io/2021/08/18/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%E8%A7%A3%E5%86%B3%E4%BA%8C%E5%8F%89%E6%A0%91%E9%97%AE%E9%A2%98/</id>
+    <published>2021-08-18T10:27:00.000Z</published>
+    <updated>2021-08-20T03:45:17.414Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="递归算法的原理"><a href="#递归算法的原理" class="headerlink" title="递归算法的原理"></a>递归算法的原理</h1><p>&emsp;&emsp;一个递归函数的调用类似于多个函数的嵌套调用，只不过调用函数和被调函数都是同一个函数。在解决递归问题时，最重要的是不要陷入递归的逻辑中去，视角要以一个节点为根基来考虑整个问题。递归调用时内部的执行过程如下:</p><ol><li>首先为递归调用建立一个<font color="blue">工作栈</font>，其结构包括值参、局部变量和返回地址；</li><li>每次执行递归调用前，把<font color="red">递归函数的值参、局部变量的当前值</font>以及<font color="red">调用后的返回地址</font>压栈；</li><li>每次递归调用结束后，将栈顶元素推出，使相应的<font color="red">值参</font>和<font color="red">局部变量</font>恢复为<font color="blue">调用前的值</font>，然后转向返回地址的位置继续执行。</li></ol><p>&emsp;&emsp;在明确了递归函数的执行过程后，只要把握好如下3个步骤即可：</p><ol><li>明确递归函数的作用；</li><li>明确终止条件和相应的解决办法；</li><li>找出函数的等价关系式，提取重复的逻辑缩小问题规模。</li></ol><h1 id="递归三步走"><a href="#递归三步走" class="headerlink" title="递归三步走"></a>递归三步走</h1><h2 id="1-明确函数功能"><a href="#1-明确函数功能" class="headerlink" title="1.明确函数功能"></a>1.明确函数功能</h2><p>&emsp;&emsp;首先要确定这个函数的具体功能是什么？它的参数有哪些？它的全局变量是什么？递归的时候要根据题目的要求设置函数功能，再根据函数功能来设置函数的参数。</p><p>&emsp;&emsp;<font color="red">方法参数：</font>这个方法的参数最好由当前阶段的状态决定。</p><p>&emsp;&emsp;<font color="red">返回数据：</font>返回数据是我们遇到递归出口之后，需要告诉前一步递归的信息数据。</p><p>注意：</p><ul><li>递归函数的<strong>返回值</strong>最好设置为<strong>单个元素</strong>，比如说<strong>一个节点</strong>或者<strong>一个数值</strong>，告诉前一步递归我们现在的结果数据即可；</li><li>如果返回值是<strong>数组</strong>的话，我们将无法从中提取到任何有效信息来进行操作；</li><li>如果结果需要<strong>数组</strong>的话，我们可以将数组作为公共变量返回值为void，我们在方法体里面操作数组即可。</li></ul><h2 id="2-寻找递归出口"><a href="#2-寻找递归出口" class="headerlink" title="2.寻找递归出口"></a>2.寻找递归出口</h2><p>&emsp;&emsp;在递归函数的一开始，我们应该思考什么时候该结束递归。因此，递归一定要有结束条件，不然会永远的递归下去。<font color="red">递归出口</font>一般为某深度或叶子结点，或非叶子结点（包括根节点）、所有节点等。决定递归出去后要执行的操作。由于我们的节点状态可能需要多个参数来表示，所以我们的递归出口可能并不唯一，可能需要为每一个转台参数安排一个递归出口，确保我们的递归能够确实有效地出去。</p><p><font color="blue">特别注意的：</font>每次提交数组的集合（即<code>list(dst())</code>）的时候，要创建一个新的数组<code>copy()</code>来存放结果数组<code>dst()</code>，不然后面操作的都是加入集合<code>list()</code>的那个数组<code>dst()</code>。</p><p>&emsp;&emsp;我们的递归出口并不一定都是在最开头的位置，我们一般在最开头设置递归出口是希望递归能以最快的速度出去；但是<strong>有时候我们在对当前节点进行一些相关处理操作之后我们就希望判断一下能不能递归出口</strong>，所以<strong>递归出口有可能是在代码中间的</strong>，大家需要灵活应用。在这一步，我们需要思考题目需要的解在哪里？是<strong>在某一具体的深度</strong>、还是在<strong>叶子结点</strong>、还是在<strong>非叶子结点</strong>（包括<strong>根节点</strong>）、还是在<strong>每个节点</strong>、还是<strong>在从跟结点到叶子结点的路径</strong>？</p><ul><li>在某一具体深度：<code>if depth &gt;= n</code></li><li>在每个节点：<code>if root != nil </code></li></ul><h2 id="3-找出递推关系"><a href="#3-找出递推关系" class="headerlink" title="3.找出递推关系"></a>3.找出递推关系</h2><p>&emsp;&emsp;类比于数学归纳法。算n的阶乘：</p><ul><li>初始条件：<code>f(1) = 1</code></li><li>递推关系式：<code>f(n) = f(n-1) * n</code></li></ul><p>递归关系：</p><ul><li>递：<code>f(n) = n * f(n-1)</code>，将<strong>f(n)→f(n-1)<strong>了。这样，</strong>问题就由n缩小为了n-1</strong>，并且为了原函数<code>f(n)</code>不变，我们需要让<code>f(n-1)</code>乘以<code>n</code>。就这样慢慢从<code>f(n)</code>,<code>f(n-1)</code><strong>“递”</strong>到<code>f(1)</code>。</li><li>归：这样就可以从<code>n=1</code>，一步一步<strong>“归”</strong>到<code>n=2,n=3,...</code></li></ul><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> n == <span class="number">1</span> &#123; <span class="comment">// 递归出口</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> f(n<span class="number">-1</span>)*n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="运用递归的二叉树算法题"><a href="#运用递归的二叉树算法题" class="headerlink" title="运用递归的二叉树算法题"></a>运用递归的二叉树算法题</h1><h2 id="剑指-Offer-07-重建二叉树"><a href="#剑指-Offer-07-重建二叉树" class="headerlink" title="剑指 Offer 07. 重建二叉树"></a><a class="link" href="https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/">剑指 Offer 07. 重建二叉树<i class="fas fa-external-link-alt"></i></a></h2><p>输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</p><p><strong>示例 1:</strong></p><p><img lazyload src="/images/loading.svg" data-src="tree" alt="avatar"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;递归算法的原理&quot;&gt;&lt;a href=&quot;#递归算法的原理&quot; class=&quot;headerlink&quot; title=&quot;递归算法的原理&quot;&gt;&lt;/a&gt;递归算法的原理&lt;/h1&gt;&lt;p&gt;&amp;emsp;&amp;emsp;一个递归函数的调用类似于多个函数的嵌套调用，只不过调用函数和被调函数都是同一</summary>
+      
+    
+    
+    
+    <category term="算法和数据结构" scheme="http://jiahaohong1997.github.io/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="递归" scheme="http://jiahaohong1997.github.io/tags/%E9%80%92%E5%BD%92/"/>
+    
+  </entry>
   
   <entry>
     <title>用Go语言实现栈</title>
