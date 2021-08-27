@@ -404,7 +404,7 @@
 
 <h2 id="2-返回bool类型的结果-一般要求对二叉树是否符合某种性质做判别"><a href="#2-返回bool类型的结果-一般要求对二叉树是否符合某种性质做判别" class="headerlink" title="2.返回bool类型的结果(一般要求对二叉树是否符合某种性质做判别)"></a>2.返回bool类型的结果(一般要求对二叉树是否符合某种性质做判别)</h2><h3 id="剑指-Offer-33-二叉搜索树的后序遍历序列"><a href="#剑指-Offer-33-二叉搜索树的后序遍历序列" class="headerlink" title="剑指 Offer 33. 二叉搜索树的后序遍历序列"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/">剑指 Offer 33. 二叉搜索树的后序遍历序列<i class="fas fa-external-link-alt"></i></a></h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 <code>true</code>，否则返回 <code>false</code>。假设输入的数组的任意两个数字都互不相同。</p>
 <p>参考以下这颗二叉搜索树：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> 	 5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   6</span><br><span class="line"> &#x2F; \</span><br><span class="line">1   3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   6</span><br><span class="line"> &#x2F; \</span><br><span class="line">1   3</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 1：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,6,3,2,5]</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure>
@@ -432,7 +432,7 @@
 <li><p><strong>划分左右子树</strong>： 遍历后序遍历的元素，寻找 <strong>第一个大于根节点</strong> 的节点，索引记为 <code>flag</code>。此时，可划分出左子树区间 <code>[:flag]</code> 、右子树区间 <code>[flag,len(postorder)−1]</code> 、根节点索引为<code>len(postorder)-1</code> 。</p>
 </li>
 <li><p><strong>判断是否为二叉搜索树：</strong> 左子树区间 <code>[0,flag−1]</code> 内的所有节点都应 &lt; <code>postorder[len(postorder)-1]</code>。而第 <code>1.划分左右子树</code> 步骤已经保证左子树区间的正确性，因此只需要判断右子树区间即可。</p>
-<p> 右子树区间<code>[flag,len(postorder)-1]</code>内所有节点都应 &gt; <code>postorder[len(postorder)-1]</code>。实现方式为遍历，当遇到 ≤ <code>postorder[len(postorder)-1]</code>的节点则跳出。</p>
+<p> 右子树区间<code>[flag,len(postorder)-1]</code>内所有节点都应 &gt; <code>postorder[len(postorder)-1]</code>。实现方式为遍历，当遇到 &lt; <code>postorder[len(postorder)-1]</code>的节点则跳出。</p>
 </li>
 </ol>
 <ul>
