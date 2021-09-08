@@ -300,6 +300,72 @@
 
 
 
+<h3 id="662-二叉树最大宽度"><a href="#662-二叉树最大宽度" class="headerlink" title="662. 二叉树最大宽度"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-width-of-binary-tree/">662. 二叉树最大宽度<i class="fas fa-external-link-alt"></i></a></h3><p>给定一个二叉树，编写一个函数来获取这个树的最大宽度。树的宽度是所有层中的最大宽度。这个二叉树与满二叉树（full binary tree）结构相同，但一些节点为空。</p>
+<p>每一层的宽度被定义为两个端点（该层最左和最右的非空节点，两端点间的<code>null</code>节点也计入长度）之间的长度。</p>
+<p><strong>示例 1:</strong></p>
+<p>输入: </p>
+<pre><code>       1
+     /   \
+    3     2
+   / \     \  
+  5   3     9 
+  
+输出: 4
+解释: 最大值出现在树的第 3 层，宽度为 4 (5,3,null,9)。
+</code></pre>
+<p><strong>示例 2:</strong></p>
+<p>输入: </p>
+<pre><code>      1
+     /  
+    3    
+   / \       
+  5   3     
+  
+输出: 2
+解释: 最大值出现在树的第 3 层，宽度为 2 (5,3)。
+</code></pre>
+<p>示例 3:</p>
+<p>输入: </p>
+<pre><code>      1
+     / \
+    3   2 
+   /        
+  5      
+  
+输出: 2
+解释: 最大值出现在树的第 2 层，宽度为 2 (3,2)。
+</code></pre>
+<p><strong>示例 4:</strong></p>
+<p>输入: </p>
+<pre><code>      1
+     / \
+    3   2
+   /     \  
+  5       9 
+ /         \
+6           7
+
+输出: 8
+解释: 最大值出现在树的第 4 层，宽度为 8 (6,null,null,null,null,null,null,7)。
+</code></pre>
+<p><strong>注意:</strong> 答案在32位有符号整数的表示范围内。</p>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;一开始很自然的想到利用层序遍历，遍历的节点存在以下情况：</p>
+<ul>
+<li>当前节点是空节点，则将两个空节点推入下一层的队列；</li>
+<li>当前节点不是空节点：<ul>
+<li>当前节点的左节点为空，则将一个空节点推入下一层的队列；左节点不为空，则将左节点推入下一层的队列；</li>
+<li>当前节点的右节点为空，则将一个空节点推入下一层的队列；右节点不为空，则将右节点推入下一层的队列。</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;当一层遍历完之后，分别从收尾收缩下一层的队列，直到队首和队尾元素均不是空节点为止。然后将此时的队列长度和返回值做比较。</p>
+<p>可是，在实际的测试过程中发现内存溢出了。这种方式对内存的占用时巨大的。</p>
+<p>&emsp;&emsp;然后考虑到完全二叉树的性质，若按层序遍历的顺序给所有的节点编号，则对于每个节点<code>i</code>的左子树，其编号为<code>2*i</code>；其右子树编号为<code>2*i+1</code>，这样就可以为每一个节点编号，直接用每一层的最后一个节点的编号减去第一个节点的编号并加1就是每一层的宽度。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * type TreeNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Left *TreeNode</span></span><br><span class="line"><span class="comment"> *     Right *TreeNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">type</span> pair <span class="keyword">struct</span> &#123;</span><br><span class="line">    node        *TreeNode</span><br><span class="line">    position    <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a,b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> a&gt;=b &#123;</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">widthOfBinaryTree</span><span class="params">(root *TreeNode)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    ret := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    q := <span class="built_in">make</span>([]*pair,<span class="number">0</span>)</span><br><span class="line">    q = <span class="built_in">append</span>(q, &amp;pair&#123;root,<span class="number">1</span>&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; <span class="built_in">len</span>(q)&gt;<span class="number">0</span>; i++ &#123;</span><br><span class="line">        p := <span class="built_in">make</span>([]*pair,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        l := <span class="built_in">len</span>(q)</span><br><span class="line">        ret = max(ret, q[l<span class="number">-1</span>].position-q[<span class="number">0</span>].position+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;l; j++ &#123;</span><br><span class="line">            <span class="keyword">if</span> q[j].node.Left != <span class="literal">nil</span> &#123;</span><br><span class="line">                p = <span class="built_in">append</span>(p, &amp;pair&#123;q[j].node.Left,q[j].position*<span class="number">2</span>&#125;)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> q[j].node.Right != <span class="literal">nil</span> &#123;</span><br><span class="line">                p = <span class="built_in">append</span>(p, &amp;pair&#123;q[j].node.Right,q[j].position*<span class="number">2</span>+<span class="number">1</span>&#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        q = p</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="实际案例-其他数据结构方式"><a href="#实际案例-其他数据结构方式" class="headerlink" title="实际案例(其他数据结构方式)"></a>实际案例(其他数据结构方式)</h2><h3 id="200-岛屿数量"><a href="#200-岛屿数量" class="headerlink" title="200. 岛屿数量"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/number-of-islands/">200. 岛屿数量<i class="fas fa-external-link-alt"></i></a></h3><p>&emsp;&emsp;给你一个由 ‘1’（陆地）和 ‘0’（水）组成的的二维网格，请你计算网格中岛屿的数量。岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。此外，你可以假设该网格的四条边均被水包围。</p>
 <p><strong>示例 1：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入：grid &#x3D; [</span><br><span class="line">  [&quot;1&quot;,&quot;1&quot;,&quot;1&quot;,&quot;1&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;1&quot;,&quot;1&quot;,&quot;0&quot;,&quot;1&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;1&quot;,&quot;1&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;0&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0&quot;]</span><br><span class="line">]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
@@ -575,7 +641,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">算法框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">BFS的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF-Golang"><span class="nav-number">1.2.</span> <span class="nav-text">算法思路(Golang)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">实际案例(二叉树)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#103-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">2.1.</span> <span class="nav-text">103. 二叉树的锯齿形层序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#111-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">111. 二叉树的最小深度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">实际案例(其他数据结构方式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#200-%E5%B2%9B%E5%B1%BF%E6%95%B0%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">200. 岛屿数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#207-%E8%AF%BE%E7%A8%8B%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">207. 课程表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#279-%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">279. 完全平方数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">算法框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">BFS的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF-Golang"><span class="nav-number">1.2.</span> <span class="nav-text">算法思路(Golang)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">实际案例(二叉树)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#103-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">2.1.</span> <span class="nav-text">103. 二叉树的锯齿形层序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#111-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">111. 二叉树的最小深度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#662-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%9C%80%E5%A4%A7%E5%AE%BD%E5%BA%A6"><span class="nav-number">2.3.</span> <span class="nav-text">662. 二叉树最大宽度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">实际案例(其他数据结构方式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#200-%E5%B2%9B%E5%B1%BF%E6%95%B0%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">200. 岛屿数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#207-%E8%AF%BE%E7%A8%8B%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">207. 课程表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#279-%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">279. 完全平方数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol>
     </div>
 </div>
         </aside>
