@@ -555,8 +555,8 @@
 </ul>
 <p>3.寻找右侧边界的二分查找</p>
 <p>&emsp;&emsp;这个右边界不仅限于target存在于数组中，也可以找到其不在数组时的右边界。举例如下：</p>
-<p>nums[] = {2,3,4,5,5,5,6,9,17} , target=5, 其左边界为索引5</p>
-<p>nums[] = {2,2,3,4,4,4,6,7,7,8,9,456}, target=5, 其左边界索引为6</p>
+<p>nums[] = {2,3,4,5,5,5,6,9,17} , target=5, 其右边界为索引5</p>
+<p>nums[] = {2,2,3,4,4,4,6,7,7,8,9,456}, target=5, 其右边界索引为6</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">right_bound</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> <span class="number">-1</span> </span><br><span class="line">  	&#125;</span><br><span class="line">  	left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">for</span> left &lt; right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">      	mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">      	<span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">        		left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125; </span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">if</span> nums[left] == target &#123; <span class="comment">// 第一位数或最后一位数作为右边界，如果在一开始就对边界情况做了判断，可以不需要对这一个条件做判断</span></span><br><span class="line">    		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  	&#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[left<span class="number">-1</span>] == target &#123;  <span class="comment">// 注意</span></span><br><span class="line">    		<span class="keyword">return</span> left<span class="number">-1</span></span><br><span class="line">  	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> left</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>值得注意的地方:</p>
@@ -1841,5 +1841,183 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Trie <span class="keyword">struct</span> &#123;</span><br><span class="line">    child   [<span class="number">26</span>]*Trie</span><br><span class="line">    isEnd   <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span> <span class="title">Trie</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Trie&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Inserts a word into the trie. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">Insert</span><span class="params">(word <span class="keyword">string</span>)</span></span>  &#123;</span><br><span class="line">    <span class="keyword">for</span> _, ch := <span class="keyword">range</span> word &#123;</span><br><span class="line">        ch -= <span class="string">&#x27;a&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> this.child[ch] == <span class="literal">nil</span> &#123;</span><br><span class="line">            this.child[ch] = &amp;Trie&#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        this = this.child[ch]</span><br><span class="line">    &#125;</span><br><span class="line">    this.isEnd = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Returns if the word is in the trie. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">Search</span><span class="params">(word <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> _, ch := <span class="keyword">range</span> word &#123;</span><br><span class="line">        ch -= <span class="string">&#x27;a&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> this.child[ch] == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;  </span><br><span class="line">        this = this.child[ch]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> this.isEnd == <span class="literal">false</span> &#123; <span class="comment">// 上述for循环结束只能表明存在该前缀，还要判断有没有结束符</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">StartsWith</span><span class="params">(prefix <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> _, ch := <span class="keyword">range</span> prefix &#123;</span><br><span class="line">        ch -= <span class="string">&#x27;a&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> this.child[ch] == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        this = this.child[ch]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your Trie object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * obj := Constructor();</span></span><br><span class="line"><span class="comment"> * obj.Insert(word);</span></span><br><span class="line"><span class="comment"> * param_2 := obj.Search(word);</span></span><br><span class="line"><span class="comment"> * param_3 := obj.StartsWith(prefix);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>循转数组相关题目</title>
+    <url>/2021/09/12/%E5%BE%AA%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/</url>
+    <content><![CDATA[<p>&emsp;&emsp;本文是对旋转数组类型的题目的总结，一共6道，基本都是二分法的套路。</p>
+<h2 id="189-旋转数组"><a href="#189-旋转数组" class="headerlink" title="189. 旋转数组"></a><a class="link" href="https://leetcode-cn.com/problems/rotate-array/">189. 旋转数组<i class="fas fa-external-link-alt"></i></a></h2><p>给定一个数组，将数组中的元素向右移动 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
+<p>进阶：</p>
+<ul>
+<li>尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个问题。</li>
+<li>你可以使用空间复杂度为 O(1) 的 原地 算法解决这个问题吗？</li>
+</ul>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: nums &#x3D; [1,2,3,4,5,6,7], k &#x3D; 3</span><br><span class="line">输出: [5,6,7,1,2,3,4]</span><br><span class="line">解释:</span><br><span class="line">向右旋转 1 步: [7,1,2,3,4,5,6]</span><br><span class="line">向右旋转 2 步: [6,7,1,2,3,4,5]</span><br><span class="line">向右旋转 3 步: [5,6,7,1,2,3,4]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [-1,-100,3,99], k &#x3D; 2</span><br><span class="line">输出：[3,99,-1,-100]</span><br><span class="line">解释: </span><br><span class="line">向右旋转 1 步: [99,-1,-100,3]</span><br><span class="line">向右旋转 2 步: [3,99,-1,-100]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 2 * 104</code></li>
+<li><code>-231 &lt;= nums[i] &lt;= 231 - 1</code></li>
+<li><code>0 &lt;= k &lt;= 105</code></li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>方法一：使用额外的数组</p>
+<p>&emsp;&emsp;可以使用额外的数组来将每个元素放至正确的位置。用 <code>n</code> 表示数组的长度，我们遍历原数组，将原数组下标为 <code>i</code> 的元素放至新数组下标为 <code>(i+k)%n</code> 的位置，最后将新数组拷贝至原数组即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rotate</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    newNums := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="built_in">len</span>(nums))</span><br><span class="line">    <span class="keyword">for</span> i, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        newNums[(i+k)%<span class="built_in">len</span>(nums)] = v</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">copy</span>(nums, newNums)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>方法二：环状替换</p>
+<p>&emsp;&emsp;从另一个角度，我们可以将被替换的元素保存在变量 <code>temp</code> 中，从而避免了额外数组的开销。我们从位置 0 开始，最初令 <code>temp=nums[0]</code>。根据规则，位置 0 的元素会放至 <code>(0+k)%n</code>的位置，令 <code>x=(0+k)%n</code>，此时交换 <code>temp </code>和 <code>nums[x]</code>，完成位置 x 的更新。然后，我们考察位置 x，并交换 <code>temp</code> 和 <code>nums[(x+k)%n]</code>，从而完成下一个位置的更新。不断进行上述过程，直至回到初始位置 0。</p>
+<p>&emsp;&emsp;容易发现，当回到初始位置 0 时，有些数字可能还没有遍历到，此时我们应该从下一个数字开始重复的过程，可是这个时候怎么才算遍历结束呢？我们不妨先考虑这样一个问题：从 0 开始不断遍历，最终回到起点 0 的过程中，我们遍历了多少个元素？</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rotate</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(nums)</span><br><span class="line">    k %= n</span><br><span class="line">    <span class="keyword">for</span> start, count := <span class="number">0</span>, gcd(k, n); start &lt; count; start++ &#123;</span><br><span class="line">        pre, cur := nums[start], start</span><br><span class="line">        <span class="keyword">for</span> ok := <span class="literal">true</span>; ok; ok = cur != start &#123;</span><br><span class="line">            next := (cur + k) % n</span><br><span class="line">            nums[next], pre, cur = pre, nums[next], next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">gcd</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123; <span class="comment">// 需要遍历的次数是n和k的最大公约数</span></span><br><span class="line">    <span class="keyword">for</span> a != <span class="number">0</span> &#123;</span><br><span class="line">        a, b = b%a, a</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>方法三：数组翻转</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nums &#x3D; &quot;-----&gt;--&gt;&quot;; k &#x3D;3</span><br><span class="line">result &#x3D; &quot;--&gt;-----&gt;&quot;;</span><br><span class="line"></span><br><span class="line">reverse &quot;-----&gt;--&gt;&quot; we can get &quot;&lt;--&lt;-----&quot;</span><br><span class="line">reverse &quot;&lt;--&quot; we can get &quot;--&gt;&lt;-----&quot;</span><br><span class="line">reverse &quot;&lt;-----&quot; we can get &quot;--&gt;-----&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rotate</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span>  &#123;</span><br><span class="line">    k %= <span class="built_in">len</span>(nums)</span><br><span class="line">    reverse(nums)</span><br><span class="line">    reverse(nums[:k])</span><br><span class="line">    reverse(nums[k:])</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reverse</span><span class="params">(a []<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(a)</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n/<span class="number">2</span>; i++ &#123;</span><br><span class="line">        a[i], a[n-i<span class="number">-1</span>] = a[n-i<span class="number">-1</span>], a[i]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="在旋转数组里寻找最小值"><a href="#在旋转数组里寻找最小值" class="headerlink" title="在旋转数组里寻找最小值"></a>在旋转数组里寻找最小值</h1><p>&emsp;&emsp;可以看作寻找最小值左边界问题(直接解决又重复元素的情况)。</p>
+<h2 id="153-寻找旋转排序数组中的最小值"><a href="#153-寻找旋转排序数组中的最小值" class="headerlink" title="153. 寻找旋转排序数组中的最小值"></a><a class="link" href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/">153. 寻找旋转排序数组中的最小值<i class="fas fa-external-link-alt"></i></a></h2><p>已知一个长度为 n 的数组，预先按照升序排列，经由 1 到 n 次 旋转 后，得到输入数组。例如，原数组 nums = [0,1,2,4,5,6,7] 在变化后可能得到：</p>
+<ul>
+<li>若旋转 <code>4</code> 次，则可以得到 <code>[4,5,6,7,0,1,2]</code></li>
+<li>若旋转 <code>7</code> 次，则可以得到 <code>[0,1,2,4,5,6,7]</code></li>
+</ul>
+<p>注意，数组<code> [a[0], a[1], a[2], ..., a[n-1]]</code> 旋转一次 的结果为数组<code> [a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code>。</p>
+<p>给你一个元素值 <strong>互不相同</strong> 的数组 <code>nums</code> ，它原来是一个升序排列的数组，并按上述情形进行了多次旋转。请你找出并返回数组中的 <strong>最小元素</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [3,4,5,1,2]</span><br><span class="line">输出：1</span><br><span class="line">解释：原数组为 [1,2,3,4,5] ，旋转 3 次得到输入数组。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [4,5,6,7,0,1,2]</span><br><span class="line">输出：0</span><br><span class="line">解释：原数组为 [0,1,2,4,5,6,7] ，旋转 4 次得到输入数组。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [11,13,15,17]</span><br><span class="line">输出：11</span><br><span class="line">解释：原数组为 [11,13,15,17] ，旋转 4 次得到输入数组。</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>n == nums.length</li>
+<li>1 &lt;= n &lt;= 5000</li>
+<li>-5000 &lt;= nums[i] &lt;= 5000</li>
+<li>nums 中的所有整数 互不相同</li>
+<li>nums 原来是一个升序排序的数组，并进行了 1 至 n 次旋转</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;本题可以看作是找数组中的最小数。如果更改一下题目条件，数组中的元素是可以重复的，那么可以看作找最小数的左边界即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findMin</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    left := <span class="number">0</span></span><br><span class="line">    right := <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt; right &#123;</span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[right] &gt; nums[mid] &#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[right] &lt; nums[mid] &#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  <span class="comment">// 可能因为重复元素使得两者相等，缩小查找范围</span></span><br><span class="line">            right--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nums[left]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="154-寻找旋转排序数组中的最小值-II"><a href="#154-寻找旋转排序数组中的最小值-II" class="headerlink" title="154. 寻找旋转排序数组中的最小值 II"></a><a class="link" href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/">154. 寻找旋转排序数组中的最小值 II<i class="fas fa-external-link-alt"></i></a></h2><p>已知一个长度为 n 的数组，预先按照升序排列，经由 1 到 n 次 旋转 后，得到输入数组。例如，原数组 nums = [0,1,4,4,5,6,7] 在变化后可能得到：</p>
+<ul>
+<li>若旋转 <code>4</code> 次，则可以得到 <code>[4,5,6,7,0,1,4]</code></li>
+<li>若旋转 <code>7</code> 次，则可以得到 <code>[0,1,4,4,5,6,7]</code></li>
+</ul>
+<p>注意，数组 <code>[a[0], a[1], a[2], ..., a[n-1]]</code> 旋转一次 的结果为数组 <code>[a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code> 。</p>
+<p>给你一个可能存在 <strong>重复</strong> 元素值的数组 <code>nums</code> ，它原来是一个升序排列的数组，并按上述情形进行了多次旋转。请你找出并返回数组中的 <strong>最小元素</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [1,3,5]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [2,2,2,0,1]</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>n == nums.length</li>
+<li>1 &lt;= n &lt;= 5000</li>
+<li>-5000 &lt;= nums[i] &lt;= 5000</li>
+<li>nums 原来是一个升序排序的数组，并进行了 1 至 n 次旋转</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;同上题。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findMin</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt; right &#123;</span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[right] &gt; nums[mid] &#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[right] &lt; nums[mid] &#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nums[left]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="在旋转数组里寻找指定的值"><a href="#在旋转数组里寻找指定的值" class="headerlink" title="在旋转数组里寻找指定的值"></a>在旋转数组里寻找指定的值</h1><p>&emsp;&emsp;上面两道题是在旋转数组里寻找最小值，下面两道题是在旋转数组里寻找指定的值，这两道题的区别也是存不存在重复值。</p>
+<h2 id="33-搜索旋转排序数组"><a href="#33-搜索旋转排序数组" class="headerlink" title="33. 搜索旋转排序数组"></a><a class="link" href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/">33. 搜索旋转排序数组<i class="fas fa-external-link-alt"></i></a></h2><p>整数数组 <code>nums</code> 按升序排列，数组中的值 <strong>互不相同</strong> 。</p>
+<p>在传递给函数之前，<code>nums</code> 在预先未知的某个下标 <code>k（0 &lt;= k &lt; nums.length）</code>上进行了 旋转，使数组变为 <code>[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]</code>（下标 从 0 开始 计数）。例如， <code>[0,1,2,4,5,6,7]</code> 在下标 3 处经旋转后可能变为 <code>[4,5,6,7,0,1,2]</code>。</p>
+<p>给你 <strong>旋转后</strong> 的数组 <code>nums</code> 和一个整数 <code>target</code> ，如果 <code>nums</code> 中存在这个目标值 <code>target</code> ，则返回它的下标，否则返回 <code>-1</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [4,5,6,7,0,1,2], target &#x3D; 0</span><br><span class="line">输出：4</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [4,5,6,7,0,1,2], target &#x3D; 3</span><br><span class="line">输出：-1</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [1], target &#x3D; 0</span><br><span class="line">输出：-1</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>1 &lt;= nums.length &lt;= 5000</li>
+<li>-10^4 &lt;= nums[i] &lt;= 10^4</li>
+<li>nums 中的每个值都 独一无二</li>
+<li>题目数据保证 nums 在预先未知的某个下标上进行了旋转</li>
+<li>-10^4 &lt;= target &lt;= 10^4</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;其实方法还是类似于上题，不过对于寻找特定的数，需要判断该数可能存在于什么区间内。</p>
+<ul>
+<li>如果 <code>[l, mid - 1]</code> 是有序数组，且 <code>target</code> 的大小满足 <code>[nums[l],nums[mid])</code>，则我们应该将搜索范围缩小至 <code>[l, mid - 1]</code>，否则在 <code>[mid + 1, r]</code> 中寻找。</li>
+<li>如果 <code>[mid, r]</code> 是有序数组，且 <code>target</code> 的大小满足 <code>(nums[mid+1],nums[r]]</code>，则我们应该将搜索范围缩小至 <code>[mid + 1, r]</code>，否则在<code>[l, mid - 1]</code> 中寻找。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">search</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt;= right &#123;</span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">            <span class="keyword">return</span> mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[right] &gt;= nums[mid] &#123; <span class="comment">// 右半部分是有序的</span></span><br><span class="line">          <span class="comment">// 此处若出现nums[right] = nums[mid]的情况，说明mid=right，因为数组不重复</span></span><br><span class="line">            <span class="keyword">if</span> nums[mid] &lt; target &amp;&amp; nums[right] &gt;= target &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid<span class="number">-1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[right] &lt;= nums[mid] &#123; <span class="comment">// 左半部分是有序的</span></span><br><span class="line">            <span class="keyword">if</span> nums[left] &lt;= target &amp;&amp; nums[mid] &gt; target &#123;</span><br><span class="line">                right = mid<span class="number">-1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="81-搜索旋转排序数组-II"><a href="#81-搜索旋转排序数组-II" class="headerlink" title="81. 搜索旋转排序数组 II"></a><a class="link" href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/">81. 搜索旋转排序数组 II<i class="fas fa-external-link-alt"></i></a></h2><p>已知存在一个按非降序排列的整数数组 <code>nums</code> ，数组中的值不必互不相同。</p>
+<p>在传递给函数之前，nums 在预先未知的某个下标 <code>k（0 &lt;= k &lt; nums.length</code>）上进行了 旋转 ，使数组变为 <code>[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]</code>（下标 从 0 开始 计数）。例如， <code>[0,1,2,4,4,4,5,6,6,7]</code> 在下标 5 处经旋转后可能变为 <code>[4,5,6,6,7,0,1,2,4,4]</code> 。</p>
+<p>给你 旋转后 的数组 <code>nums</code> 和一个整数 <code>target</code> ，请你编写一个函数来判断给定的目标值是否存在于数组中。如果 <code>nums</code> 中存在这个目标值 <code>target</code> ，则返回 <code>true</code> ，否则返回 <code>false</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [2,5,6,0,0,1,2], target &#x3D; 0</span><br><span class="line">输出：true</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [2,5,6,0,0,1,2], target &#x3D; 3</span><br><span class="line">输出：false</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>1 &lt;= nums.length &lt;= 5000</li>
+<li>-104 &lt;= nums[i] &lt;= 104</li>
+<li>题目数据保证 nums 在预先未知的某个下标上进行了旋转</li>
+<li>-104 &lt;= target &lt;= 104</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;大体上同上题思路是一致的，只需要在遇到<code>nums[mid]==nums[right]</code>时缩小查找范围即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">search</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt;= right &#123;</span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] == nums[right] || nums[left] == nums[right] &#123;</span><br><span class="line">          <span class="comment">// 当收尾元素相等或中值与末尾元素相等时，缩小查找范围</span></span><br><span class="line">            right--</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; nums[right] &#123;</span><br><span class="line">            <span class="keyword">if</span> nums[mid] &lt; target &amp;&amp; nums[right] &gt;= target &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid<span class="number">-1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &gt; nums[right] &#123;</span><br><span class="line">            <span class="keyword">if</span> nums[left] &lt;= target &amp;&amp; nums[mid] &gt; target &#123;</span><br><span class="line">                right = mid<span class="number">-1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="面试题-10-03-搜索旋转数组"><a href="#面试题-10-03-搜索旋转数组" class="headerlink" title="面试题 10.03. 搜索旋转数组"></a><a class="link" href="https://leetcode-cn.com/problems/search-rotate-array-lcci/">面试题 10.03. 搜索旋转数组<i class="fas fa-external-link-alt"></i></a></h2><p>搜索旋转数组。给定一个排序后的数组，包含n个整数，但这个数组已被旋转过很多次了，次数不详。请编写代码找出数组中的某个元素，假设数组元素原先是按升序排列的。若有多个相同元素，返回索引值最小的一个。</p>
+<p><strong>示例1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: arr &#x3D; [15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], target &#x3D; 5</span><br><span class="line">输出: 8（元素5在该数组中的索引）</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：arr &#x3D; [15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], target &#x3D; 11</span><br><span class="line"> 输出：-1 （没有找到）</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示:</strong></p>
+<ol>
+<li>arr 长度范围在[1, 1000000]之间</li>
+</ol>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;本题是上一题的一个小进阶，不仅要确认是否有<code>target</code>值，还要输出其左边界，在上一题的基础上套用二分法查找左边界的方法即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">search</span><span class="params">(arr []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(arr)<span class="number">-1</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> left &lt; right &#123;</span><br><span class="line">        mid := left + (right-left)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> arr[mid] == target &#123; <span class="comment">// 找到目标后用右边界锁定住</span></span><br><span class="line">            right = mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> arr[left] == arr[right] || arr[mid] == arr[right] &#123; <span class="comment">// 排除重复数，缩小搜索范围</span></span><br><span class="line">            right--</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> arr[right] &gt; arr[mid] &#123;</span><br><span class="line">            <span class="keyword">if</span> arr[mid] &lt; target &amp;&amp; arr[right] &gt;= target &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> arr[right] &lt; arr[mid] &#123;</span><br><span class="line">            <span class="keyword">if</span> arr[left] &lt;= target &amp;&amp; arr[mid] &gt; target &#123;</span><br><span class="line">                right = mid</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> arr[left] == target &#123;</span><br><span class="line">        <span class="keyword">return</span> left</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+      </tags>
   </entry>
 </search>
