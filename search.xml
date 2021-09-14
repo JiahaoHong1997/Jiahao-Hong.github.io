@@ -2072,4 +2072,154 @@
         <tag>SQL数据库</tag>
       </tags>
   </entry>
+  <entry>
+    <title>图算法</title>
+    <url>/2021/09/14/%E5%9B%BE%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="图论基础"><a href="#图论基础" class="headerlink" title="图论基础"></a>图论基础</h1><h2 id="图的逻辑结构和具体实现"><a href="#图的逻辑结构和具体实现" class="headerlink" title="图的逻辑结构和具体实现"></a>图的逻辑结构和具体实现</h2><ol>
+<li>图的逻辑结构</li>
+</ol>
+<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;为了方便研究图，我们将图可以抽象为下面的形式：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">  	id					<span class="keyword">int</span></span><br><span class="line">  	neighbors		[]*Vertex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;可见，这个结构和多叉树节点是一样的。所以可以认为图是比较特殊的多叉树。不过呢，上面的这种实现是「逻辑上的」，实际上我们很少用这个 <code>Vertex</code> 类实现图，而是用常说的<strong>邻接表和邻接矩阵</strong>来实现。</p>
+<ol start="2">
+<li>具体实现方式</li>
+</ol>
+<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<ul>
+<li>邻接表：邻接表很直观，我把每个节点 <code>x</code> 的邻居都存到一个列表里，然后把 <code>x</code> 和这个列表关联起来，这样就可以通过一个节点 <code>x</code> 找到它的所有相邻节点。</li>
+<li>邻接矩阵：邻接矩阵是一个二维布尔数组，将其称为<code>matrix</code>，如果节点 <code>x</code> 和 <code>y</code> 是相连的，那么就把 <code>matrix[x][y]</code> 设为 <code>true</code>（上图中绿色的方格代表 <code>true</code>）。如果想找节点 <code>x</code>的邻居，去扫一圈 <code>matrix[x][..]</code> 就行了。</li>
+</ul>
+<ol start="3">
+<li>邻接表和邻接矩阵的优劣</li>
+</ol>
+<ul>
+<li>邻接表<ul>
+<li>好处是占用的空间少。</li>
+<li>坏处是邻接表无法快速判断两个节点是否相邻。</li>
+</ul>
+</li>
+<li>邻接矩阵<ul>
+<li>好处是可以快速判断两个节点是否相邻。</li>
+<li>坏处是占用空间大。</li>
+</ul>
+</li>
+</ul>
+<h2 id="更复杂的图"><a href="#更复杂的图" class="headerlink" title="更复杂的图"></a>更复杂的图</h2><ul>
+<li>有向加权图<ul>
+<li>如果使用邻接表，我们不仅仅存储某个节点 <code>x</code> 的所有邻居节点，还存储 <code>x</code> 到每个邻居的权重。</li>
+<li>如果使用邻接矩阵，<code>matrix[x][y]</code> 不再是布尔值，而是一个 int 值，0 表示没有连接，其他值表示权重。</li>
+</ul>
+</li>
+<li>无向图<ul>
+<li>所谓的「无向」，也等同于「双向」。</li>
+<li>如果连接无向图中的节点 <code>x</code> 和 <code>y</code>，把 <code>matrix[x][y]</code> 和 <code>matrix[y][x]</code> 都变成 <code>true</code>。</li>
+<li>如果使用邻接表，则<code>list[x]</code>和<code>list[y]</code>中各自填入<code>y</code> 和<code>x</code>。</li>
+</ul>
+</li>
+</ul>
+<h1 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h1><p>&emsp;&emsp;图和多叉树最大的区别是，图是可能包含环的，你从图的某一个节点开始遍历，有可能走了一圈又回到这个节点。所以，如果图包含环，遍历框架就要一个 <code>visited</code> 数组进行辅助：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">graph *Vertex</span><br><span class="line">visited <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">traverse</span><span class="params">(graph *Vertex, s <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">  	<span class="keyword">if</span> visited[s] == <span class="literal">true</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span>  <span class="comment">// 经过节点s</span></span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	visited[s] = <span class="literal">true</span></span><br><span class="line">  	<span class="keyword">for</span> _,v := <span class="keyword">range</span> s.neighbor &#123;</span><br><span class="line">    	traverse(graph, s)</span><br><span class="line">  	&#125;</span><br><span class="line">  	visited[s] = <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;这个 <code>visited</code> 数组的操作很像回溯算法做「做选择」和「撤销选择」，区别在于位置，回溯算法的「做选择」和「撤销选择」在 for 循环里面，而对 <code>visited</code> 数组的操作在 for 循环外面。在 for 循环里面和外面唯一的区别就是对根节点的处理。对于这里「图」的遍历，我们应该把 <code>visited</code> 的操作放到 for 循环外面，否则会漏掉起始点的遍历。</p>
+<h2 id="797-所有可能的路径"><a href="#797-所有可能的路径" class="headerlink" title="797. 所有可能的路径"></a><a class="link" href="https://leetcode-cn.com/problems/all-paths-from-source-to-target/">797. 所有可能的路径<i class="fas fa-external-link-alt"></i></a></h2><p>给你一个有 <code>n</code> 个节点的 <strong>有向无环图（DAG）</strong>，请你找出所有从节点 <code>0</code> 到节点 <code>n-1</code> 的路径并输出（<strong>不要求按特定顺序</strong>）</p>
+<p>二维数组的第 <code>i</code> 个数组中的单元都表示有向图中 <code>i</code> 号节点所能到达的下一些节点，空就是没有下一个结点了。</p>
+<p><strong>示例 1</strong></p>
+<p><img lazyload src="/images/loading.svg" data-src="3.jpg" alt="avatar"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[1,2],[3],[3],[]]</span><br><span class="line">输出：[[0,1,3],[0,2,3]]</span><br><span class="line">解释：有两条路径 0 -&gt; 1 -&gt; 3 和 0 -&gt; 2 -&gt; 3</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[4,3,1],[3,2,4],[3],[4],[]]</span><br><span class="line">输出：[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[1],[]]</span><br><span class="line">输出：[[0,1]]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 4：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[1,2,3],[2],[3],[]]</span><br><span class="line">输出：[[0,1,2,3],[0,2,3],[0,3]]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 5：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[1,3],[2],[3],[]]</span><br><span class="line">输出：[[0,1,2,3],[0,3]]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">提示：</span><br><span class="line"></span><br><span class="line">n &#x3D;&#x3D; graph.length</span><br><span class="line">2 &lt;&#x3D; n &lt;&#x3D; 15</span><br><span class="line">0 &lt;&#x3D; graph[i][j] &lt; n</span><br><span class="line">graph[i][j] !&#x3D; i（即，不存在自环）</span><br><span class="line">graph[i] 中的所有元素 互不相同</span><br><span class="line">保证输入为 有向无环图（DAG）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;从0为起点开始遍历图，将遍历到的每个节点加入到辅助数组<code>path</code>中，当遍历到节点值为n-1时停止遍历，将<code>path</code>保存的路径拷贝到输出结构<code>res</code>中。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">allPathsSourceTarget</span><span class="params">(graph [][]<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line">    res := <span class="built_in">make</span>([][]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    path := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    travel(path, graph, &amp;res, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">travel</span><span class="params">(path []<span class="keyword">int</span>, graph [][]<span class="keyword">int</span>, res *[][]<span class="keyword">int</span>, start <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    path = <span class="built_in">append</span>(path,start)</span><br><span class="line">    n := <span class="built_in">len</span>(graph)<span class="number">-1</span></span><br><span class="line">    <span class="keyword">if</span> start == n &#123;</span><br><span class="line">        dst := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="built_in">len</span>(path))</span><br><span class="line">        <span class="built_in">copy</span>(dst,path) <span class="comment">// 由于在回溯的时候path会动态变化，所以要重新拷贝后传入res</span></span><br><span class="line">        *res = <span class="built_in">append</span>(*res,dst)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _,v := <span class="keyword">range</span> graph[start] &#123;</span><br><span class="line">        travel(path, graph, res, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="有向图的环检测"><a href="#有向图的环检测" class="headerlink" title="有向图的环检测"></a>有向图的环检测</h1><h2 id="207-课程表"><a href="#207-课程表" class="headerlink" title="207. 课程表"></a><a class="link" href="https://leetcode-cn.com/problems/course-schedule/">207. 课程表<i class="fas fa-external-link-alt"></i></a></h2><p>你这个学期必须选修 <code>numCourses</code> 门课程，记为 <code>0</code> 到 <code>numCourses - 1</code>。</p>
+<p>在选修某些课程之前需要一些先修课程。 先修课程按数组 <code>prerequisites</code> 给出，其中 <code>prerequisites[i] = [ai, bi]</code> ，表示如果要学习课程 <code>ai</code> 则 必须 先学习课程  <code>bi</code> 。</p>
+<ul>
+<li>例如，先修课程对 <code>[0, 1]</code> 表示：想要学习课程 <code>0</code> ，你需要先完成课程 <code>1</code> 。</li>
+</ul>
+<p>请你判断是否可能完成所有课程的学习？如果可以，返回 <code>true</code> ；否则，返回 <code>false</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：numCourses &#x3D; 2, prerequisites &#x3D; [[1,0]]</span><br><span class="line">输出：true</span><br><span class="line">解释：总共有 2 门课程。学习课程 1 之前，你需要完成课程 0 。这是可能的。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：numCourses &#x3D; 2, prerequisites &#x3D; [[1,0],[0,1]]</span><br><span class="line">输出：false</span><br><span class="line">解释：总共有 2 门课程。学习课程 1 之前，你需要先完成​课程 0 ；并且学习课程 0 之前，你还应先完成课程 1 。这是不可能的。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">提示：</span><br><span class="line"></span><br><span class="line">1 &lt;&#x3D; numCourses &lt;&#x3D; 105</span><br><span class="line">0 &lt;&#x3D; prerequisites.length &lt;&#x3D; 5000</span><br><span class="line">prerequisites[i].length &#x3D;&#x3D; 2</span><br><span class="line">0 &lt;&#x3D; ai, bi &lt; numCourses</span><br><span class="line">prerequisites[i] 中的所有课程对 互不相同</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;什么时候无法修完所有课程？当存在循环依赖的时候。其实这种场景在现实生活中也十分常见，比如我们写代码 import 包也是一个例子，必须合理设计代码目录结构，否则会出现循环依赖，编译器会报错，所以编译器实际上也使用了类似算法来判断你的代码是否能够成功编译。</p>
+<p>&emsp;&emsp;<strong>看到依赖问题，首先想到的就是把问题转化成「有向图」这种数据结构，只要图中存在环，那就说明存在循环依赖</strong>。具体来说，我们首先可以把课程看成「有向图」中的节点，节点编号分别是 <code>0, 1, ..., numCourses-1</code>，把课程之间的依赖关系看做节点之间的有向边。</p>
+<p>&emsp;&emsp;比如说必须修完课程 <code>1</code> 才能去修课程 <code>3</code>，那么就有一条有向边从节点 <code>1</code> 指向 <code>3</code>。所以我们可以根据题目输入的 <code>prerequisites</code> 数组生成一幅类似这样的图：</p>
+<p><img lazyload src="/images/loading.svg" data-src="4.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;<strong>如果发现这幅有向图中存在环，那就说明课程之间存在循环依赖，肯定没办法全部上完；反之，如果没有环，那么肯定能上完全部课程</strong>。所以第一步，我们要讲本题的这种依赖关系转换成图。</p>
+<ul>
+<li>先写一个建图函数</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildGraph</span><span class="params">(numCourses <span class="keyword">int</span>, prerequisites [][]<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line">    graph := <span class="built_in">make</span>([][]<span class="keyword">int</span>,numCourses)</span><br><span class="line">    <span class="keyword">for</span> _,v := <span class="keyword">range</span> prerequisites &#123;</span><br><span class="line">        from := v[<span class="number">1</span>]</span><br><span class="line">        to := v[<span class="number">0</span>]</span><br><span class="line">        graph[from] = <span class="built_in">append</span>(graph[from], to)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> graph</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以把 <code>traverse</code> 看做在图中节点上游走的指针，只需要再添加一个布尔数组 <code>onPath</code> 记录当前 <code>traverse</code> 经过的路径。完整代码如下：</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">canFinish</span><span class="params">(numCourses <span class="keyword">int</span>, prerequisites [][]<span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    graph := buildGraph(numCourses, prerequisites)</span><br><span class="line">    onPath := <span class="built_in">make</span>([]<span class="keyword">bool</span>,numCourses)</span><br><span class="line">    visited := <span class="built_in">make</span>([]<span class="keyword">bool</span>,numCourses)</span><br><span class="line">    isCycle := <span class="literal">false</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> traverse <span class="function"><span class="keyword">func</span><span class="params">(<span class="keyword">int</span>)</span></span></span><br><span class="line">    traverse = <span class="function"><span class="keyword">func</span><span class="params">(s <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> onPath[s] == <span class="literal">true</span> &#123; <span class="comment">// 发现环</span></span><br><span class="line">            isCycle = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> visited[s] || onPath[s] &#123; <span class="comment">// 若是遍历过的节点或是存在于环内的节点，直接回溯</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 前序遍历代码</span></span><br><span class="line">        visited[s] = <span class="literal">true</span></span><br><span class="line">        onPath[s] = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _,v := <span class="keyword">range</span> graph[s] &#123;</span><br><span class="line">            traverse(v)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 后序遍历代码</span></span><br><span class="line">        onPath[s] = <span class="literal">false</span> <span class="comment">// 在回溯的过程中将遍历过的节点标记为无环状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;numCourses; i++ &#123;  <span class="comment">// 遍历图中所有节点</span></span><br><span class="line">        traverse(i)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> !isCycle</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildGraph</span><span class="params">(numCourses <span class="keyword">int</span>, prerequisites [][]<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line">    graph := <span class="built_in">make</span>([][]<span class="keyword">int</span>,numCourses)</span><br><span class="line">    <span class="keyword">for</span> _,v := <span class="keyword">range</span> prerequisites &#123;</span><br><span class="line">        from := v[<span class="number">1</span>]</span><br><span class="line">        to := v[<span class="number">0</span>]</span><br><span class="line">        graph[from] = <span class="built_in">append</span>(graph[from], to)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> graph</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="拓扑排序（无环图的后续遍历的反转）"><a href="#拓扑排序（无环图的后续遍历的反转）" class="headerlink" title="拓扑排序（无环图的后续遍历的反转）"></a>拓扑排序（<font color="red">无环图的后续遍历的反转</font>）</h1><h3 id="210-课程表-II"><a href="#210-课程表-II" class="headerlink" title="210. 课程表 II"></a><a class="link" href="https://leetcode-cn.com/problems/course-schedule-ii/">210. 课程表 II<i class="fas fa-external-link-alt"></i></a></h3><p>现在你总共有 <em>n</em> 门课需要选，记为 <code>0</code> 到 <code>n-1</code>。</p>
+<p>在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: <code>[0,1]</code></p>
+<p>给定课程总量以及它们的先决条件，返回你为了学完所有课程所安排的学习顺序。</p>
+<p>可能会有多个正确的顺序，你只要返回一种就可以了。如果不可能完成所有课程，返回一个空数组。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: 2, [[1,0]] </span><br><span class="line">输出: [0,1]</span><br><span class="line">解释: 总共有 2 门课程。要学习课程 1，你需要先完成课程 0。因此，正确的课程顺序为 [0,1] 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: 4, [[1,0],[2,0],[3,1],[3,2]]</span><br><span class="line">输出: [0,1,2,3] or [0,2,1,3]</span><br><span class="line">解释: 总共有 4 门课程。要学习课程 3，你应该先完成课程 1 和课程 2。并且课程 1 和课程 2 都应该排在课程 0 之后。</span><br><span class="line">     因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3]。</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明:</strong></p>
+<ol>
+<li>输入的先决条件是由<strong>边缘列表</strong>表示的图形，而不是邻接矩阵。详情请参见<a class="link" href="http://blog.csdn.net/woaidapaopao/article/details/51732947">图的表示法<i class="fas fa-external-link-alt"></i></a>。</li>
+<li>你可以假定输入的先决条件中没有重复的边。</li>
+</ol>
+<p>提示:</p>
+<ul>
+<li>这个问题相当于查找一个循环是否存在于有向图中。如果存在循环，则不存在拓扑排序，因此不可能选取所有课程进行学习。</li>
+<li>拓扑排序也可以通过 BFS 完成。</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>&emsp;&emsp;这道题就是上道题的进阶版，不是仅仅让你判断是否可以完成所有课程，而是进一步让你返回一个合理的上课顺序，保证开始修每个课程时，前置的课程都已经修完。<strong>如果把课程抽象成节点，课程之间的依赖关系抽象成有向边，那么这幅图的拓扑排序结果就是上课顺序</strong>。首先，我们先判断一下题目输入的课程依赖是否成环，成环的话是无法进行拓扑排序的，所以我们可以复用上一道题的主函数。<strong>将后序遍历的结果进行反转，就是拓扑排序的结果</strong>。<strong>为什么后序遍历的反转结果就是拓扑排序呢</strong>？<strong>后序遍历的这一特点很重要，之所以拓扑排序的基础是后序遍历，是因为一个任务必须在等到所有的依赖任务都完成之后才能开始开始执行</strong>。你把每个任务理解成二叉树里面的节点，这个任务所依赖的任务理解成子节点，那你是不是应该先把所有子节点处理完再处理父节点？这是不是就是后序遍历？所以只需要在遍历节点的时候使用一个<code>postorder</code>数组存储后续遍历结果即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findOrder</span><span class="params">(numCourses <span class="keyword">int</span>, prerequisites [][]<span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    postorder := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> canFinish(numCourses, prerequisites, &amp;postorder) == <span class="literal">false</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []<span class="keyword">int</span>&#123;&#125; <span class="comment">// 先判断是否有环，有环的话直接输出空数组</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    res := <span class="built_in">make</span>([]<span class="keyword">int</span>,numCourses)</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;numCourses; i++ &#123; <span class="comment">// 无环的话将后续遍历的结果反转即可</span></span><br><span class="line">        res[i] = postorder[numCourses-i<span class="number">-1</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">canFinish</span><span class="params">(numCourses <span class="keyword">int</span>, prerequisites [][]<span class="keyword">int</span>, postorder *[]<span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    graph := buildGraph(numCourses, prerequisites)</span><br><span class="line">    onPath := <span class="built_in">make</span>([]<span class="keyword">bool</span>,numCourses)</span><br><span class="line">    visited := <span class="built_in">make</span>([]<span class="keyword">bool</span>,numCourses)</span><br><span class="line">    isCycle := <span class="literal">false</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> traverse <span class="function"><span class="keyword">func</span><span class="params">(<span class="keyword">int</span>)</span></span></span><br><span class="line">    traverse = <span class="function"><span class="keyword">func</span><span class="params">(s <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> onPath[s] == <span class="literal">true</span> &#123; <span class="comment">// 发现环</span></span><br><span class="line">            isCycle = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> visited[s] || onPath[s] &#123; <span class="comment">// 若是遍历过的节点或是存在于环内的节点，直接回溯</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 前序遍历代码</span></span><br><span class="line">        visited[s] = <span class="literal">true</span></span><br><span class="line">        onPath[s] = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _,v := <span class="keyword">range</span> graph[s] &#123;</span><br><span class="line">            traverse(v)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 后序遍历代码</span></span><br><span class="line">        onPath[s] = <span class="literal">false</span> <span class="comment">// 在回溯的过程中将遍历过的节点标记为无环状态</span></span><br><span class="line">        *postorder = <span class="built_in">append</span>(*postorder,s) <span class="comment">// 存储后续遍历的结果</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;numCourses; i++ &#123;  <span class="comment">// 遍历图中所有节点</span></span><br><span class="line">        traverse(i)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> !isCycle</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildGraph</span><span class="params">(numCourses <span class="keyword">int</span>, prerequisites [][]<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123; <span class="comment">// 生成图结构</span></span><br><span class="line">    graph := <span class="built_in">make</span>([][]<span class="keyword">int</span>,numCourses)</span><br><span class="line">    <span class="keyword">for</span> _,v := <span class="keyword">range</span> prerequisites &#123;</span><br><span class="line">        from := v[<span class="number">1</span>]</span><br><span class="line">        to := v[<span class="number">0</span>]</span><br><span class="line">        graph[from] = <span class="built_in">append</span>(graph[from], to)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> graph</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>算法和数据结构</category>
+      </categories>
+      <tags>
+        <tag>图</tag>
+      </tags>
+  </entry>
 </search>
