@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            Union-Find(并查集) |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Union-Find(并查集)</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-09-15 16:02:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="并查集介绍"><a href="#并查集介绍" class="headerlink" title="并查集介绍"></a>并查集介绍</h2><h3 id="连通性"><a href="#连通性" class="headerlink" title="连通性"></a>连通性</h3><p>&emsp;&emsp;对于无向图，对其进行遍历时：</p>
+<ul>
+<li>若是连通图，仅需从图中任一顶点出发，就能访问图中的所有顶点。</li>
+<li>若是非连通图，需从图中多个顶点出发。每次从一个新顶点出发所访问的顶点集序列恰好是各个连通分量的顶点集。</li>
+</ul>
+<p>&emsp;&emsp;比如下面这幅图，总共有 10 个节点，他们互不相连，分别用 0~9 标记：</p>
+<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;「连通」是一种等价关系，也就是说具有如下三个性质：</p>
+<ol>
+<li>自反性：节点 <code>p</code> 和 <code>p</code> 是连通的。</li>
+<li>对称性：如果节点 <code>p</code> 和 <code>q</code> 连通，那么 <code>q</code> 和 <code>p</code> 也连通。</li>
+<li>传递性：如果节点 <code>p</code> 和 <code>q</code> 连通，<code>q</code> 和 <code>r</code> 连通，那么 <code>p</code> 和 <code>r</code> 也连通。</li>
+</ol>
+<h3 id="函数签名-基本模型"><a href="#函数签名-基本模型" class="headerlink" title="函数签名(基本模型)"></a>函数签名(基本模型)</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">union</span><span class="params">(p,q <span class="keyword">int</span>)</span></span> &#123; <span class="comment">// 将p，q节点连接</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connected</span><span class="params">(p,q <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123; <span class="comment">// 判断p，q节点是否连通</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countUF</span><span class="params">(graph *Vertax)</span> <span class="title">int</span></span> &#123; <span class="comment">// 返回途中有多少个连通分量 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>比如说之前那幅图，0～9 任意两个<strong>不同</strong>的点都不连通，调用 <code>connected</code> 都会返回 false，连通分量为 10 个。</li>
+<li>如果现在调用 <code>union(0, 1)</code>，那么 0 和 1 被连通，连通分量降为 9 个。</li>
+<li>再调用 <code>union(1, 2)</code>，这时 0,1,2 都被连通，调用 <code>connected(0, 2)</code> 也会返回 true，连通分量变为 8 个。</li>
+</ul>
+<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;判断这种「等价关系」非常实用，比如说编译器判断同一个变量的不同引用，比如社交网络中的朋友圈计算等等。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>&emsp;&emsp;我们使用森林（若干棵树）来表示图的动态连通性，用数组来具体实现这个森林。怎么用森林来表示连通性呢？我们设定树的每个节点有一个指针指向其父节点，如果是根节点的话，这个指针指向自己。比如说刚才那幅 10 个节点的图，一开始的时候没有相互连通，就是这样：</p>
+<p><img lazyload src="/images/loading.svg" data-src="3.jpg" alt="avatar"></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> UF <span class="keyword">struct</span> &#123;</span><br><span class="line">  	count			<span class="keyword">int</span>		<span class="comment">// 记录连通分量</span></span><br><span class="line">  	parent		[]<span class="keyword">int</span>	<span class="comment">// 节点x的父节点是parent[x]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">construct</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">UF</span></span> &#123;</span><br><span class="line">  	p := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">    	p[i] = i</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> UF&#123;</span><br><span class="line">    	count = n		<span class="comment">// 一开始互不连通</span></span><br><span class="line">      parent = p	<span class="comment">// 父节点指针初始指向自己</span></span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>如果某两个节点被连通，则让其中的（任意）一个节点的根节点接到另一个节点的根节点上</strong>：</p>
+<p><img lazyload src="/images/loading.svg" data-src="4.jpg" alt="avatar"></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">union</span><span class="params">(p,q <span class="keyword">int</span>, u *UF)</span></span> &#123;</span><br><span class="line">  	rootP := find(p,u)</span><br><span class="line">  	rootQ := find(q,u)</span><br><span class="line">  	<span class="keyword">if</span> rootP == rootQ &#123;</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 将两棵树合为一棵树</span></span><br><span class="line">  	u.parent[rootP] = rootQ</span><br><span class="line">  	<span class="comment">// u.parent[rootQ] = rootP也一样</span></span><br><span class="line">  	u.count--</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">find</span><span class="params">(x <span class="keyword">int</span>, u *UF)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 根节点的u.parent[x]=x</span></span><br><span class="line">  	<span class="keyword">for</span> u.parent[x] != x &#123;</span><br><span class="line">    	x = u.parent[x]</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>这样，如果节点</strong> <strong><code>p</code></strong> <strong>和</strong> <strong><code>q</code></strong> <strong>连通的话，它们一定拥有相同的根节点</strong>：</p>
+<p><img lazyload src="/images/loading.svg" data-src="5.jpg" alt="avatar"></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connected</span><span class="params">(p,q <span class="keyword">int</span>, u *UF)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">  	rootP := find(p,u)</span><br><span class="line">  	rootQ := find(q,u)</span><br><span class="line">  	<span class="keyword">return</span> rootP == rootQ</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;主要 API <code>connected</code> 和 <code>union</code> 中的复杂度都是 <code>find</code> 函数造成的，所以说它们的复杂度和 <code>find</code> 一样。<code>find</code> 主要功能就是从某个节点向上遍历到树根，其时间复杂度就是树的高度。我们可能习惯性地认为树的高度就是 <code>logN</code>，但这并不一定。<code>logN</code> 的高度只存在于平衡二叉树，对于一般的树可能出现极端不平衡的情况，使得「树」几乎退化成「链表」，树的高度最坏情况下可能变成 <code>N</code>。所以说上面这种解法，<code>find</code> , <code>union</code> , <code>connected</code> 的时间复杂度都是 O(N)。这个复杂度很不理想的，你想图论解决的都是诸如社交网络这样数据规模巨大的问题，对于 <code>union</code> 和 <code>connected</code> 的调用非常频繁，每次调用需要线性时间完全不可忍受。<strong>问题的关键在于，如何想办法避免树的不平衡呢</strong>？</p>
+<h2 id="平衡性优化"><a href="#平衡性优化" class="headerlink" title="平衡性优化"></a>平衡性优化</h2><p>&emsp;&emsp;我们要知道哪种情况下可能出现不平衡现象，关键在于 <code>union</code> 过程：我们一开始就是简单粗暴的把 <code>p</code> 所在的树接到 <code>q</code> 所在的树的根节点下面，那么这里就可能出现「头重脚轻」的不平衡状况，比如下面这种局面：</p>
+<p><img lazyload src="/images/loading.svg" data-src="7.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;长此以往，树可能生长得很不平衡。<strong>我们其实是希望，小一些的树接到大一些的树下面，这样就能避免头重脚轻，更平衡一些</strong>。解决方法是额外使用一个 <code>size</code> 数组，记录每棵树包含的节点数，我们不妨称为「重量」：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> UF <span class="keyword">struct</span> &#123;</span><br><span class="line">  	count			<span class="keyword">int</span>		<span class="comment">// 记录连通分量</span></span><br><span class="line">  	parent		[]<span class="keyword">int</span>	<span class="comment">// 节点x的父节点是parent[x]</span></span><br><span class="line">  	size			[]<span class="keyword">int</span>	<span class="comment">// 新增一个数组用于记录树的“重量”,这个数组只对根节点有意义，在使用前需要先判别是否是根节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">construct</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">UF</span></span> &#123;</span><br><span class="line">  	p := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	s := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">    	p[i] = i	<span class="comment">// 最初每棵树只有一个节点</span></span><br><span class="line">      s[i] = <span class="number">1</span>	<span class="comment">// 重量应该初始化为1</span></span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> UF&#123;</span><br><span class="line">    	count = n		<span class="comment">// 一开始互不连通</span></span><br><span class="line">      parent = p	<span class="comment">// 父节点指针初始指向自己</span></span><br><span class="line">      size = s		<span class="comment">// 每个节点的重量应该初始化为1</span></span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;比如说 <code>size[3] = 5</code> 表示，以节点 <code>3</code> 为根的那棵树，总共有 <code>5</code> 个节点。这样我们可以修改一下 <code>union</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">union</span><span class="params">(p,q <span class="keyword">int</span>, u *UF)</span></span> &#123;</span><br><span class="line">  	rootP := find(p,u)</span><br><span class="line">  	rootQ := find(q,u)</span><br><span class="line">  	<span class="keyword">if</span> rootP == rootQ &#123;</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 小树接到大树下面，较平衡</span></span><br><span class="line">  	<span class="keyword">if</span> u.size[rootP] &gt; u.size[rootQ] &#123;</span><br><span class="line">    		u.parent[rootQ] = rootP</span><br><span class="line">    		u.size[rootP] += u.size[rootQ]</span><br><span class="line">  	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		u.parent[rootP] = rootQ</span><br><span class="line">    		u.size[rootQ] += u.size[rootP]</span><br><span class="line">  	&#125;</span><br><span class="line">  	u.count--</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;这样，通过比较树的重量，就可以保证树的生长相对平衡，树的高度大致在 <code>logN</code> 这个数量级，极大提升执行效率。此时，<code>find</code> , <code>union</code> , <code>connected</code> 的时间复杂度都下降为 O(logN)，即便数据规模上亿，所需时间也非常少。</p>
+<h2 id="路经压缩"><a href="#路经压缩" class="headerlink" title="路经压缩"></a>路经压缩</h2><p>&emsp;&emsp;这步优化特别简单，所以非常巧妙。我们能不能进一步压缩每棵树的高度，使树高始终保持为常数？</p>
+<p><img lazyload src="/images/loading.svg" data-src="8.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;这样 <code>find</code> 就能以 O(1) 的时间找到某一节点的根节点，相应的，<code>connected</code> 和 <code>union</code> 复杂度都下降为 O(1)。要做到这一点，非常简单，只需要在 <code>find</code> 中加一行代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">find</span><span class="params">(x <span class="keyword">int</span>, u *UF)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">for</span> u.parent[x] != x &#123;</span><br><span class="line">    	u.parent[x] = u.parent[u.parent[x]]	<span class="comment">// 指向爷爷节点 </span></span><br><span class="line">    	x = u.parent[x]											<span class="comment">// 定位到爷爷节点</span></span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这个操作有点匪夷所思，看个 GIF 就明白它的作用了（为清晰起见，这棵树比较极端）：</p>
+<p><img lazyload src="/images/loading.svg" data-src="9.gif" alt="avatar"></p>
+<p>&emsp;&emsp;可见，调用 <code>find</code> 函数每次向树根遍历的同时，顺手将树高缩短了，最终所有树高都不会超过 3（<code>union</code> 的时候树高可能达到 3）。PS：读者可能会问，这个 GIF 图的find过程完成之后，树高恰好等于 3 了，但是如果更高的树，压缩后高度依然会大于 3 呀？不能这么想。这个 GIF 的情景是我编出来方便大家理解路径压缩的，但是实际中，每次find都会进行路径压缩，所以树本来就不可能增长到这么高，你的这种担心应该是多余的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;先看一下完整代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> UF <span class="keyword">struct</span> &#123;</span><br><span class="line">  	count			<span class="keyword">int</span></span><br><span class="line">  	parent		[]<span class="keyword">int</span></span><br><span class="line">  	size			[]<span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">construct</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">UF</span></span> &#123; <span class="comment">// 初始化UF</span></span><br><span class="line">  	p := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	s := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">    	p[i] = i</span><br><span class="line">    	size[i] = <span class="number">1</span></span><br><span class="line"> 		&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> UF&#123;</span><br><span class="line">    	count=n,</span><br><span class="line">    	parent=p,</span><br><span class="line">    	size=s</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">find</span><span class="params">(x <span class="keyword">int</span>, u *UF)</span> <span class="title">int</span></span> &#123;	<span class="comment">// 查找两节点是否连通</span></span><br><span class="line">  	<span class="keyword">for</span> u.parent[x] != x &#123;</span><br><span class="line">    	u.parent[x] = u.parent[u.parent[x]]</span><br><span class="line">    	x = u.parent[x]</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">union</span><span class="params">(p,q <span class="keyword">int</span>, u *UF)</span></span> &#123;	<span class="comment">// 使p，q节点连通</span></span><br><span class="line">  	rootP := find(p,u)</span><br><span class="line">  	rootQ := find(q,u)</span><br><span class="line">  	<span class="keyword">if</span> rootP == rootQ &#123;</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">if</span> u.size[rootP] &gt; u.size[rootQ] &#123;</span><br><span class="line">    	u.paremt[rootQ] = rootP</span><br><span class="line">    	u.size[rootP] += u.size[rootQ]</span><br><span class="line">  	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	u.parent[rootP] = rootQ</span><br><span class="line">    	u.size[rootQ] += u.size[rootP]</span><br><span class="line">  	&#125;</span><br><span class="line">  	u.count--</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connected</span><span class="params">(p,q <span class="keyword">int</span>, u *UF)</span> <span class="title">bool</span></span> &#123;	<span class="comment">// 查看p，q节点是否连通</span></span><br><span class="line">  	rootP := find(p,u)</span><br><span class="line">  	rootQ := find(q,u)</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">return</span> rootP == rootQ</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countUF</span><span class="params">(u *UF)</span> <span class="title">int</span></span> &#123;	<span class="comment">// 查看连通分量</span></span><br><span class="line">  	<span class="keyword">return</span> u.count</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;Union-Find 算法的复杂度可以这样分析：构造函数初始化数据结构需要 O(N) 的时间和空间复杂度；连通两个节点 <code>union</code>、判断两个节点的连通性 <code>connected</code>、计算连通分量 <code>count</code> 所需的时间复杂度均为 O(1)。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Union-Find(并查集)</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2021-09-15 16:02:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2021/09/15/Union-Find(并查集)/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/09/14/%E5%9B%BE%E7%AE%97%E6%B3%95/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">图算法</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E6%9F%A5%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">并查集介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">连通性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%AD%BE%E5%90%8D-%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">函数签名(基本模型)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E6%80%A7%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">平衡性优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%BB%8F%E5%8E%8B%E7%BC%A9"><span class="nav-number">4.</span> <span class="nav-text">路经压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
