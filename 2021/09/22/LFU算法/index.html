@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            LFU算法 |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">LFU算法</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-09-22 13:00:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/LFU/">LFU</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="LFU算法介绍"><a href="#LFU算法介绍" class="headerlink" title="LFU算法介绍"></a>LFU算法介绍</h1><h2 id="LFU缓存机制"><a href="#LFU缓存机制" class="headerlink" title="LFU缓存机制"></a>LFU缓存机制</h2><p>&emsp;&emsp;LFU 算法的淘汰策略是 Least Frequently Used，也就是每次淘汰那些使用次数最少的数据。对比于在<a href="https://jiahaohong1997.github.io/2021/09/21/LRU%E7%AE%97%E6%B3%95/">LRU算法</a>中介绍的LRU 缓存淘汰算法，LRU 算法的淘汰策略是 Least Recently Used，也就是每次淘汰那些最久没被使用的数据。LRU 算法的核心数据结构是使用哈希链表 <code>LinkedHashMap</code>，首先借助链表的有序性使得链表元素维持插入顺序，同时借助哈希映射的快速访问能力使得我们可以在 O(1) 时间访问链表的任意元素。</p>
+<p>&emsp;&emsp;而 LFU 算法相当于是把数据按照访问频次进行排序，这个需求恐怕没有那么简单，而且还有一种情况，如果多个数据拥有相同的访问频次，我们就得删除最早插入的那个数据。也就是说 LFU 算法是淘汰访问频次最低的数据，如果访问频次最低的数据有多条，需要淘汰最旧的数据。</p>
+<h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p>&emsp;&emsp;要求你写一个类，接受一个 <code>capacity</code> 参数，实现 <code>get</code> 和 <code>put</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> LFUCache <span class="keyword">struct</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">(capacity <span class="keyword">int</span>)</span> <span class="title">LFUCache</span></span> &#123;&#125; <span class="comment">// 构造容量为 capacity 的缓存</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Get</span><span class="params">(key <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;&#125;  <span class="comment">// 在缓存中查询 key</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Put</span><span class="params">(key <span class="keyword">int</span>, val <span class="keyword">int</span>)</span></span> &#123;&#125; <span class="comment">// 将 key 和 val 存入缓存</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Get(key)</code> 方法会去缓存中查询键 <code>key</code>，如果 <code>key</code> 存在，则返回 <code>key</code> 对应的 <code>val</code>，否则返回 -1。</p>
+<p><code>Put(key, value)</code> 方法插入或修改缓存。如果 <code>key</code> 已存在，则将它对应的值改为 <code>val</code>；如果 <code>key</code> 不存在，则插入键值对 <code>(key, val)</code>。</p>
+<p>&emsp;&emsp;当缓存达到容量 <code>capacity</code> 时，则应该在插入新的键值对之前，删除使用频次（后文用 <code>freq</code> 表示）最低的键值对。如果 <code>freq</code> 最低的键值对有多个，则删除其中最旧的那个。</p>
+<h1 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h1><p>&emsp;&emsp;首先我们需要理解LFU算法执行过程的几个事实：</p>
+<ol>
+<li>调用<code>Get(key int)</code>方法时，要返回<code>key</code>对应的<code>val</code>。</li>
+<li>只要用到<code>Get</code>或<code>Put</code>方法访问一次某个<code>key</code>，该<code>key</code>的<code>freq</code>就要加一。</li>
+<li>如果在容量满了的时候插入，则需要将 <code>freq</code> 最小的 <code>key</code> 删除，如果最小的 <code>freq</code> 对应多个 <code>key</code>，则删除其中最旧的那一个。</li>
+</ol>
+<p>&emsp;&emsp;现在我们来逐一解决:</p>
+<ol>
+<li>调用<code>Get(key int)</code>方法时，要返回<code>key</code>对应的<code>val</code>。</li>
+</ol>
+<p>&emsp;&emsp;使用一个 <code>HashMap</code> 存储 <code>key</code> 到 <code>val</code> 的映射，就可以快速计算 <code>get(key)</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyToVal := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>只要用到<code>Get</code>或<code>Put</code>方法访问一次某个<code>key</code>，该<code>key</code>的<code>freq</code>就要加一。</li>
+</ol>
+<p>&emsp;&emsp;使用一个 <code>HashMap</code> 存储 <code>key</code> 到 <code>freq</code> 的映射，就可以快速操作 <code>key</code> 对应的 <code>freq</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyToFreq := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>如果在容量满了的时候插入，则需要将 <code>freq</code> 最小的 <code>key</code> 删除，如果最小的 <code>freq</code> 对应多个 <code>key</code>，则删除其中最旧的那一个。</li>
+</ol>
+<p>&emsp;&emsp;这个需求应该是 LFU 算法的核心，所以我们分开说。</p>
+<ul>
+<li>首先，肯定是需要 <code>freq</code> 到 <code>key</code> 的映射，用来找到 <code>freq</code> 最小的 <code>key</code>。</li>
+<li>将 <code>freq</code> 最小的 <code>key</code> 删除，那你就得快速得到当前所有 <code>key</code> 最小的 <code>freq</code> 是多少。想要时间复杂度 O(1) 的话，肯定不能遍历一遍去找，那就用一个变量 <code>minFreq</code> 来记录当前最小的 <code>freq</code> 吧。</li>
+<li>可能有多个 <code>key</code> 拥有相同的 <code>freq</code>，所以 <strong><code>freq</code></strong> <strong>对</strong> <strong><code>key</code></strong> <strong>是一对多的关系</strong>，即一个 <code>freq</code> 对应一个 <code>key</code> 的列表。</li>
+<li>希望 <code>freq</code> 对应的 <code>key</code> 的列表是<strong>存在时序</strong>的，便于快速查找并删除最旧的 <code>key</code>。</li>
+<li>希望<strong>能够快速删除</strong> <strong><code>key</code></strong> <strong>列表中的任何一个</strong> **<code>key</code>**，因为如果频次为 <code>freq</code> 的某个 <code>key</code> 被访问，那么它的频次就会变成 <code>freq+1</code>，就应该从 <code>freq</code> 对应的 <code>key</code> 列表中删除，加到 <code>freq+1</code> 对应的 <code>key</code> 的列表中。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">freqToKeys := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*LinkedHashSet)</span><br><span class="line">minFreq := <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> node <span class="keyword">struct</span> &#123;</span><br><span class="line">    key		<span class="keyword">int</span></span><br><span class="line">    prev	*node</span><br><span class="line">    next	*node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> DoubleList <span class="keyword">struct</span> &#123;</span><br><span class="line">    head	*node</span><br><span class="line">    tail	*node</span><br><span class="line">    size	<span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">constructorDL</span><span class="params">()</span> *<span class="title">DoubleList</span></span> &#123;</span><br><span class="line">    dh := &amp;node&#123;</span><br><span class="line">        key		:	<span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    dt := &amp;node &#123;</span><br><span class="line">        key		:	<span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    dh.next,dt.prev = dt,dh</span><br><span class="line">    <span class="keyword">return</span> &amp;DoubleList&#123;</span><br><span class="line">        head	:	dh,</span><br><span class="line">        tail	:	dt,</span><br><span class="line">        size	:	<span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> LinkedHashSet <span class="keyword">struct</span> &#123;</span><br><span class="line">    hashMap		<span class="keyword">map</span>[<span class="keyword">int</span>]*node</span><br><span class="line">    doubleList	*DoubleList    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">constructorLH</span><span class="params">()</span> *<span class="title">LinkedHashSet</span></span> &#123;</span><br><span class="line">    m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*node)</span><br><span class="line">    dl := constructorDL()</span><br><span class="line">    <span class="keyword">return</span> &amp;LinkedHashSet&#123;</span><br><span class="line">        hashMap		:	m,</span><br><span class="line">        doubleList	:	dl,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;<code>LinkedHashSet</code> 顾名思义，是链表和哈希集合的结合体。链表不能快速访问链表节点，但是插入元素具有时序；哈希集合中的元素无序，但是可以对元素进行快速的访问和删除。那么，它俩结合起来就兼具了哈希集合和链表的特性，既可以在 O(1) 时间内访问或删除其中的元素，又可以保持插入的时序。</p>
+<p>综上，我们可以写出 LFU 算法的基本数据结构：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> LFUCache <span class="keyword">struct</span> &#123;</span><br><span class="line">    keyToVal	<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>				<span class="comment">// key 到 val 的映射，我们后文称为 KV 表</span></span><br><span class="line">    keyToFreq	<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>				<span class="comment">// key 到 freq 的映射，我们后文称为 KF 表</span></span><br><span class="line">    freqToKeys	<span class="keyword">map</span>[<span class="keyword">int</span>]*LinkedHashSet	<span class="comment">// freq 到 key 列表的映射，我们后文称为 FK 表</span></span><br><span class="line">    minFreq		<span class="keyword">int</span>						<span class="comment">// 记录最小的频次</span></span><br><span class="line">    <span class="built_in">cap</span>			<span class="keyword">int</span>						<span class="comment">// 记录 LFU 缓存的最大容量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">(capacity)</span> <span class="title">LFUCache</span></span> &#123;</span><br><span class="line">    kv := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">    kf := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">    fk := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*LinkedHashSet)</span><br><span class="line">    <span class="keyword">return</span> LFUCache&#123;</span><br><span class="line">        keyToVal	:	kv,</span><br><span class="line">        keyToFreq	:	kf,</span><br><span class="line">        freqToKeys	:	fk,</span><br><span class="line">        minFreq		:	<span class="number">0</span>,</span><br><span class="line">        <span class="built_in">cap</span>			:	capacity,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Get</span><span class="params">(key <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;&#125;  <span class="comment">// 在缓存中查询 key</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Put</span><span class="params">(key <span class="keyword">int</span>, val <span class="keyword">int</span>)</span></span> &#123;&#125; <span class="comment">// 将 key 和 val 存入缓存</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h1><h2 id="实现Get-key-int-方法"><a href="#实现Get-key-int-方法" class="headerlink" title="实现Get(key int)方法"></a>实现<code>Get(key int)</code>方法</h2><p>&emsp;&emsp;逻辑很简单，返回 <code>key</code> 对应的 <code>val</code>，然后增加 <code>key</code> 对应的 <code>freq</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Get</span><span class="params">(key <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> _,ok := this.keyToVal[key]; !ok &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line">    this.increaseFreq(key)</span><br><span class="line">    <span class="keyword">return</span> this.keyToVal[key]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;增加<code>key</code>对应的<code>freq</code>是LFU算法的核心，所以我们干脆抽象一个方法<code>increaseFreq</code>，这样<code>Get</code>方法就比较简洁。</p>
+<h2 id="实现Put-key-int-val-int-方法"><a href="#实现Put-key-int-val-int-方法" class="headerlink" title="实现Put(key int,val int) 方法"></a>实现<code>Put(key int,val int)</code> 方法</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Put</span><span class="params">(key <span class="keyword">int</span>, value <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> this.<span class="built_in">cap</span> &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> _,ok := this.keyToVal[key]; ok &#123;  <span class="comment">// 若key已存在，修改对应的val即可</span></span><br><span class="line">        this.keyToVal[key] = value</span><br><span class="line">        this.increaseFreq(key)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// key不存在，需要插入</span></span><br><span class="line">    <span class="comment">// 容量已满的话需要淘汰一个freq最小的key</span></span><br><span class="line">    <span class="keyword">if</span> this.<span class="built_in">cap</span> == <span class="built_in">len</span>(this.keyToVal) &#123;</span><br><span class="line">        this.removeMinFreqKey()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 插入key和val，对应的freq为1</span></span><br><span class="line">    this.keyToVal[key] = value	<span class="comment">// 插入KV表</span></span><br><span class="line">    this.keyToFreq[key] = <span class="number">1</span>		<span class="comment">// 插入KF表</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.freqToKeys[<span class="number">1</span>]; !ok &#123;  <span class="comment">// 如果没有freq为1的LinkedHashSet，则生成一个</span></span><br><span class="line">        this.freqToKeys[<span class="number">1</span>] = constructorLH()</span><br><span class="line">    &#125;</span><br><span class="line">    this.addRecently(key,<span class="number">1</span>)  <span class="comment">// 插入新key后的freq肯定是1</span></span><br><span class="line">    this.minFreq = <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="实现核心逻辑（中间抽象层）"><a href="#实现核心逻辑（中间抽象层）" class="headerlink" title="实现核心逻辑（中间抽象层）"></a>实现核心逻辑（中间抽象层）</h2><h3 id="实现removeMinFreqKey方法"><a href="#实现removeMinFreqKey方法" class="headerlink" title="实现removeMinFreqKey方法"></a>实现<code>removeMinFreqKey</code>方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">removeMinFreqKey</span><span class="params">()</span></span> &#123;</span><br><span class="line">    keyList := this.freqToKeys[this.minFreq].doubleList	<span class="comment">// 获得最小freq的LinkedHashSet</span></span><br><span class="line">    deleteKey := keyList.removeFirst()	<span class="comment">// 删除LinkedHashSet的双链表头的元素</span></span><br><span class="line">    <span class="built_in">delete</span>(this.freqToKeys[this.minFreq].hashMap,deleteKey.key)		<span class="comment">// 删除LinkedHashSet的哈希表对应元素</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(this.freqToKeys[this.minFreq].hashMap) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="built_in">delete</span>(this.freqToKeys,this.minFreq)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">delete</span>(this.keyToVal,deleteKey.key)		<span class="comment">// 更新KV表</span></span><br><span class="line">    <span class="built_in">delete</span>(this.keyToFreq,deleteKey.key)	<span class="comment">// 更新KF表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;删除某个<code>key</code>肯定是要同时映射三个表的，借助<code>minFreq</code>参数可以从<code>FK</code>表中找到<code>freq</code>最小的<code>keyList</code>，删除其表头元素即可，同时删除<code>Fk</code>表中<code>freq</code>最小的<code>hashMap</code>对应的元素。然后根据要被淘汰的<code>deleteKey</code>删除其余两个表中的映射关系。</p>
+<p>&emsp;&emsp;这里有个细节问题，如果<code>keyList</code>中只有一个元素，那么删除之后<code>minFreq</code>对应的<code>key</code>列表就为空了，也就是<code>minFreq</code>变量需要更新。实际上没办法快速计算<code>minFreq</code>，只能线性遍历<code>FK</code>表或者<code>KF</code>表来计算，这样肯定不能保证 O(1) 的时间复杂度。<strong>但是，其实这里没必要更新<code>minFreq</code>变量</strong>，因为你想想<code>removeMinFreqKey</code>这个函数是在什么时候调用？在<code>put</code>方法中插入新<code>key</code>时可能调用。而你回头看<code>put</code>的代码，插入新<code>key</code>时一定会把<code>minFreq</code>更新成 1，所以说即便这里<code>minFreq</code>变了，我们也不需要管它。</p>
+<h3 id="实现increaseFreq方法"><a href="#实现increaseFreq方法" class="headerlink" title="实现increaseFreq方法"></a>实现<code>increaseFreq</code>方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">increaseFreq</span><span class="params">(key <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    freq := this.keyToFreq[key]</span><br><span class="line">    this.keyToFreq[key] = freq+<span class="number">1</span>	<span class="comment">// 更新KF表</span></span><br><span class="line">    <span class="comment">// 将key从freq对应的列表和哈希表中删除</span></span><br><span class="line">    this.freqToKeys[freq].doubleList.remove(this.freqToKeys[freq].hashMap[key])</span><br><span class="line">    <span class="built_in">delete</span>(this.freqToKeys[freq].hashMap,key)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(this.freqToKeys[freq].hashMap) == <span class="number">0</span> &#123; <span class="comment">// 如果 freq 对应的列表空了，移除这个 freq</span></span><br><span class="line">        <span class="built_in">delete</span>(this.freqToKeys,freq)</span><br><span class="line">        <span class="keyword">if</span> freq == this.minFreq &#123;  <span class="comment">// 如果这个 freq 恰好是 minFreq，更新 minFreq</span></span><br><span class="line">            this.minFreq++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将key加入到freq+1对应的列表和哈希表中</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.freqToKeys[freq+<span class="number">1</span>]; !ok &#123;</span><br><span class="line">        this.freqToKeys[freq+<span class="number">1</span>] = constructorLH()</span><br><span class="line">    &#125;</span><br><span class="line">    this.addRecently(key,freq+<span class="number">1</span>)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="实现addRecently方法"><a href="#实现addRecently方法" class="headerlink" title="实现addRecently方法"></a>实现<code>addRecently</code>方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">addRecently</span><span class="params">(key <span class="keyword">int</span>, freq <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    x := &amp;node&#123;</span><br><span class="line">        key		:	key,</span><br><span class="line">    &#125;</span><br><span class="line">    this.freqToKeys[freq].doubleList.addLast(x)</span><br><span class="line">    this.freqToKeys[freq].hashMap[key] = x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;在插入新的节点时，需要修改<code>FK</code>表的哈希表和双链表。</p>
+<h2 id="对底层数据结构进行操作"><a href="#对底层数据结构进行操作" class="headerlink" title="对底层数据结构进行操作"></a>对底层数据结构进行操作</h2><p>&emsp;&emsp;该层的主要作用是对我们实现的<code>LinkedHashSet</code>结构封装一些通用操作，用以满足<code>FK</code>表的更新和删除操作，主要包含以下几个方法：</p>
+<ol>
+<li>删除<code>DoubleList</code>中某一节点的方法<code>remove(x *node)</code>。</li>
+<li>删除<code>DoubleList</code>中表首元素的方法<code>removeFirst()</code>。</li>
+<li>在<code>DoubleList</code>中表尾部增加新元素的<code>addLast()</code>。</li>
+</ol>
+<h3 id="实现remove方法"><a href="#实现remove方法" class="headerlink" title="实现remove方法"></a>实现<code>remove</code>方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">remove</span><span class="params">(x *node)</span></span> &#123;</span><br><span class="line">    x.prev.next = x.next</span><br><span class="line">    x.next.prev = x.prev</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="实现removeFirst方法"><a href="#实现removeFirst方法" class="headerlink" title="实现removeFirst方法"></a>实现<code>removeFirst</code>方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">removeFirst</span><span class="params">()</span> *<span class="title">node</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> dl.head.next == dl.tail &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    first := dl.head.next</span><br><span class="line">    dl.remove(first)</span><br><span class="line">    <span class="keyword">return</span> first</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="实现addLast方法"><a href="#实现addLast方法" class="headerlink" title="实现addLast方法"></a>实现<code>addLast</code>方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">addLast</span><span class="params">(x *node)</span></span> &#123;</span><br><span class="line">    x.prev = dl.tail.prev</span><br><span class="line">    x.next = dl.tail</span><br><span class="line">    dl.tail.prev.next = x</span><br><span class="line">    dl.tail.prev = x</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="总体算法"><a href="#总体算法" class="headerlink" title="总体算法"></a>总体算法</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ###############基础数据结构###################</span></span><br><span class="line"><span class="keyword">type</span> node <span class="keyword">struct</span> &#123;</span><br><span class="line">    key		<span class="keyword">int</span></span><br><span class="line">    prev	*node</span><br><span class="line">    next	*node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 双端链表</span></span><br><span class="line"><span class="keyword">type</span> DoubleList <span class="keyword">struct</span> &#123;</span><br><span class="line">    head	*node</span><br><span class="line">    tail	*node</span><br><span class="line">    size	<span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化双端链表</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">constructorDL</span><span class="params">()</span> *<span class="title">DoubleList</span></span> &#123;</span><br><span class="line">    dh := &amp;node&#123;</span><br><span class="line">        key		:	<span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    dt := &amp;node &#123;</span><br><span class="line">        key		:	<span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    dh.next,dt.prev = dt,dh</span><br><span class="line">    <span class="keyword">return</span> &amp;DoubleList&#123;</span><br><span class="line">        head	:	dh,</span><br><span class="line">        tail	:	dt,</span><br><span class="line">        size	:	<span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造LinkedHashSet作为freqToKeys表</span></span><br><span class="line"><span class="keyword">type</span> LinkedHashSet <span class="keyword">struct</span> &#123;</span><br><span class="line">    hashMap		<span class="keyword">map</span>[<span class="keyword">int</span>]*node</span><br><span class="line">    doubleList	*DoubleList    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化LinkedHashSet</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">constructorLH</span><span class="params">()</span> *<span class="title">LinkedHashSet</span></span> &#123;</span><br><span class="line">    m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*node)</span><br><span class="line">    dl := constructorDL()</span><br><span class="line">    <span class="keyword">return</span> &amp;LinkedHashSet&#123;</span><br><span class="line">        hashMap		:	m,</span><br><span class="line">        doubleList	:	dl,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ##############底层方法（用于直接操作数据结构）####################</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除双端链表中的某一节点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">remove</span><span class="params">(x *node)</span></span> &#123;</span><br><span class="line">    x.prev.next = x.next</span><br><span class="line">    x.next.prev = x.prev</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除双端链表表头元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">removeFirst</span><span class="params">()</span> *<span class="title">node</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> dl.head.next == dl.tail &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    first := dl.head.next</span><br><span class="line">    dl.remove(first)</span><br><span class="line">    <span class="keyword">return</span> first</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在双端链表尾部添加新元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">addLast</span><span class="params">(x *node)</span></span> &#123;</span><br><span class="line">    x.prev = dl.tail.prev</span><br><span class="line">    x.next = dl.tail</span><br><span class="line">    dl.tail.prev.next = x</span><br><span class="line">    dl.tail.prev = x</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// ###############LFU类的实现##################</span></span><br><span class="line"><span class="keyword">type</span> LFUCache <span class="keyword">struct</span> &#123;</span><br><span class="line">    keyToVal	<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>				<span class="comment">// key 到 val 的映射，我们后文称为 KV 表</span></span><br><span class="line">    keyToFreq	<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>				<span class="comment">// key 到 freq 的映射，我们后文称为 KF 表</span></span><br><span class="line">    freqToKeys	<span class="keyword">map</span>[<span class="keyword">int</span>]*LinkedHashSet	<span class="comment">// freq 到 key 列表的映射，我们后文称为 FK 表</span></span><br><span class="line">    minFreq		<span class="keyword">int</span>						<span class="comment">// 记录最小的频次</span></span><br><span class="line">    <span class="built_in">cap</span>			<span class="keyword">int</span>						<span class="comment">// 记录 LFU 缓存的最大容量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化LFU类，加载KV表、KF表以及FK表，设置最小频率树minFreq</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">(capacity <span class="keyword">int</span>)</span> <span class="title">LFUCache</span></span> &#123;</span><br><span class="line">    kv := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">    kf := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">    fk := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*LinkedHashSet)</span><br><span class="line">    <span class="keyword">return</span> LFUCache&#123;</span><br><span class="line">        keyToVal	:	kv,</span><br><span class="line">        keyToFreq	:	kf,</span><br><span class="line">        freqToKeys	:	fk,</span><br><span class="line">        minFreq		:	<span class="number">0</span>,</span><br><span class="line">        <span class="built_in">cap</span>			:	capacity,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Get</span><span class="params">(key <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> _,ok := this.keyToVal[key]; !ok &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line">    this.increaseFreq(key)</span><br><span class="line">    <span class="keyword">return</span> this.keyToVal[key]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Put方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">Put</span><span class="params">(key <span class="keyword">int</span>, value <span class="keyword">int</span>)</span></span>  &#123;</span><br><span class="line">    <span class="keyword">if</span> this.<span class="built_in">cap</span> &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> _,ok := this.keyToVal[key]; ok &#123;  <span class="comment">// 若key已存在，修改对应的val即可</span></span><br><span class="line">        this.keyToVal[key] = value</span><br><span class="line">        this.increaseFreq(key)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// key不存在，需要插入</span></span><br><span class="line">    <span class="comment">// 容量已满的话需要淘汰一个freq最小的key</span></span><br><span class="line">    <span class="keyword">if</span> this.<span class="built_in">cap</span> &lt;= <span class="built_in">len</span>(this.keyToVal) &#123;</span><br><span class="line">        this.removeMinFreqKey()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 插入key和val，对应的freq为1</span></span><br><span class="line">    this.keyToVal[key] = value	<span class="comment">// 插入KV表</span></span><br><span class="line">    this.keyToFreq[key] = <span class="number">1</span>		<span class="comment">// 插入KF表</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.freqToKeys[<span class="number">1</span>]; !ok &#123;  <span class="comment">// 如果没有freq为1的LinkedHashSet，则生成一个</span></span><br><span class="line">        this.freqToKeys[<span class="number">1</span>] = constructorLH()</span><br><span class="line">    &#125;</span><br><span class="line">    this.addRecently(key,<span class="number">1</span>)  <span class="comment">// 插入新key后的freq肯定是1</span></span><br><span class="line">    this.minFreq = <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ################中间抽象层####################</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除使用频率最低节点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">removeMinFreqKey</span><span class="params">()</span></span> &#123;</span><br><span class="line">    keyList := this.freqToKeys[this.minFreq].doubleList	<span class="comment">// 获得最小freq的LinkedHashSet</span></span><br><span class="line">    deleteKey := keyList.removeFirst()	<span class="comment">// 删除LinkedHashSet的双链表头的元素</span></span><br><span class="line">    <span class="built_in">delete</span>(this.freqToKeys[this.minFreq].hashMap,deleteKey.key)		<span class="comment">// 删除LinkedHashSet的哈希表对应元素</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(this.freqToKeys[this.minFreq].hashMap) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="built_in">delete</span>(this.freqToKeys,this.minFreq)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">delete</span>(this.keyToVal,deleteKey.key)		<span class="comment">// 更新KV表</span></span><br><span class="line">    <span class="built_in">delete</span>(this.keyToFreq,deleteKey.key)	<span class="comment">// 更新KF表</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 增加某一节点的使用频数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">increaseFreq</span><span class="params">(key <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    freq := this.keyToFreq[key]</span><br><span class="line">    this.keyToFreq[key] = freq+<span class="number">1</span>	<span class="comment">// 更新KF表</span></span><br><span class="line">    <span class="comment">// 将key从freq对应的列表和哈希表中删除</span></span><br><span class="line">    this.freqToKeys[freq].doubleList.remove(this.freqToKeys[freq].hashMap[key])</span><br><span class="line">    <span class="built_in">delete</span>(this.freqToKeys[freq].hashMap,key)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(this.freqToKeys[freq].hashMap) == <span class="number">0</span> &#123; <span class="comment">// 如果 freq 对应的列表空了，移除这个 freq</span></span><br><span class="line">        <span class="built_in">delete</span>(this.freqToKeys,freq)</span><br><span class="line">        <span class="keyword">if</span> freq == this.minFreq &#123;  <span class="comment">// 如果这个 freq 恰好是 minFreq，更新 minFreq</span></span><br><span class="line">            this.minFreq++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将key加入到freq+1对应的列表和哈希表中</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.freqToKeys[freq+<span class="number">1</span>]; !ok &#123;</span><br><span class="line">        this.freqToKeys[freq+<span class="number">1</span>] = constructorLH()</span><br><span class="line">    &#125;</span><br><span class="line">    this.addRecently(key,freq+<span class="number">1</span>)</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 对最近使用的节点的处理</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *LFUCache)</span> <span class="title">addRecently</span><span class="params">(key <span class="keyword">int</span>, freq <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    x := &amp;node&#123;</span><br><span class="line">        key		:	key,</span><br><span class="line">    &#125;</span><br><span class="line">    this.freqToKeys[freq].doubleList.addLast(x)</span><br><span class="line">    this.freqToKeys[freq].hashMap[key] = x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：LFU算法</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2021-09-22 13:00:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2021/09/22/LFU算法/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/09/21/LRU%E7%AE%97%E6%B3%95/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">LRU算法</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LFU%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">LFU算法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LFU%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">LFU缓存机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">算法描述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">代码框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Get-key-int-%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">实现Get(key int)方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Put-key-int-val-int-%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">实现Put(key int,val int) 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%88%E4%B8%AD%E9%97%B4%E6%8A%BD%E8%B1%A1%E5%B1%82%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">实现核心逻辑（中间抽象层）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0removeMinFreqKey%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.1.</span> <span class="nav-text">实现removeMinFreqKey方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0increaseFreq%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.2.</span> <span class="nav-text">实现increaseFreq方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0addRecently%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.3.</span> <span class="nav-text">实现addRecently方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">3.4.</span> <span class="nav-text">对底层数据结构进行操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0remove%E6%96%B9%E6%B3%95"><span class="nav-number">3.4.1.</span> <span class="nav-text">实现remove方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0removeFirst%E6%96%B9%E6%B3%95"><span class="nav-number">3.4.2.</span> <span class="nav-text">实现removeFirst方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0addLast%E6%96%B9%E6%B3%95"><span class="nav-number">3.4.3.</span> <span class="nav-text">实现addLast方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">总体算法</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
