@@ -309,7 +309,7 @@
 
 
 <h3 id="remove-x-node-方法的实现细节"><a href="#remove-x-node-方法的实现细节" class="headerlink" title="remove(x *node)方法的实现细节"></a><code>remove(x *node)</code>方法的实现细节</h3><p>&emsp;&emsp;删除连表中的某一节点，x存在时才能使用。</p>
- <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">remove</span><span class="params">(x *node)</span></span> &#123; <span class="comment">// 由于是双链表且给的是目标 Node 节点，时间 O(1)</span></span><br><span class="line">	x.prev.next = x.next</span><br><span class="line">    x.next.prev = x.prev</span><br><span class="line">    dl.size--</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dl *DoubleList)</span> <span class="title">remove</span><span class="params">(x *node)</span></span> &#123; <span class="comment">// 由于是双链表且给的是目标 Node 节点，时间 O(1)</span></span><br><span class="line">    x.prev.next = x.next</span><br><span class="line">    x.next.prev = x.prev</span><br><span class="line">    dl.size--</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
