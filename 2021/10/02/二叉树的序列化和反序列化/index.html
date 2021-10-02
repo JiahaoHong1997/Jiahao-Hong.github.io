@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            二叉树的序列化和反序列化 |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">二叉树的序列化和反序列化</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-10-02 17:19:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="序列化的目的"><a href="#序列化的目的" class="headerlink" title="序列化的目的"></a>序列化的目的</h1><p>&emsp;&emsp;JSON 的运用非常广泛，比如我们经常将变成语言中的结构体序列化成 JSON 字符串，存入缓存或者通过网络发送给远端服务，消费者接受 JSON 字符串然后进行反序列化，就可以得到原始数据了。这就是「序列化」和「反序列化」的目的，以某种固定格式组织字符串，使得数据可以独立于编程语言。</p>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/">297. 二叉树的序列化与反序列化<i class="fas fa-external-link-alt"></i></a></p>
+<p>&emsp;&emsp;序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。</p>
+<p>&emsp;&emsp;请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。</p>
+<p><strong>提示:</strong> 输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅 LeetCode 序列化二叉树的格式。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。</p>
+<p><strong>示例 1：</strong></p>
+<p><img lazyload src="/images/loading.svg" data-src="serdeser.jpg" alt="avatar"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root &#x3D; [1,2,3,null,null,4,5]</span><br><span class="line">输出：[1,2,3,null,null,4,5]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root &#x3D; []</span><br><span class="line">输出：[]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root &#x3D; [1]</span><br><span class="line">输出：[1]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 4：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root &#x3D; [1,2]</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>树中结点数在范围 <code>[0, 104]</code> 内</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>&emsp;&emsp;我们可以用 <code>serialize</code> 方法将二叉树序列化成字符串，用 <code>deserialize</code> 方法将序列化的字符串反序列化成二叉树，至于以什么格式序列化和反序列化，这个完全由你决定。比如说输入如下这样一棵二叉树：</p>
+<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;<code>serialize</code> 方法也许会把它序列化成字符串 <code>2,1,#,6,3,#,#</code>，其中 <code>#</code> 表示 <code>null</code> 指针，那么把这个字符串再输入 <code>deserialize</code> 方法，依然可以还原出这棵二叉树。也就是说，这两个方法会成对儿使用，你只要保证他俩能够自洽就行了。</p>
+<p>&emsp;&emsp;想象一下，二叉树结该是一个二维平面内的结构，而序列化出来的字符串是一个线性的一维结构。<strong>所谓的序列化不过就是把结构化的数据「打平」，其实就是在考察二叉树的遍历方式</strong>。</p>
+<p>&emsp;&emsp;二叉树的遍历方式有哪些？递归遍历方式有前序遍历，中序遍历，后序遍历；迭代方式一般是层级遍历。本文就把这些方式都尝试一遍，来实现 <code>serialize</code> 方法和 <code>deserialize</code> 方法。</p>
+<h2 id="结构体构造"><a href="#结构体构造" class="headerlink" title="结构体构造"></a>结构体构造</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Codec <span class="keyword">struct</span> &#123;</span><br><span class="line">    s       <span class="keyword">string</span></span><br><span class="line">    null    <span class="keyword">string</span></span><br><span class="line">    sep     <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span> <span class="title">Codec</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Codec&#123;</span><br><span class="line">        null    :   <span class="string">&quot;#&quot;</span>,  <span class="comment">// 空节点</span></span><br><span class="line">        sep     :   <span class="string">&quot;,&quot;</span>,  <span class="comment">// 分隔符</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h1><h2 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h2><p>&emsp;&emsp;如下二叉树（<code>#</code> 代表空指针 null），可以直观看出前序遍历做的事情：</p>
+<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;那么 <code>res = [1,2,-1,4,-1,-1,3,-1,-1]</code>，这就是将二叉树「打平」到了一个列表中，其中 -1 代表 null。</p>
+<p>那么，将二叉树打平到一个字符串中也是完全一样的，至此，我们已经可以写出序列化函数 <code>serialize</code> 的代码了：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Serializes a tree to a single string.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">serialize</span><span class="params">(root *TreeNode)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        this.s = this.s + this.null + this.sep</span><br><span class="line">        <span class="keyword">return</span> this.s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    node := strconv.Itoa(root.Val)</span><br><span class="line">    this.s = this.s + node + this.sep</span><br><span class="line">    this.serialize(root.Left)</span><br><span class="line">    this.serialize(root.Right)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> this.s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;现在，思考一下如何写 <code>deserialize</code> 函数，将字符串反过来构造二叉树。首先我们可以把字符串转化成列表：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.s = <span class="string">&quot;1,2,#,4,#,#,3,#,#,&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;一般语境下，单单前序遍历结果是不能还原二叉树结构的，因为缺少空指针的信息，至少要得到前、中、后序遍历中的两种才能还原二叉树。但是这里的 <code>node</code>列表包含空指针的信息，所以只使用 <code>node</code> 列表就可以还原二叉树。那么，反序列化过程也是一样，<strong>先确定根节点 <code>root</code>，然后遵循前序遍历的规则，递归生成左右子树即可</strong>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Deserializes your encoded data to tree.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">deserialize</span><span class="params">(data <span class="keyword">string</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    m := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>) </span><br><span class="line">    j := <span class="number">0</span></span><br><span class="line">    f := <span class="number">0</span></span><br><span class="line">    x := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(data); i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> data[i] == <span class="string">&#x27;,&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;#&#x27;</span> &#123;	<span class="comment">// 当前节点是空指针</span></span><br><span class="line">            m = <span class="built_in">append</span>(m,math.MinInt32)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;-&#x27;</span> &#123;	<span class="comment">// 当前节点是负值</span></span><br><span class="line">            <span class="keyword">for</span> j = i+<span class="number">1</span>; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span>+x</span><br><span class="line">            &#125;           </span><br><span class="line">            m = <span class="built_in">append</span>(m,<span class="number">-1</span>*f)</span><br><span class="line">            i = j</span><br><span class="line">            f = <span class="number">0</span> </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j = i; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span>+x</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            m = <span class="built_in">append</span>(m,f)</span><br><span class="line">            i = j</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> helper(&amp;m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helper</span><span class="params">(m *[]<span class="keyword">int</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(*m) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 列表最左侧就是根节点</span></span><br><span class="line">    first := (*m)[<span class="number">0</span>]</span><br><span class="line">    *m = (*m)[<span class="number">1</span>:]	<span class="comment">// 引用全局变量进行操作，就不会随递归栈进行变化</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> first == math.MinInt32 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    root := &amp;TreeNode&#123;first,<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">    root.Left = helper(m)</span><br><span class="line">    root.Right = helper(m)</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="后续遍历"><a href="#后续遍历" class="headerlink" title="后续遍历"></a>后续遍历</h2><p>&emsp;&emsp;明白了前序遍历的解法，后序遍历就比较容易理解了，我们首先实现 <code>serialize</code> 序列化方法，只需要稍微修改辅助方法即可：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">serialize</span><span class="params">(root *TreeNode)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        this.s = this.s + this.null + this.sep</span><br><span class="line">        <span class="keyword">return</span> this.s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    this.serialize(root.Left)</span><br><span class="line">    this.serialize(root.Right)</span><br><span class="line"></span><br><span class="line">    x := strconv.Itoa(root.Val)</span><br><span class="line">    this.s = this.s + x + this.sep</span><br><span class="line">    <span class="keyword">return</span> this.s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;后序遍历导致结果的顺序发生变化：</p>
+<p><img lazyload src="/images/loading.svg" data-src="postorder.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;关键的难点在于，如何实现后序遍历的 <code>deserialize</code> 方法呢？是不是也简单地将关键代码放到后序遍历的位置就行了呢？**<code>deserialize</code> 方法首先寻找 <code>root</code> 节点的值，然后递归计算左右子节点<strong>。那么我们这里也应该顺着这个基本思路走，后续遍历中，<code>root</code> 节点的值能不能找到？<code>root</code> 的值是列表的最后一个元素。我们应该从后往前取出列表元素，先用最后一个元素构造 <code>root</code>，然后递归调用生成 <code>root</code> 的左右子树。</strong>注意，根据上图，从后往前在 <code>nodes</code> 列表中取元素，一定要先构造 <code>root.right</code> 子树，后构造 <code>root.left</code> 子树**。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">deserialize</span><span class="params">(data <span class="keyword">string</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    m := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        f = <span class="number">0</span></span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(data);i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> data[i] == <span class="string">&#x27;,&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;#&#x27;</span> &#123;</span><br><span class="line">            m = <span class="built_in">append</span>(m,math.MinInt32)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;-&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j=i+<span class="number">1</span>; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span> + x</span><br><span class="line">            &#125;</span><br><span class="line">            m = <span class="built_in">append</span>(m,<span class="number">-1</span>*f)</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">            i = j</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j=i; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span> + x</span><br><span class="line">            &#125;</span><br><span class="line">            m = <span class="built_in">append</span>(m,f)</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">            i = j</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> helper(&amp;m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helper</span><span class="params">(m *[]<span class="keyword">int</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(*m) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    n := <span class="built_in">len</span>(*m)</span><br><span class="line">    last := (*m)[n<span class="number">-1</span>]</span><br><span class="line">    *m = (*m)[:n<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> last == math.MinInt32 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    root := &amp;TreeNode&#123;</span><br><span class="line">        Val     :       last,</span><br><span class="line">        Left    :       <span class="literal">nil</span>,</span><br><span class="line">        Right   :       <span class="literal">nil</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    root.Right = helper(m)	<span class="comment">//一定要先构造 root.right 子树</span></span><br><span class="line">    root.Left = helper(m)</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="中序遍历-不能实现"><a href="#中序遍历-不能实现" class="headerlink" title="中序遍历(不能实现)"></a>中序遍历(不能实现)</h2><p>&emsp;&emsp;先说结论，中序遍历的方式行不通，因为无法实现反序列化方法 <code>deserialize</code>。</p>
+<p>&emsp;&emsp;序列化方法 <code>serialize</code> 依然容易，只要把字符串的拼接操作放到中序遍历的位置就行了。但是，我们刚才说了，要想实现反序列方法，首先要构造 <code>root</code> 节点。前序遍历得到的 <code>nodes</code> 列表中，第一个元素是 <code>root</code> 节点的值；后序遍历得到的 <code>nodes</code> 列表中，最后一个元素是 <code>root</code> 节点的值。</p>
+<p>&emsp;&emsp;而中序遍历的<code>root</code> 的值被夹在两棵子树的中间，也就是在 <code>nodes</code> 列表的中间，我们不知道确切的索引位置，所以无法找到 <code>root</code> 节点，也就无法进行反序列化。</p>
+<h2 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h2><p>序列化：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">serialize</span><span class="params">(root *TreeNode)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        this.s = this.s + this.null + this.sep</span><br><span class="line">        <span class="keyword">return</span> this.s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    q := []*TreeNode&#123;root&#125;</span><br><span class="line">    nodeNum := <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; nodeNum&gt;<span class="number">0</span>; i++ &#123;</span><br><span class="line">        p := []*TreeNode&#123;&#125;</span><br><span class="line">        nodeNum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;<span class="built_in">len</span>(q); j++ &#123;</span><br><span class="line">            node := q[j]</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node == <span class="literal">nil</span> &#123;</span><br><span class="line">                this.s = this.s + this.null + this.sep</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            this.s = this.s + strconv.Itoa(node.Val) + this.sep</span><br><span class="line">            <span class="keyword">if</span> node.Left != <span class="literal">nil</span> &#123;</span><br><span class="line">                nodeNum++</span><br><span class="line">                p = <span class="built_in">append</span>(p,node.Left)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                p = <span class="built_in">append</span>(p,<span class="literal">nil</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node.Right != <span class="literal">nil</span> &#123;</span><br><span class="line">                nodeNum++</span><br><span class="line">                p = <span class="built_in">append</span>(p,node.Right)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                p = <span class="built_in">append</span>(p,<span class="literal">nil</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        q = p</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> this.s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>层级遍历序列化得出的结果如下图：</p>
+<p><img lazyload src="/images/loading.svg" data-src="3.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;可以看到，每一个非空节点都会对应两个子节点，<strong>那么反序列化的思路也是用队列进行层级遍历，同时用索引 <code>i</code> 记录对应子节点的位置</strong>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">deserialize</span><span class="params">(data <span class="keyword">string</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    m := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        f = <span class="number">0</span></span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(data);i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> data[i] == <span class="string">&#x27;,&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;#&#x27;</span> &#123;</span><br><span class="line">            m = <span class="built_in">append</span>(m,math.MinInt32)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;-&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j=i+<span class="number">1</span>; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span> + x</span><br><span class="line">            &#125;</span><br><span class="line">            m = <span class="built_in">append</span>(m,<span class="number">-1</span>*f)</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">            i = j</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j=i; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span> + x</span><br><span class="line">            &#125;</span><br><span class="line">            m = <span class="built_in">append</span>(m,f)</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">            i = j</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> helper(m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helper</span><span class="params">(m []<span class="keyword">int</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(m) == <span class="number">0</span> || m[<span class="number">0</span>] == math.MinInt32 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    root := &amp;TreeNode&#123;m[<span class="number">0</span>],<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">    q := []*TreeNode&#123;root&#125;</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">1</span>; i&lt;<span class="built_in">len</span>(m); &#123;</span><br><span class="line">        parent := q[<span class="number">0</span>]</span><br><span class="line">        q = q[<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> m[i] != math.MinInt32 &#123;	<span class="comment">// 左子树</span></span><br><span class="line">            parent.Left = &amp;TreeNode&#123;m[i],<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">            q = <span class="built_in">append</span>(q,parent.Left)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parent.Left = <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        i++</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> m[i] != math.MinInt32 &#123;	<span class="comment">// 右子树</span></span><br><span class="line">            parent.Right = &amp;TreeNode&#123;m[i],<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">            q = <span class="built_in">append</span>(q,parent.Right)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parent.Right = <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：二叉树的序列化和反序列化</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2021-10-02 17:19:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2021/10/02/二叉树的序列化和反序列化/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/09/27/%E4%BA%8C%E5%8F%89%E5%A0%86%E7%9A%84Go%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">二叉堆的Go语言实现</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">序列化的目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">问题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%9E%84%E9%80%A0"><span class="nav-number">3.1.</span> <span class="nav-text">结构体构造</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">解题方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">4.1.</span> <span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E9%81%8D%E5%8E%86"><span class="nav-number">4.2.</span> <span class="nav-text">后续遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86-%E4%B8%8D%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.3.</span> <span class="nav-text">中序遍历(不能实现)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">4.4.</span> <span class="nav-text">层序遍历</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
