@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            最大栈 |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">最大栈</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-10-03 15:16:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%9C%80%E5%A4%A7%E6%A0%88/">最大栈</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="最大栈介绍"><a href="#最大栈介绍" class="headerlink" title="最大栈介绍"></a>最大栈介绍</h1><p>&emsp;&emsp;直接参考Leetcode上895题：<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-frequency-stack/">895. 最大频率栈<i class="fas fa-external-link-alt"></i></a></p>
+<p>实现 <code>FreqStack</code>，模拟类似栈的数据结构的操作的一个类。</p>
+<p><code>FreqStack</code> 有两个函数：</p>
+<ul>
+<li><code>push(int x)</code>，将整数 <code>x</code> 推入栈中。</li>
+<li><code>pop()</code>，它移除并返回栈中出现最频繁的元素。<ul>
+<li>如果最频繁的元素不只一个，则移除并返回最接近栈顶的元素。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[&quot;FreqStack&quot;,&quot;push&quot;,&quot;push&quot;,&quot;push&quot;,&quot;push&quot;,&quot;push&quot;,&quot;push&quot;,&quot;pop&quot;,&quot;pop&quot;,&quot;pop&quot;,&quot;pop&quot;],</span><br><span class="line">[[],[5],[7],[5],[7],[4],[5],[],[],[],[]]</span><br><span class="line">输出：[null,null,null,null,null,null,null,5,7,5,4]</span><br><span class="line">解释：</span><br><span class="line">执行六次 .push 操作后，栈自底向上为 [5,7,5,7,4,5]。然后：</span><br><span class="line"></span><br><span class="line">pop() -&gt; 返回 5，因为 5 是出现频率最高的。</span><br><span class="line">栈变成 [5,7,5,7,4]。</span><br><span class="line"></span><br><span class="line">pop() -&gt; 返回 7，因为 5 和 7 都是频率最高的，但 7 最接近栈顶。</span><br><span class="line">栈变成 [5,7,5,4]。</span><br><span class="line"></span><br><span class="line">pop() -&gt; 返回 5 。</span><br><span class="line">栈变成 [5,7,4]。</span><br><span class="line"></span><br><span class="line">pop() -&gt; 返回 4 。</span><br><span class="line">栈变成 [5,7]。</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>对 <code>FreqStack.push(int x)</code> 的调用中 <code>0 &lt;= x &lt;= 10^9</code>。</li>
+<li>如果栈的元素数目为零，则保证不会调用 <code>FreqStack.pop()</code>。</li>
+<li>单个测试样例中，对 <code>FreqStack.push</code> 的总调用次数不会超过 <code>10000</code>。</li>
+<li>单个测试样例中，对 <code>FreqStack.pop</code> 的总调用次数不会超过 <code>10000</code>。</li>
+<li>所有测试样例中，对 <code>FreqStack.push</code> 和 <code>FreqStack.pop</code> 的总调用次数不会超过 <code>150000</code>。</li>
+</ul>
+<h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>&emsp;&emsp;<strong>这种设计数据结构的问题，主要是要搞清楚问题的难点在哪里，然后结合各种基本数据结构的特性，高效实现题目要求的 API</strong>。</p>
+<p>那么，我们仔细思考一下 <code>push</code> 和 <code>pop</code> 方法，难点如下：</p>
+<p>1、每次 <code>pop</code> 时，必须要知道频率最高的元素是什么。</p>
+<p>2、如果频率最高的元素有多个，还得知道哪个是最近 <code>push</code> 进来的元素是哪个。</p>
+<p>为了实现上述难点，我们要做到以下几点：</p>
+<p>1、肯定要有一个变量 <code>maxFreq</code> 记录当前栈中最高的频率是多少。</p>
+<p>2、我们得知道一个频率 <code>freq</code> 对应的元素有哪些，且这些元素要有时间顺序。</p>
+<p>3、随着 <code>pop</code> 的调用，每个 <code>val</code> 对应的频率会变化，所以还得维持一个映射记录每个 <code>val</code> 对应的 <code>freq</code>。</p>
+<h1 id="设计实现"><a href="#设计实现" class="headerlink" title="设计实现"></a>设计实现</h1><p>&emsp;&emsp;综上，我们可以先实现 <code>FreqStack</code> 所需的数据结构：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> FreqStack <span class="keyword">struct</span> &#123;</span><br><span class="line">    maxFreq     <span class="keyword">int</span>     <span class="comment">// 出现最大频数的记录</span></span><br><span class="line">    valToFreq   <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span></span><br><span class="line">    freqToVal   <span class="keyword">map</span>[<span class="keyword">int</span>]*stack</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span> <span class="title">FreqStack</span></span> &#123;	<span class="comment">// 初始化最大栈</span></span><br><span class="line">    mf := <span class="number">0</span></span><br><span class="line">    vf := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    fv := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*stack,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> FreqStack&#123;</span><br><span class="line">        maxFreq     :       mf,</span><br><span class="line">        valToFreq   :       vf,</span><br><span class="line">        freqToVal   :       fv,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;我们来亲自构建<code>stack</code>这一数据结构及其方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> stack <span class="keyword">struct</span> &#123;			<span class="comment">// 栈可以用一个简单的切片来表示</span></span><br><span class="line">    list        []<span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">constructorStack</span><span class="params">()</span> *<span class="title">stack</span></span> &#123;	<span class="comment">// 初始化栈</span></span><br><span class="line">    l := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> &amp;stack&#123;</span><br><span class="line">        list    :       l,   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *stack)</span> <span class="title">push</span><span class="params">(val <span class="keyword">int</span>)</span></span> &#123;		<span class="comment">// 入栈方法</span></span><br><span class="line">    s.list = <span class="built_in">append</span>(s.list,val)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *stack)</span> <span class="title">pop</span><span class="params">()</span> <span class="title">int</span></span> &#123;		<span class="comment">// 出栈方法，返回出栈的元素</span></span><br><span class="line">    n := <span class="built_in">len</span>(s.list)</span><br><span class="line">    old := s.list</span><br><span class="line">    last := old[n<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> &#123;</span><br><span class="line">        s.list = []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        s.list = old[:n<span class="number">-1</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> last</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *stack)</span> <span class="title">len</span><span class="params">()</span> <span class="title">int</span></span> &#123;		<span class="comment">// 计算栈的容量的方法</span></span><br><span class="line">    n := <span class="built_in">len</span>(s.list)</span><br><span class="line">    <span class="keyword">return</span> n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;其实这有点类似前文<a href="https://jiahaohong1997.github.io/tags/LFU/">LFU算法</a>，注意 <code>freqToVal</code> 中 <code>val</code> 列表用一个栈实现，如果一个 <code>freq</code> 对应的元素有多个，根据栈的特点，可以首先取出最近添加的元素。</p>
+<p>要记住在 <code>push</code> 和 <code>pop</code> 方法中同时修改 <code>maxFreq</code>、<code>VF</code> 表、<code>FV</code> 表，否则容易出现 bug。</p>
+<h2 id="Push方法"><a href="#Push方法" class="headerlink" title="Push方法"></a><code>Push</code>方法</h2><p>现在，我们可以来实现 <code>push</code> 方法了。</p>
+<p>我们要分别实现对<code>FreqStack</code>结构体中三个元素的更新。</p>
+<ul>
+<li><code>valToFreq(VF表)</code>：如果<code>val</code>对应的映射存在，则映射到的值加1；如果不存在，则初始为1；</li>
+<li><code>freqToVal(FV表)</code>：如果新加入的<code>val</code>对应的新的<code>freq</code>在<code>FV</code>表中没有初始化的栈，则创建一个新栈，将该<code>val</code>入栈；否则直接入栈；</li>
+<li><code>maxFreq</code>：比较新的<code>freq</code>与原始的<code>maxFreq</code>，取大者作为<code>maxFreq</code>。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *FreqStack)</span> <span class="title">Push</span><span class="params">(val <span class="keyword">int</span>)</span></span>  &#123;</span><br><span class="line">    <span class="keyword">var</span> freq <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改vf表</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.valToFreq[val]; !ok &#123;</span><br><span class="line">        this.valToFreq[val] = <span class="number">1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        this.valToFreq[val]++</span><br><span class="line">    &#125;</span><br><span class="line">    freq = this.valToFreq[val]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改fv表</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.freqToVal[freq]; !ok &#123;</span><br><span class="line">        this.freqToVal[freq] = constructorStack()</span><br><span class="line">        this.freqToVal[freq].push(val)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        this.freqToVal[freq].push(val)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改最大频数</span></span><br><span class="line">    <span class="keyword">if</span> freq &gt; this.maxFreq &#123;</span><br><span class="line">        this.maxFreq = freq</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Pop-方法"><a href="#Pop-方法" class="headerlink" title="Pop()方法"></a><code>Pop()</code>方法</h2><p>我们要分别实现对<code>FreqStack</code>结构体中三个元素的更新。</p>
+<ul>
+<li><code>freqToVal(FV表)</code>：找到<code>maxFreq</code>在<code>FV</code>表中的映射，如果映射到的<code>stack</code>容量为1(说明只有一个数的频率是<code>maxFreq</code>)，则将<code>maxFreq</code>减一并将栈顶元素出栈；否则直接将栈顶元素出栈；</li>
+<li><code>valToFreq(VF表)</code>：找到出栈元素对应的<code>VF</code>表的映射（代表其出现频率），将其直接减一；</li>
+<li><code>maxFreq</code>：已经在修改<code>FV</code>表时进行了选择性的修改，不做特殊操作。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *FreqStack)</span> <span class="title">Pop</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> this.maxFreq == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> popNum <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改fv表</span></span><br><span class="line">    freq := this.maxFreq</span><br><span class="line">    <span class="keyword">if</span> this.freqToVal[freq].<span class="built_in">len</span>() == <span class="number">1</span> &#123;</span><br><span class="line">        popNum = this.freqToVal[freq].pop()</span><br><span class="line">        this.maxFreq--      <span class="comment">// 修改最大频数</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        popNum = this.freqToVal[freq].pop() </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改vf表</span></span><br><span class="line">    this.valToFreq[popNum]--</span><br><span class="line">    <span class="keyword">return</span> popNum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>完整的最大栈实现代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> stack <span class="keyword">struct</span> &#123;</span><br><span class="line">    list        []<span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *stack)</span> <span class="title">push</span><span class="params">(val <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    s.list = <span class="built_in">append</span>(s.list,val)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *stack)</span> <span class="title">pop</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(s.list)</span><br><span class="line">    old := s.list</span><br><span class="line">    last := old[n<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> &#123;</span><br><span class="line">        s.list = []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        s.list = old[:n<span class="number">-1</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> last</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *stack)</span> <span class="title">len</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(s.list)</span><br><span class="line">    <span class="keyword">return</span> n</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">constructorStack</span><span class="params">()</span> *<span class="title">stack</span></span> &#123;</span><br><span class="line">    l := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> &amp;stack&#123;</span><br><span class="line">        list    :       l,   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> FreqStack <span class="keyword">struct</span> &#123;</span><br><span class="line">    maxFreq     <span class="keyword">int</span>     <span class="comment">// 出现最大频数的记录</span></span><br><span class="line">    valToFreq   <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span></span><br><span class="line">    freqToVal   <span class="keyword">map</span>[<span class="keyword">int</span>]*stack</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span> <span class="title">FreqStack</span></span> &#123;</span><br><span class="line">    mf := <span class="number">0</span></span><br><span class="line">    vf := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    fv := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*stack,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> FreqStack&#123;</span><br><span class="line">        maxFreq     :       mf,</span><br><span class="line">        valToFreq   :       vf,</span><br><span class="line">        freqToVal   :       fv,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *FreqStack)</span> <span class="title">Push</span><span class="params">(val <span class="keyword">int</span>)</span></span>  &#123;</span><br><span class="line">    <span class="keyword">var</span> freq <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改vf表</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.valToFreq[val]; !ok &#123;</span><br><span class="line">        this.valToFreq[val] = <span class="number">1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        this.valToFreq[val]++</span><br><span class="line">    &#125;</span><br><span class="line">    freq = this.valToFreq[val]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改fv表</span></span><br><span class="line">    <span class="keyword">if</span> _,ok := this.freqToVal[freq]; !ok &#123;</span><br><span class="line">        this.freqToVal[freq] = constructorStack()</span><br><span class="line">        this.freqToVal[freq].push(val)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        this.freqToVal[freq].push(val)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改最大频数</span></span><br><span class="line">    <span class="keyword">if</span> freq &gt; this.maxFreq &#123;</span><br><span class="line">        this.maxFreq = freq</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *FreqStack)</span> <span class="title">Pop</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> this.maxFreq == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> popNum <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改fv表</span></span><br><span class="line">    freq := this.maxFreq</span><br><span class="line">    <span class="keyword">if</span> this.freqToVal[freq].<span class="built_in">len</span>() == <span class="number">1</span> &#123;</span><br><span class="line">        popNum = this.freqToVal[freq].pop()</span><br><span class="line">        this.maxFreq--      <span class="comment">// 修改最大频数</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        popNum = this.freqToVal[freq].pop() </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改vf表</span></span><br><span class="line">    this.valToFreq[popNum]--</span><br><span class="line">    <span class="keyword">return</span> popNum</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your FreqStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * obj := Constructor();</span></span><br><span class="line"><span class="comment"> * obj.Push(val);</span></span><br><span class="line"><span class="comment"> * param_2 := obj.Pop();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：最大栈</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2021-10-03 15:16:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2021/10/03/最大栈/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/10/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">二叉树的序列化和反序列化</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%A0%88%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">最大栈介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">设计实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Push%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">Push方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pop-%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">Pop()方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
