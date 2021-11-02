@@ -2833,6 +2833,23 @@
 <h2 id="Redis的持久化"><a href="#Redis的持久化" class="headerlink" title="Redis的持久化"></a>Redis的持久化</h2><h3 id="RDB（Redis-Database）"><a href="#RDB（Redis-Database）" class="headerlink" title="RDB（Redis Database）"></a>RDB（Redis Database）</h3><p>&emsp;&emsp;Redis是内存数据库，如果不将内存中的数据库状态保存在磁盘，一旦服务器退出进程，服务器中的数据库状态也会消失。所以Redis提供了持久化功能。</p>
 <p>&emsp;&emsp;在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是Snapshot快照，它会腐蚀是将快照文件直接读到内存当中。</p>
 <p>&emsp;&emsp;Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入一个临时文件中，待持久化过程都结束了，再用这个临时文件替换掉上次持久化好的文件。整个过程中，主进程不进行任何OI操作。这就确保了极高的性能。如果需进行大规模的数据恢复，且对于数据恢复的完整性不是特别敏感，那RDB方式要比AOF更加高效。RDB的缺点是最后一次持久化的数据可能丢失。</p>
+<p>&emsp;&emsp;rdb保存的文件是dump.rdb，可以在配置文件的快照项下修改。修改持久化的频率为：每60秒进行了5次操作就保存一次。</p>
+<p><img lazyload src="/images/loading.svg" data-src="8.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;下图设置了dump.rdb的保存地址。</p>
+<p><img lazyload src="/images/loading.svg" data-src="9.jpg" alt="avatar"></p>
+<h4 id="触发机制"><a href="#触发机制" class="headerlink" title="触发机制"></a>触发机制</h4><p>1、save的规则满足的情况下，会自动触发rdb规则</p>
+<p>2、执行flushall命令，会触发rdb规则</p>
+<p>3、退出redis，会产生rdb文件</p>
+<h4 id="恢复rdb文件"><a href="#恢复rdb文件" class="headerlink" title="恢复rdb文件"></a>恢复rdb文件</h4><p>1、只需将rdb文件放到redis的启动项中</p>
+<p>2、查看需要存放的位置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config get dir  <span class="comment"># 查看rdb文件的启动地址</span></span><br><span class="line">1) <span class="string">&quot;dir&quot;</span></span><br><span class="line">2) <span class="string">&quot;/usr/local/var/db/redis&quot;</span> <span class="comment"># 如果在这个目录下存在rdb文件，启动时就会自动恢复其中的数据</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>1、适合大规模的数据恢复</p>
+<p>2、对数据的完整性要求不高</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>1、需要一定的时间间隔进行自动化保存，如果redis意外宕机了，最后一次修改的数据就没了</p>
+<p>2、fork进程的时候，会占用一定的内存空间</p>
 ]]></content>
       <categories>
         <category>中间件</category>
