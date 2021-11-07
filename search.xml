@@ -2850,6 +2850,44 @@
 <p>2、对数据的完整性要求不高</p>
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>1、需要一定的时间间隔进行自动化保存，如果redis意外宕机了，最后一次修改的数据就没了</p>
 <p>2、fork进程的时候，会占用一定的内存空间</p>
+<h3 id="AOF（Append-Only-File）"><a href="#AOF（Append-Only-File）" class="headerlink" title="AOF（Append Only File）"></a>AOF（Append Only File）</h3><p>&emsp;&emsp;将我们的所有命令记录下来（history），恢复的时候再重新执行记录的命令。</p>
+<p>&emsp;&emsp;以日志的形式来记录每个写操作，将Redis执行过的所有指令记录下来（读操作不记录），只许追加文件但不可以改写文件，redis启动之初会读取该文件重新构建数据结构，换言之，redis重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
+<p>&emsp;&emsp;AOF保存的是appendonly.aof文件。AOF模式默认是不开启的，需要手动设置开启。只需要将appendonly改为yes就可以开启aof。</p>
+<p> <img lazyload src="/images/loading.svg" data-src="10.jpg" alt="avatar"></p>
+<p>&emsp;&emsp;appendonly.aof的保存路径如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config get dir  <span class="comment"># 查看rdb文件的启动地址</span></span><br><span class="line">1) <span class="string">&quot;dir&quot;</span></span><br><span class="line">2) <span class="string">&quot;/usr/local/var/db/redis&quot;</span> <span class="comment"># 如果在这个目录下存在rdb文件，启动时就会自动恢复其中的数据</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>写入的频率</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># appendfsync always</span></span><br><span class="line">appendfsync everysec</span><br><span class="line"><span class="comment"># appendfsync no</span></span><br><span class="line"></span><br><span class="line">no-appendfsync-on-rewrite no</span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
+
+<p>如果aof文件的大小大雨64mB，会fork一个新的进程来讲文件进行重写。aof默认文件无限追加，文件会越来越大。</p>
+<p>&emsp;&emsp;如果appendonly.aof文件有错误，此时redis是启动不起来的，需要先修复这个aof文件。redis为我们提供了一个工具：<code>redis-check-aof</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-check-aof --fix appendonly.aof</span><br></pre></td></tr></table></figure>
+
+<p>如果文件正常，重启即可直接恢复了。</p>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>1、每一次修改都同步，文件的完整性会更加好</p>
+<p>2、每秒同步一次，可能只会丢失一秒的数据</p>
+<p>3、从不同步，效率最高</p>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><p>1、相对于数据文件来说，aof远远大于rdb，恢复的速度也比rdb慢</p>
+<p>2、aof运行效率也要比rdb慢，所以redis默认采用rdb持久化</p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><ul>
+<li>RDb持久化方式能够在指定的时间间隔内对数据进行快照存储</li>
+<li>AOF持久化方式记录每次对服务器的写操作，当服务器重启的时候会重新执行这些命令来恢复原始的数据，AOF命令以Redis协议追加每次写的操作到文件末尾，Redis还能对后台进行重写，是的AOF文件的体积不至于过大</li>
+<li>只做缓存，如果你希望你的数据只在服务器端存在，可以不使用任何持久化</li>
+<li>同时开启两种持久化方式<ul>
+<li>在这种情况下，当redis重启的时候会优先载入AOF文件来恢复原始的数据，因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要更完整</li>
+<li>RDB的数据不实时，同时使用两者时服务器重启也只会找AOF文件。但RDB更适合用于备份数据库（AOF在不断变化不好备份），快速重启，而且不会有AOF可能潜在的bug。</li>
+</ul>
+</li>
+<li>性能建议<ul>
+<li>因为RDB文件只用做后备用途，见一直在slave上持久化RDB文件，而且只要15分钟备份一次就够了，只保留save 900 1 这条规则</li>
+<li>如果Enable AOF，好处是在最恶劣的情况下也只会丢失不超多2秒的数据，启动脚本较简单，只需要load自己的AOF文件就可以了，代价一是带来了持续的IO，二是AOF rewrite的最后将 rewrite 过程中产生的新数据写到新文件造成的阻塞几乎是不可避免的，只要硬盘许可，应该尽量减少AOF rewrite的频率，AOF重写默认64mB太小了，可以设到5GB以上，默认超过原大小100%大小重写可以改到适当的数值。</li>
+<li>如果不Enable AOF，仅靠 Mater-Slave Replication 实现高可用性也可以，能省掉一大笔IO，也减少了rewrite时带来的系统波动。代价是如果Master/Slave同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个Master/Slave中的RDB文件，载入较新的那个。</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>中间件</category>
