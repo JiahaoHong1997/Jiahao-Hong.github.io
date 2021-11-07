@@ -2888,6 +2888,26 @@
 </ul>
 </li>
 </ul>
+<h2 id="Redis订阅发布"><a href="#Redis订阅发布" class="headerlink" title="Redis订阅发布"></a>Redis订阅发布</h2><p>订阅端：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; subscribe JiahaoHong1997  <span class="comment"># 订阅一个频道</span></span><br><span class="line">Reading messages... (press Ctrl-C to quit)</span><br><span class="line">1) <span class="string">&quot;subscribe&quot;</span></span><br><span class="line">2) <span class="string">&quot;JiahaoHong1997&quot;</span></span><br><span class="line">3) (<span class="built_in">integer</span>) 1</span><br><span class="line"><span class="comment"># 等待读取推送的消息</span></span><br><span class="line">1) <span class="string">&quot;message&quot;</span>	<span class="comment"># 消息</span></span><br><span class="line">2) <span class="string">&quot;JiahaoHong1997&quot;</span>	<span class="comment"># 来自的频道</span></span><br><span class="line">3) <span class="string">&quot;hello,jiahao&quot;</span>	<span class="comment"># 消息的具体内容</span></span><br><span class="line">1) <span class="string">&quot;message&quot;</span></span><br><span class="line">2) <span class="string">&quot;JiahaoHong1997&quot;</span></span><br><span class="line">3) <span class="string">&quot;ganbadie&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>发送端：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; publish JiahaoHong1997 <span class="string">&quot;hello,jiahao&quot;</span> <span class="comment"># 发布者发布消息到频道</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; publish JiahaoHong1997 <span class="string">&quot;ganbadie&quot;</span>	<span class="comment"># 发布者发布消息到频道</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>原理</p>
+</blockquote>
+<p>&emsp;&emsp;Redis是用C实现的，通过分析Redis源码里的pubsub.c文件，了解发布和订阅机制的底层实现，借此加深对Redis的理解。</p>
+<p>&emsp;&emsp;Redis通过publish、subscribe和psubscribe等命令实现发布和订阅功能。通过subscribe命令订阅某频道后，redis-server里维护了一个字典，字典的关键词是一个个channel，而字典的值则是一个链表，链表中保存了所有订阅这个channel的客户端。subscribe命令的关键，就是将客户端添加到给定的channel的订阅列表中。</p>
+<p>&emsp;&emsp;通过publish命令向订阅者发送消息，redis-server会使用给定的频道作为键，在它所维护的channel字典中朝着记录了订阅这个频道的所有客户端的链表，链里这个链表，将消息发布给订阅者。</p>
+<p>&emsp;&emsp;在Redis中，可以设定对某一个key值进行消息发布及消息订阅，当一个key值上进行了消息发布后，所有的订阅它的客户端会收到相应的消息。这一功能最明显的用法就是用作实时消息系统，比如普通的即时聊天，群聊等功能。</p>
+<p>使用场景：</p>
+<p>1、实时消息系统</p>
+<p>2、实时聊天（频道当作聊天室，将信息回给所有人即可）</p>
+<p>3、订阅、关注系统</p>
+<p>稍微复杂的场景通常使用消息队列。</p>
 ]]></content>
       <categories>
         <category>中间件</category>
