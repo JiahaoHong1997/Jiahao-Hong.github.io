@@ -255,7 +255,79 @@
 <li>数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余方式；</li>
 <li>故障恢复：当主节点出现问题时，可以由从节点提供服务，实现快速的故障恢复；实际上是一种服务的冗余；</li>
 <li>负载均衡：在主从复制的基础上，配合读写分离，可以由主节点提供写服务，由从节点提供读服务（即写Redis数据时应用连接主节点，读Redis数据时应用连接从节点），分担服务器负载；尤其是在写少读多的场景下，通过多个从节点分担读负载，可以大大提高Redis服务器的并发量；</li>
-<li>高可用基石：除了上述作用以外，主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
+<li>高可用(集群)基石：除了上述作用以外，主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
+</ul>
+<p>&emsp;&emsp;一般来说，要将Redis运用于工程项目中，只使用一台Redis是万万不能的（宕机），原因如下：</p>
+<ul>
+<li>从结构上，单个Redis服务器会发生单点故障，并且一台服务器需要处理所有的请求负载，压力较大；</li>
+<li>从容量上，单个Redis服务器内存容量有限，就算一台Redis服务器内存容量为256GB，也不能将所有的内存用作Redis存储内存，一般来说，单台Redis最大使用内存不应该超过20GB</li>
+</ul>
+<p>&emsp;&emsp;对于电商网站上的商品，一般都是一次上传，无数次浏览的，也就是“多读少写”。</p>
+<h2 id="环境配置-单机上模拟，多机同理"><a href="#环境配置-单机上模拟，多机同理" class="headerlink" title="环境配置(单机上模拟，多机同理)"></a>环境配置(单机上模拟，多机同理)</h2><p>只配置从库，不用配置主库。</p>
+<p>查看当前库的信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0   <span class="comment"># 没有从机</span></span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:05fce2cd1d05bab4c0c503cb7ef7c5c4c1b445e0</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:0</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:0</span><br><span class="line">repl_backlog_histlen:0</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;将redis的配置文件复制若干次（要配置的从节点个数）：</p>
+<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<p>然后修改每个配置文件中的项目如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">port 6380  <span class="comment"># 端口号要改成从服务的节点</span></span><br><span class="line">pidfile /var/run/redis_6380.pid  <span class="comment"># pid file也要改成对应的名字</span></span><br><span class="line">logfile <span class="string">&quot;6380.log&quot;</span>	<span class="comment"># 日志文件名也要对应</span></span><br><span class="line">dbfilename dump6380.rdb  <span class="comment"># rdb文件命名也要修改</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>然后分别启动主从服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis-server redis-config/redis79.conf</span><br><span class="line">redis-server redis-config/redis80.conf</span><br><span class="line">redis-server redis-config/redis81.conf</span><br></pre></td></tr></table></figure>
+
+<p>查看进程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep redis</span><br><span class="line">  501 76856     1   0 12:08上午 ??         0:00.15 redis-server 127.0.0.1:6379</span><br><span class="line">  501 76963     1   0 12:09上午 ??         0:00.09 redis-server 127.0.0.1:6380</span><br><span class="line">  501 77118     1   0 12:09上午 ??         0:00.02 redis-server 127.0.0.1:6381</span><br><span class="line">  501 77166 73157   0 12:09上午 ttys004    0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox redis</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="一主二从"><a href="#一主二从" class="headerlink" title="一主二从"></a>一主二从</h3><p>&emsp;&emsp;默认情况下，redis服务都是主机，一般情况下只需要配置从机。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## port 6379</span></span><br><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:35cf0a87f4009c0db73dc38088333e56c6ae4ebd</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:0</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:0</span><br><span class="line">repl_backlog_histlen:0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 6380</span></span><br><span class="line">127.0.0.1:6380&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:89cbbf9896b1e99c65b6ce88e7d67af16bbb49f6</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:0</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:0</span><br><span class="line">repl_backlog_histlen:0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 6381</span></span><br><span class="line">127.0.0.1:6381&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:e0f2e6d24e37f5ce033a886d647c641b10289329</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:0</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:0</span><br><span class="line">repl_backlog_histlen:0</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;若将6379端口上的服务设为主机，6380、6381端口上的服务为从机。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># slaveof [host] [port]</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6380&gt; slaveof 127.0.0.1 6379</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">127.0.0.1:6380&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:slave	<span class="comment"># 角色转变为从机</span></span><br><span class="line">master_host:127.0.0.1	<span class="comment"># 主机地址</span></span><br><span class="line">master_port:6379	<span class="comment"># 主机端口</span></span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:2</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:84</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">replica_announced:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:494f98ba6749c752bb7ff2fb6e47f7c89c5712b8</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:84</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:84</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6381&gt; slaveof 127.0.0.1 6379</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">127.0.0.1:6381&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:3</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:364</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">replica_announced:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:494f98ba6749c752bb7ff2fb6e47f7c89c5712b8</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:364</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:351</span><br><span class="line">repl_backlog_histlen:14</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;再查看一下主机（6379）上的主从信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">slave0:ip=127.0.0.1,port=6380,state=online,offset=392,lag=1	<span class="comment"># 从机信息</span></span><br><span class="line">slave1:ip=127.0.0.1,port=6381,state=online,offset=392,lag=1</span><br><span class="line">master_failover_state:no-failover</span><br><span class="line">master_replid:494f98ba6749c752bb7ff2fb6e47f7c89c5712b8</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:392</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:392</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;真实的主从配置应该在配置文件中配置，这样才是永久的，在redis客户端中通过命令来配置只是暂时的。</p>
+<p>在配置文件中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">################################# REPLICATION #################################</span></span><br><span class="line"><span class="comment"># replicaof &lt;masterip&gt; &lt;masterport&gt;  # 在此处配置主机的地址和端口</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;在一主二从的配置方式中，主机可以写，从机不能写只能读。主机中的所有信息和数据，都会自动被从机保存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 主机</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> k1 v1</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="comment">### 从机1</span></span><br><span class="line">127.0.0.1:6380&gt; keys *</span><br><span class="line">1) <span class="string">&quot;k1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 从机2</span></span><br><span class="line">127.0.0.1:6381&gt; keys *</span><br><span class="line">1) <span class="string">&quot;k1&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;若尝试在从机中写入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6380&gt; <span class="built_in">set</span> k2 v2</span><br><span class="line">(error) READONLY You can<span class="string">&#x27;t write against a read only replica.</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>&emsp;&emsp;默认情况下，主机断开连接，从机依旧是连接到主机的，但是没有写操作了。当主机重新连回来时，从机依旧可以重新开始接收主机写入的数据。</p>
+<p>&emsp;&emsp;如果是使用命令行配置的主从，若主机断开连接，重新连回来仍然是其他从机的主机；若某一个从机断开连接，再连回来就不再是从机了，在其断开连接后主机写入的数据就无法同步了。但只要重新将其设置为原来主机的丛机，马上就会写入主机的全部数据。</p>
+<blockquote>
+<p>复制原理</p>
+</blockquote>
+<p>Slave启动成功连接到master后会发送一个sync同步命令。Master接收到命令，启动后台的存盘进程，同时收集所有接受到的用于修改数据集命令，在后台进程执行完毕之后，Master将传送整个数据文件到Slave，并完成一次完全同步。Slave服务在接收集到数据文件数据后，将其存盘并加载到内存中。Master继续将新的所有收集到的修改命令一次传给Slave，完成同步。但是只要重新连接Master，一次完全同步（全量复制）将被自动执行。</p>
+<ul>
+<li>全量复制：Slave在接收到数据文件数据后，将其存盘并加载到内存中</li>
+<li>增量复制：继续将新的所有收集到的修改命令一次传给Slave</li>
 </ul>
 
         </div>
@@ -281,6 +353,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/11/10/Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Go语言中的字符串操作</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -474,7 +561,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">Redis主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">Redis主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BA%E4%B8%8A%E6%A8%A1%E6%8B%9F%EF%BC%8C%E5%A4%9A%E6%9C%BA%E5%90%8C%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">环境配置(单机上模拟，多机同理)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E"><span class="nav-number">1.2.1.</span> <span class="nav-text">一主二从</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
         </aside>
