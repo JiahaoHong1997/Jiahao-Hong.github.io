@@ -627,7 +627,7 @@
 
 <h2 id="左右指针的常见算法"><a href="#左右指针的常见算法" class="headerlink" title="左右指针的常见算法"></a>左右指针的常见算法</h2><p>&emsp;&emsp;左右指针在数组中实际是指两个索引值，一般初始化为left:=0, right:=len(array)-1。常见的左右指针算法通常分为四类：1.二分查找；2.两数之和；3.反转数组；4.滑动窗口。其中以滑动窗口最为困难，已经有专门的专题<a href="https://jiahaohong1997.github.io/2021/04/28/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/">滑动窗口(Sliding Window)算法框架</a>来介绍。其他三类只要掌握了基本框架，基本都能解决。</p>
 <h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><h4 id="二分查找的三种基本框架"><a href="#二分查找的三种基本框架" class="headerlink" title="二分查找的三种基本框架"></a>二分查找的三种基本框架</h4><p>1.寻找某一个特定的数(最基本的二分查找)</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">binarySearch</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">		left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">for</span> left &lt;= right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">  			mid := left + (right-left)/<span class="number">2</span>  <span class="comment">// 如果使用(left+right)/2的方式，可能导致溢出</span></span><br><span class="line">    		<span class="keyword">if</span> nums[mid] == target &#123;  <span class="comment">// 一旦找到。立即返回</span></span><br><span class="line">      			<span class="keyword">return</span> mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span>  <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid - <span class="number">1</span>  <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">binarySearch</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums)<span class="number">-1</span></span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">for</span> left &lt;= right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">  			mid := left + (right-left)/<span class="number">2</span>  <span class="comment">// 如果使用(left+right)/2的方式，可能导致溢出</span></span><br><span class="line">    		<span class="keyword">if</span> nums[mid] == target &#123;  <span class="comment">// 一旦找到。立即返回</span></span><br><span class="line">      			<span class="keyword">return</span> mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span>  <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid - <span class="number">1</span>  <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>值得注意的地方(也是区分于其他框架的地方)：</p>
 <ul>
@@ -639,7 +639,7 @@
 <p>&emsp;&emsp;这个左边界不仅限于target存在于数组中，也可以找到其不在数组时的左边界。举例如下：</p>
 <p>nums[] = {2,3,4,5,5,5,6,9,17} , target=5, 其左边界为索引3</p>
 <p>nums[] = {2,2,3,4,4,4,6,7,7,8,9,456}, target=5, 其左边界索引为5</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">left_bound</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> <span class="number">-1</span> </span><br><span class="line">  	&#125;</span><br><span class="line">  	left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">for</span> left &lt; right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">      	mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">      	<span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">        		right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125; </span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">if</span> nums[left] == target &#123; <span class="comment">// 等于target，直接返回左边界</span></span><br><span class="line">    		<span class="keyword">return</span> left</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[<span class="built_in">len</span>(nums)<span class="number">-1</span>] &lt; target &#123; <span class="comment">// 如果最后一个数都小于target，此时left指向的是最后一个数，此时将其最为左边界的话直接返回left。如果在一开始就对边界情况做了判断，就不需要对这一条件做判断。</span></span><br><span class="line">      <span class="keyword">return</span> left  <span class="comment">// left=len(nums)-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> left<span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">left_bound</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> <span class="number">-1</span> </span><br><span class="line">  	&#125;</span><br><span class="line">  	left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">for</span> left &lt; right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">      	mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">      	<span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">        		right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125; </span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">if</span> nums[left] == target &#123; <span class="comment">// 等于target，直接返回左边界</span></span><br><span class="line">        <span class="keyword">return</span> left</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[<span class="built_in">len</span>(nums)<span class="number">-1</span>] &lt; target &#123; <span class="comment">// 如果最后一个数都小于target，此时left指向的是最后一个数，此时将其最为左边界的话直接返回left。如果在一开始就对边界情况做了判断，就不需要对这一条件做判断</span></span><br><span class="line">        <span class="keyword">return</span> left  <span class="comment">// left=len(nums)-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> left<span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>值得注意的地方:</p>
 <ul>
@@ -653,7 +653,7 @@
 <p>&emsp;&emsp;这个右边界不仅限于target存在于数组中，也可以找到其不在数组时的右边界。举例如下：</p>
 <p>nums[] = {2,3,4,5,5,5,6,9,17} , target=5, 其右边界为索引5</p>
 <p>nums[] = {2,2,3,4,4,4,6,7,7,8,9,456}, target=5, 其右边界索引为6</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">right_bound</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> <span class="number">-1</span> </span><br><span class="line">  	&#125;</span><br><span class="line">  	left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">for</span> left &lt; right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">      	mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">      	<span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">        		left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125; </span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">if</span> nums[left] == target &#123; <span class="comment">// 第一位数或最后一位数作为右边界，如果在一开始就对边界情况做了判断，可以不需要对这一个条件做判断</span></span><br><span class="line">    		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  	&#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[left<span class="number">-1</span>] == target &#123;  <span class="comment">// 注意</span></span><br><span class="line">    		<span class="keyword">return</span> left<span class="number">-1</span></span><br><span class="line">  	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> left</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">right_bound</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="number">-1</span> </span><br><span class="line">  	&#125;</span><br><span class="line">  	left := <span class="number">0</span></span><br><span class="line">  	right := <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">for</span> left &lt; right &#123;  <span class="comment">// 注意符号</span></span><br><span class="line">      	mid := left + (right-left)/<span class="number">2</span></span><br><span class="line">      	<span class="keyword">if</span> nums[mid] == target &#123;</span><br><span class="line">        		left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &lt; target &#123;</span><br><span class="line">          	left = mid + <span class="number">1</span> <span class="comment">// 注意</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          	right = mid <span class="comment">// 注意</span></span><br><span class="line">        &#125;</span><br><span class="line">  	&#125; </span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">if</span> nums[left] == target &#123; <span class="comment">// 第一位数或最后一位数作为右边界，如果在一开始就对边界情况做了判断，可以不需要对这一个条件做判断</span></span><br><span class="line">    	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  	&#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[left<span class="number">-1</span>] == target &#123;  <span class="comment">// 注意</span></span><br><span class="line">    	<span class="keyword">return</span> left<span class="number">-1</span></span><br><span class="line">  	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span> left</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>值得注意的地方:</p>
 <ul>
@@ -4187,6 +4187,86 @@
       </categories>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL常见问题补充</title>
+    <url>/2021/11/20/MySQL%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A1%A5%E5%85%85/</url>
+    <content><![CDATA[<h1 id="数据表的类型"><a href="#数据表的类型" class="headerlink" title="数据表的类型"></a>数据表的类型</h1><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">MYISM</th>
+<th align="center">INNODB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">事务支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">数据行锁定</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">外键约束</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">全文索引</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">表空间的大小</td>
+<td align="center">较小</td>
+<td align="center">较大，约为MYSIM2倍</td>
+</tr>
+</tbody></table>
+<ul>
+<li>MYSIM：节约空间，速度较快</li>
+<li>INNODB：安全性高，支持事务处理，多表多用户操作</li>
+</ul>
+<h1 id="DROP、TRUNCATE和DELETE的区别"><a href="#DROP、TRUNCATE和DELETE的区别" class="headerlink" title="DROP、TRUNCATE和DELETE的区别"></a>DROP、TRUNCATE和DELETE的区别</h1><ul>
+<li><p>TRUNCATE和DELETE的相同点：都能删除数据面都不会删除表结构</p>
+</li>
+<li><p>区别：</p>
+<ul>
+<li>DROP table 【表名】<ul>
+<li><strong>删除内容和定义</strong>，并释放空间。执行drop语句，<strong>将使此表的结构</strong>一起删除。</li>
+</ul>
+</li>
+<li>TRUNCATE <ul>
+<li><strong>删除内容、释放空间但不删除定义</strong>(也就是保留表的数据结构)。与drop不同的是,只是<strong>清空表数据</strong>而已。</li>
+<li>重新设置，自增列计数器会归零</li>
+<li>不会影响事务</li>
+</ul>
+</li>
+<li>DELETE from 【表名】(where 【列名】= 值)<ul>
+<li><strong>只删除内容、释放空间但不删除定义</strong>；但是delete即<strong>可以对行数据进行删除</strong>，也可以对整表数据进行删除。</li>
+<li>自增列计数器保持原来的值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>注意</p>
+<ul>
+<li>delete语句执行删除的过程是<strong>每次从表中删除一行</strong>，并且同时将该行的删除操作作为事务<strong>记录在日志</strong>中保存，以便进行进行回滚操作。</li>
+<li><strong>执行速度</strong>一般来说：drop&gt;truncate&gt;delete</li>
+<li>delete语句是数据库操作语言(dml)，这个操作会放到 rollback segement 中，<strong>事务提交之后才生效</strong>；如果有相应的 trigger，执行的时候将被触发。truncate、drop 是数据库定义语言(ddl)<strong>，操作立即生效</strong>，原数据不放到 rollback segment 中，不能回滚，操作不触发trigger。</li>
+<li> truncate语句执行以后，<strong>id标识列还是按顺序排列</strong>，保持连续；而delete语句执行后，<strong>ID标识列不连续</strong></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>SQL数据库</tag>
       </tags>
   </entry>
 </search>
