@@ -4572,6 +4572,9 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ go run main.go</span><br><span class="line">[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.</span><br><span class="line"></span><br><span class="line">[GIN-debug] [WARNING] Running <span class="keyword">in</span> <span class="string">&quot;debug&quot;</span> mode. Switch to <span class="string">&quot;release&quot;</span> mode <span class="keyword">in</span> production.</span><br><span class="line"> - using env:   <span class="built_in">export</span> GIN_MODE=release</span><br><span class="line"> - using code:  gin.SetMode(gin.ReleaseMode)</span><br><span class="line"></span><br><span class="line">[GIN-debug] GET    /                         --&gt; main.main.func1 (3 handlers)</span><br><span class="line">2019/11/05 22:49:04 Shutdown Server ...</span><br><span class="line">[GIN] 2019/11/05 - 22:49:07 | 200 |    5.0000438s |             ::1 | GET      /</span><br><span class="line">2019/11/05 22:49:08 Server exiting</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>Go框架</category>
+      </categories>
       <tags>
         <tag>web框架</tag>
       </tags>
