@@ -4579,4 +4579,44 @@
         <tag>web框架</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Go语言的错误处理</title>
+    <url>/2021/12/05/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</url>
+    <content><![CDATA[<h1 id="Error-vs-Exception"><a href="#Error-vs-Exception" class="headerlink" title="Error vs Exception"></a>Error vs Exception</h1><p>先看下面一段代码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;errors&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a named type for our new error type</span></span><br><span class="line"><span class="keyword">type</span> errorString <span class="keyword">string</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Implement the error interface.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e errorString)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">string</span>(e)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// New creates interface values of type error.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(text <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errorString(text)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ErrNamedType = New(<span class="string">&quot;EOF&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> ErrStructType = errors.New(<span class="string">&quot;EOF&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ErrNamedType == New(<span class="string">&quot;EOF&quot;</span>) &#123;  <span class="comment">// true</span></span><br><span class="line">		fmt. Println(<span class="string">&quot;Named Type Error&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> ErrStructType == errors.New(<span class="string">&quot;EOF&quot;</span>) &#123; <span class="comment">// false</span></span><br><span class="line">		fmt.Println(<span class="string">&quot;Struct Type Error&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;<code>ErrNamedType</code> 是我们自己定义的<code>Error</code> 方法，它是一个<code>string</code> 类型的变量(错误描述)，只要错误描述相同，那么两个<code>Error</code>是一样的。<code>ErrStructType</code>是通过<code>go</code>标准库定义的<code>Error</code> 类型，它是指向<code>string</code> 类型的错误描述的指针，即使错误描述一样，也会因为指向其地址的指针不同而不同。</p>
+<h2 id="各语言的演进历史"><a href="#各语言的演进历史" class="headerlink" title="各语言的演进历史"></a>各语言的演进历史</h2><ul>
+<li>C</li>
+</ul>
+<p>&emsp;&emsp;单返回值，一般通过传递指针作为入参，返回值为 int 表示成功还是失败。</p>
+<ul>
+<li>C++</li>
+</ul>
+<p>&emsp;&emsp;引入了exception，但是无法知道被调用方会城出什么异常。</p>
+<ul>
+<li>Java</li>
+</ul>
+<p>&emsp;&emsp;引入了checked exception，方法的所有者必须申明，调用者必须处理。在启动时拋出大量的异常是司空见惯的事情，并在它们的调用堆栈中尽职地记录下来。Java 异常不再是异常，而是变得司空见惯了。它们从良性到灾难性都有使用，异常的严重性由两数的调用者来区分。</p>
+<ul>
+<li>Go</li>
+</ul>
+<p>&emsp;&emsp;Go 的处理异常逻辑是不引入 exception，支持多参数返回，所以很容易的在函数签名中带上实现了 error interface 的对象，交由调用者来判定。如果一个西数返回了(value,error)，你不<strong>能对这个 value 做任何假设，必须先判定 error</strong>。唯一可以忽路error 的是，如果你连 value 也不关心。Go 中有 panic 的机制，如果你认为和其他语言的 exception 一样，那你就错了。当我们拋出异常的时候，相当于你把 exception 扔给了调用者来处理。比如，你在C++ 中，把string 转为 int， 如果转换失败，拋出异常。或者在 java 中转换 string 为 date 失败时，拋出异常。Go panic 意味着 fatal error（就是挂了）。不能假设调用者来解决 panic，意味着代码不能继续运行。</p>
+<p>&emsp;&emsp;使用多个返回值和一个简单的约定，Go解决了让程序员知道什么时候出了问题，并为真正的异常情况保留了 panic。可以更好的分别什么时候是良性异常，什么时候是真正的错误。通过 panic + recover 还可以为代码兜底，放弃掉这个<code>request</code> 进而保证别的<code>request</code> 的正常处理。</p>
+<p>&emsp;&emsp;对于真正意外的情况，那些表示不可恢复的程序错误，例如索引l越界、不可恢复的环境问题、栈溢出，我们才使用 panic。对于其他的错误情况，我们应该是期望使用 error 来进行判定。下面是Go使用这种机制的理由：</p>
+<ol>
+<li>简单</li>
+<li>考虑失败，而不是成功(plan for failure, not success)</li>
+<li>没有隐藏的控制流</li>
+<li>完全交给你来控制 Error</li>
+<li>Error are values</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Error机制</category>
+      </categories>
+      <tags>
+        <tag>Error</tag>
+      </tags>
+  </entry>
 </search>
