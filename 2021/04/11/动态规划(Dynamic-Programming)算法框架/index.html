@@ -413,7 +413,7 @@
 </ul>
 <p><strong>解题思路：</strong></p>
 <p>&emsp;&emsp;对于一个子串而言，如果它是回文串，并且长度大于 2，那么将它首尾的两个字母去除之后，它仍然是个回文串。例如对于字符串 “ababa”，如果我们已经知道 “bab” 是回文串，那么 “ababa” 一定是回文串，这是因为它的首尾两个字母都是 “a”。据这样的思路，我们就可以用动态规划的方法解决本题。我们用 <code>dp(i,j)</code> 表示字符串 s 的第 i 到 j 个字母组成的串（下文表示成 <code>s[i:j]</code>）是否为回文串：</p>
-<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
 <p>这里的「其它情况」包含两种可能性：</p>
 <ul>
 <li><p><code>s[i,j]</code> 本身不是一个回文串；</p>
@@ -479,7 +479,7 @@
 <p>这种情况下，如果前面有和 <code>s[i]</code> 组成有效括号对的字符，即形如 <code>((....))</code>，这样的话，就要求 <code>s[i−1]</code>位置必然是有效的括号对，否则 <code>s[i]</code> 无法和前面对字符组成有效括号对。这时，我们只需要找到和 <code>s[i]</code> 配对对位置，并判断其是否是 <code>(</code> 即可。和其配对对位置为：<code>i−dp[i−1]−1</code>。</p>
 <p>如果：<code>s[i−dp[i−1]−1]==&#39;(&#39;</code> :</p>
 <p>有效括号长度新增长度2，i<em>i</em>位置对最长有效括号长度为 <strong>i-1位置的最长括号长度加上当前位置新增的2</strong>，那么有：<code>dp[i]=dp[i−1]+2</code>。值得注意的是，<code>i−dp[i−1]−1</code> 和 i 组成了有效括号对，这将是一段独立的有效括号序列，如果之前的子序列是形如 <code>(...)</code> 这种序列，那么当前位置的最长有效括号长度还需要加上这一段。所以：<code>dp[i]=dp[i−1]+dp[i−dp[i−1]−2]+2</code></p>
-<p><img lazyload src="/images/loading.svg" data-src="5.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/5.jpg" alt="avatar"></p>
 </li>
 </ul>
 </li>

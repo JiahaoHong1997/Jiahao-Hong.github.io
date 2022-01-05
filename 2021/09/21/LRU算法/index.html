@@ -249,7 +249,7 @@
         <div class="article-content markdown-body">
             <h1 id="LRU算法介绍"><a href="#LRU算法介绍" class="headerlink" title="LRU算法介绍"></a>LRU算法介绍</h1><p>&emsp;&emsp;LRU算法(Least Recently Used)算法实质上是一种缓存机制，常用于操作系统的缓存。计算机的缓存容量是有限的，如果缓存满了就要给新的内容腾位置。那淘汰哪些缓存，哪些继续以何种方式留在缓存中就是一个策略性的问题。LRU算法就是其中一种淘汰策略。其内核就是<strong>认为最近使用过的数据是最有用的，很久都没使用的数据是无用的，内存满了就应该优先淘汰很久没用过的数据</strong>。</p>
 <p>&emsp;&emsp;举一个实际例子，安卓手机都可以把软件放到后台运行，比如我先后打开了「设置」「手机管家」「日历」，那么现在他们在后台排列的顺序是这样的：</p>
-<p><img lazyload src="/images/loading.svg" data-src="1.jpg#pic_center" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg#pic_center" alt="avatar"></p>
 <p>&emsp;&emsp;但是这时候如果我访问了一下「设置」界面，那么「设置」就会被提前到第一个，变成这样：</p>
 <p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg#pic_center" alt="avatar"></p>
 <p>&emsp;&emsp;假设我的手机只允许我同时开 3 个应用程序，现在已经满了。那么如果我新开了一个应用「时钟」，就必须关闭一个应用为「时钟」腾出一个位置，关那个呢？按照 LRU 的策略，就关最底下的「手机管家」，因为那是最久未使用的，然后把新开的应用放到最上面：</p>

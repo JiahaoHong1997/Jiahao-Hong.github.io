@@ -253,7 +253,7 @@
 <li>若是非连通图，需从图中多个顶点出发。每次从一个新顶点出发所访问的顶点集序列恰好是各个连通分量的顶点集。</li>
 </ul>
 <p>&emsp;&emsp;比如下面这幅图，总共有 10 个节点，他们互不相连，分别用 0~9 标记：</p>
-<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;「连通」是一种等价关系，也就是说具有如下三个性质：</p>
 <ol>
 <li>自反性：节点 <code>p</code> 和 <code>p</code> 是连通的。</li>
@@ -284,14 +284,14 @@
 
 
 <p><strong>这样，如果节点</strong> <strong><code>p</code></strong> <strong>和</strong> <strong><code>q</code></strong> <strong>连通的话，它们一定拥有相同的根节点</strong>：</p>
-<p><img lazyload src="/images/loading.svg" data-src="5.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/5.jpg" alt="avatar"></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u UF)</span> <span class="title">connected</span><span class="params">(p,q <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">  	rootP := u.find(p)</span><br><span class="line">  	rootQ := u.find(q)</span><br><span class="line">  	<span class="keyword">return</span> rootP == rootQ</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p>&emsp;&emsp;主要 API <code>connected</code> 和 <code>union</code> 中的复杂度都是 <code>find</code> 函数造成的，所以说它们的复杂度和 <code>find</code> 一样。<code>find</code> 主要功能就是从某个节点向上遍历到树根，其时间复杂度就是树的高度。我们可能习惯性地认为树的高度就是 <code>logN</code>，但这并不一定。<code>logN</code> 的高度只存在于平衡二叉树，对于一般的树可能出现极端不平衡的情况，使得「树」几乎退化成「链表」，树的高度最坏情况下可能变成 <code>N</code>。所以说上面这种解法，<code>find</code> , <code>union</code> , <code>connected</code> 的时间复杂度都是 O(N)。这个复杂度很不理想的，你想图论解决的都是诸如社交网络这样数据规模巨大的问题，对于 <code>union</code> 和 <code>connected</code> 的调用非常频繁，每次调用需要线性时间完全不可忍受。<strong>问题的关键在于，如何想办法避免树的不平衡呢</strong>？</p>
 <h2 id="平衡性优化"><a href="#平衡性优化" class="headerlink" title="平衡性优化"></a>平衡性优化</h2><p>&emsp;&emsp;我们要知道哪种情况下可能出现不平衡现象，关键在于 <code>union</code> 过程：我们一开始就是简单粗暴的把 <code>p</code> 所在的树接到 <code>q</code> 所在的树的根节点下面，那么这里就可能出现「头重脚轻」的不平衡状况，比如下面这种局面：</p>
-<p><img lazyload src="/images/loading.svg" data-src="7.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/7.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;长此以往，树可能生长得很不平衡。<strong>我们其实是希望，小一些的树接到大一些的树下面，这样就能避免头重脚轻，更平衡一些</strong>。解决方法是额外使用一个 <code>size</code> 数组，记录每棵树包含的节点数，我们不妨称为「重量」：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> UF <span class="keyword">struct</span> &#123;</span><br><span class="line">  	count			<span class="keyword">int</span>		<span class="comment">// 记录连通分量</span></span><br><span class="line">  	parent		[]<span class="keyword">int</span>	<span class="comment">// 节点x的父节点是parent[x]</span></span><br><span class="line">  	size			[]<span class="keyword">int</span>	<span class="comment">// 新增一个数组用于记录树的“重量”,这个数组只对根节点有意义，在使用前需要先判别是否是根节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">construct</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">UF</span></span> &#123;</span><br><span class="line">  	p := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	s := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">    	p[i] = i	<span class="comment">// 最初每棵树只有一个节点</span></span><br><span class="line">      s[i] = <span class="number">1</span>	<span class="comment">// 重量应该初始化为1</span></span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> UF&#123;</span><br><span class="line">      count : n		<span class="comment">// 一开始互不连通</span></span><br><span class="line">      parent : p	<span class="comment">// 父节点指针初始指向自己</span></span><br><span class="line">      size : s		<span class="comment">// 每个节点的重量应该初始化为1</span></span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -302,7 +302,7 @@
 
 <p>&emsp;&emsp;这样，通过比较树的重量，就可以保证树的生长相对平衡，树的高度大致在 <code>logN</code> 这个数量级，极大提升执行效率。此时，<code>find</code> , <code>union</code> , <code>connected</code> 的时间复杂度都下降为 O(logN)，即便数据规模上亿，所需时间也非常少。</p>
 <h2 id="路经压缩"><a href="#路经压缩" class="headerlink" title="路经压缩"></a>路经压缩</h2><p>&emsp;&emsp;这步优化特别简单，所以非常巧妙。我们能不能进一步压缩每棵树的高度，使树高始终保持为常数？</p>
-<p><img lazyload src="/images/loading.svg" data-src="8.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A6%82%E8%A7%88%E4%B8%8E%E8%AE%BE%E8%AE%A1/8.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;这样 <code>find</code> 就能以 O(1) 的时间找到某一节点的根节点，相应的，<code>connected</code> 和 <code>union</code> 复杂度都下降为 O(1)。要做到这一点，非常简单，只需要在 <code>find</code> 中加一行代码：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u UF)</span> <span class="title">find</span><span class="params">(x <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  	<span class="keyword">for</span> u.parent[x] != x &#123;</span><br><span class="line">    	u.parent[x] = u.parent[u.parent[x]]	<span class="comment">// 指向爷爷节点 </span></span><br><span class="line">    	x = u.parent[x]											<span class="comment">// 定位到爷爷节点</span></span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -315,7 +315,7 @@
 <p>&emsp;&emsp;Union-Find 算法的复杂度可以这样分析：构造函数初始化数据结构需要 O(N) 的时间和空间复杂度；连通两个节点 <code>union</code>、判断两个节点的连通性 <code>connected</code>、计算连通分量 <code>count</code> 所需的时间复杂度均为 O(1)。</p>
 <h2 id="并查集相关题目"><a href="#并查集相关题目" class="headerlink" title="并查集相关题目"></a>并查集相关题目</h2><h3 id="130-被围绕的区域"><a href="#130-被围绕的区域" class="headerlink" title="130. 被围绕的区域"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/surrounded-regions/">130. 被围绕的区域<i class="fas fa-external-link-alt"></i></a></h3><p>给你一个 <code>m x n</code> 的矩阵 <code>board</code> ，由若干字符 <code>&#39;X&#39;</code> 和 <code>&#39;O&#39;</code> ，找到所有被 <code>&#39;X&#39;</code> 围绕的区域，并将这些区域里所有的 <code>&#39;O&#39;</code> 用 <code>&#39;X&#39;</code> 填充。</p>
 <p><strong>示例 1：</strong></p>
-<p><img lazyload src="/images/loading.svg" data-src="10.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A6%82%E8%A7%88%E4%B8%8E%E8%AE%BE%E8%AE%A1/10.jpg" alt="avatar"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：board &#x3D; [[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;O&quot;,&quot;O&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;X&quot;,&quot;O&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;O&quot;,&quot;X&quot;,&quot;X&quot;]]</span><br><span class="line">输出：[[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;O&quot;,&quot;X&quot;,&quot;X&quot;]]</span><br><span class="line">解释：被围绕的区间不会存在于边界上，换句话说，任何边界上的 &#39;O&#39; 都不会被填充为 &#39;X&#39;。 任何不在边界上，或不与边界上的 &#39;O&#39; 相连的 &#39;O&#39; 最终都会被填充为 &#39;X&#39;。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
@@ -365,13 +365,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/09/16/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                           href="/2021/09/16/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Redis学习笔记</span>
+                                <span class="post-nav-title-item">Redis学习笔记（一）</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>

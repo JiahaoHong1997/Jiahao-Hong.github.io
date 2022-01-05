@@ -9,7 +9,7 @@
     
     <title>
         
-            Redis学习笔记 |
+            Redis学习笔记（一） |
         
         Hao&#39;s Blog
     </title>
@@ -186,7 +186,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Redis学习笔记</span>
+            <span class="title-hover-animation">Redis学习笔记（一）</span>
         </div>
 
         
@@ -207,6 +207,28 @@
         <i class="fas fa-edit"></i>&nbsp;2021-09-16 12:37:00
     </span>
     
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Redis/">Redis</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -270,7 +292,7 @@
 <li>InfoGrid</li>
 </ul>
 <h1 id="Mac下Redis的运行环境"><a href="#Mac下Redis的运行环境" class="headerlink" title="Mac下Redis的运行环境"></a>Mac下Redis的运行环境</h1><p>&emsp;&emsp;在Mac中，Redis的安装目录在<code>/usr/local/bin</code>下,Redis默认不是后台启动的，修改配置文件<code>redis.conf</code>中的<code>daemonize</code>项为yes，如下图：</p>
-<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
 <h2 id="启动Redis"><a href="#启动Redis" class="headerlink" title="启动Redis"></a>启动Redis</h2><p>&emsp;&emsp;在<code>/usr/local/bin</code>目录下启动Redis，并使用之前修改后的配置文件：</p>
 <p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;使用<code>redis-cli</code>进行连接并验证Redis服务是否正常启动：</p>
@@ -279,14 +301,14 @@
 <p>&emsp;&emsp;查看redis进程是否开启：</p>
 <p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
 <h2 id="关闭Redis服务"><a href="#关闭Redis服务" class="headerlink" title="关闭Redis服务"></a>关闭Redis服务</h2><p>&emsp;&emsp;使用<code>shutdown</code>命令关闭服务：</p>
-<p><img lazyload src="/images/loading.svg" data-src="5.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/5.jpg" alt="avatar"></p>
 <h1 id="Redis-benchmark"><a href="#Redis-benchmark" class="headerlink" title="Redis-benchmark"></a>Redis-benchmark</h1><p>&emsp;&emsp;官方自带的性能测试工具，redis 性能测试工具可选参数如下所示：</p>
-<p><img lazyload src="/images/loading.svg" data-src="6.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/6.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;简单测试下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试：100个并发连接，每个并发100000个请求</span></span><br><span class="line">redis-benchmark -h localhost -p 6379 -c 100 -n 100000</span><br></pre></td></tr></table></figure>
 
 <p>测试结果如下图所示：</p>
-<p><img lazyload src="/images/loading.svg" data-src="7.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/7.jpg" alt="avatar"></p>
 <h1 id="Redis的基础知识"><a href="#Redis的基础知识" class="headerlink" title="Redis的基础知识"></a>Redis的基础知识</h1><p>&emsp;&emsp;Redis有16个数据库，默认使用第一个数据库，可以使用select切换</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; select 3  <span class="comment"># 切换成3号数据库</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379[3]&gt; dbsize  <span class="comment"># 查看数据库的大小</span></span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br></pre></td></tr></table></figure>
 
@@ -599,9 +621,9 @@
 <p>&emsp;&emsp;在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是Snapshot快照，它会腐蚀是将快照文件直接读到内存当中。</p>
 <p>&emsp;&emsp;Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入一个临时文件中，待持久化过程都结束了，再用这个临时文件替换掉上次持久化好的文件。整个过程中，主进程不进行任何OI操作。这就确保了极高的性能。如果需进行大规模的数据恢复，且对于数据恢复的完整性不是特别敏感，那RDB方式要比AOF更加高效。RDB的缺点是最后一次持久化的数据可能丢失。</p>
 <p>&emsp;&emsp;rdb保存的文件是dump.rdb，可以在配置文件的快照项下修改。修改持久化的频率为：每60秒进行了5次操作就保存一次。</p>
-<p><img lazyload src="/images/loading.svg" data-src="8.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A6%82%E8%A7%88%E4%B8%8E%E8%AE%BE%E8%AE%A1/8.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;下图设置了dump.rdb的保存地址。</p>
-<p><img lazyload src="/images/loading.svg" data-src="9.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A6%82%E8%A7%88%E4%B8%8E%E8%AE%BE%E8%AE%A1/9.jpg" alt="avatar"></p>
 <h4 id="触发机制"><a href="#触发机制" class="headerlink" title="触发机制"></a>触发机制</h4><p>1、save的规则满足的情况下，会自动触发rdb规则</p>
 <p>2、执行flushall命令，会触发rdb规则</p>
 <p>3、退出redis，会产生rdb文件</p>
@@ -618,7 +640,7 @@
 <h3 id="AOF（Append-Only-File）"><a href="#AOF（Append-Only-File）" class="headerlink" title="AOF（Append Only File）"></a>AOF（Append Only File）</h3><p>&emsp;&emsp;将我们的所有命令记录下来（history），恢复的时候再重新执行记录的命令。</p>
 <p>&emsp;&emsp;以日志的形式来记录每个写操作，将Redis执行过的所有指令记录下来（读操作不记录），只许追加文件但不可以改写文件，redis启动之初会读取该文件重新构建数据结构，换言之，redis重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
 <p>&emsp;&emsp;AOF保存的是appendonly.aof文件。AOF模式默认是不开启的，需要手动设置开启。只需要将appendonly改为yes就可以开启aof。</p>
-<p> <img lazyload src="/images/loading.svg" data-src="10.jpg" alt="avatar"></p>
+<p> <img lazyload src="/images/loading.svg" data-src="%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A6%82%E8%A7%88%E4%B8%8E%E8%AE%BE%E8%AE%A1/10.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;appendonly.aof的保存路径如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config get dir  <span class="comment"># 查看rdb文件的启动地址</span></span><br><span class="line">1) <span class="string">&quot;dir&quot;</span></span><br><span class="line">2) <span class="string">&quot;/usr/local/var/db/redis&quot;</span> <span class="comment"># 如果在这个目录下存在rdb文件，启动时就会自动恢复其中的数据</span></span><br></pre></td></tr></table></figure>
 
@@ -680,11 +702,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：Redis学习笔记</li>
+        <li>Post title：Redis学习笔记（一）</li>
         <li>Post author：洪笳淏</li>
         <li>Create time：2021-09-16 12:37:00</li>
         <li>
-            Post link：https://jiahaohong1997.github.io/2021/09/16/Redis学习笔记/
+            Post link：https://jiahaohong1997.github.io/2021/09/16/Redis学习笔记（一）/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -701,13 +723,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/09/21/LRU%E7%AE%97%E6%B3%95/"
+                           href="/2021/09/16/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">LRU算法</span>
+                                <span class="post-nav-title-item">Redis学习笔记</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>
@@ -717,10 +739,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/09/16/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"
+                           href="/2021/09/15/Union-Find(%E5%B9%B6%E6%9F%A5%E9%9B%86)/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Redis学习笔记（一）</span>
+                                <span class="post-nav-title-item">Union-Find(并查集)</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">

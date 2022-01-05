@@ -346,7 +346,7 @@
 </ul>
 <p><strong>解题思路：</strong></p>
 <p>&emsp;&emsp;这个逻辑就很简单了，要删除倒数第 <code>n</code> 个节点，就得获得倒数第 <code>n + 1</code> 个节点的引用，首先，我们先让一个指针 <code>p1</code> 指向链表的头节点 <code>head</code>，然后走 <code>k</code> 步：</p>
-<p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
 <p>现在的 <code>p1</code>，只要再走 <code>n - k</code> 步，就能走到链表末尾的空指针了对吧？</p>
 <p>趁这个时候，再用一个指针 <code>p2</code> 指向链表头节点 <code>head</code>：</p>
 <p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
@@ -388,11 +388,11 @@
 <p><strong>解题思路：</strong></p>
 <p>&emsp;&emsp;这个题直接的想法可能是用 <code>HashSet</code> 记录一个链表的所有节点，然后和另一条链表对比，但这就需要额外的空间。</p>
 <p>&emsp;&emsp;如果不用额外的空间，只使用两个指针，你如何做呢？难点在于，由于两条链表的长度可能不同，两条链表之间的节点无法对应：</p>
-<p><img lazyload src="/images/loading.svg" data-src="5.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/5.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;如果用两个指针 <code>p1</code> 和 <code>p2</code> 分别在两条链表上前进，并不能<strong>同时</strong>走到公共节点，也就无法得到相交节点 <code>c1</code>。</p>
 <p>&emsp;&emsp;<strong>所以，解决这个问题的关键是，通过某些方式，让</strong> <strong><code>p1</code></strong> <strong>和</strong> <strong><code>p2</code></strong> <strong>能够同时到达相交节点</strong> **<code>c1</code>**。</p>
 <p>&emsp;&emsp;所以，我们可以让 <code>p1</code> 遍历完链表 <code>A</code> 之后开始遍历链表 <code>B</code>，让 <code>p2</code> 遍历完链表 <code>B</code> 之后开始遍历链表 <code>A</code>，这样相当于「逻辑上」两条链表接在了一起。如果这样进行拼接，就可以让 <code>p1</code> 和 <code>p2</code> 同时进入公共部分，也就是同时到达相交节点 <code>c1</code>：</p>
-<p><img lazyload src="/images/loading.svg" data-src="7.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/7.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;那你可能会问，如果说两个链表没有相交点，是否能够正确的返回 <code>nil</code> 呢？这个逻辑可以覆盖这种情况的，相当于 <code>c1</code> 节点是 <code>nil</code> 空指针嘛，可以正确返回 <code>nil</code>。</p>
 <p>按照这个思路，可以写出如下代码：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getIntersectionNode</span><span class="params">(headA, headB *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    a, b := headA, headB</span><br><span class="line">    <span class="keyword">for</span> a != b &#123;</span><br><span class="line">        <span class="keyword">if</span> a != <span class="literal">nil</span> &#123;</span><br><span class="line">            a = a.Next</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            a = headB</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> b != <span class="literal">nil</span> &#123;</span><br><span class="line">            b = b.Next</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            b = headA</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -413,7 +413,7 @@
 
 
 <h2 id="反转链表前n个节点"><a href="#反转链表前n个节点" class="headerlink" title="反转链表前n个节点"></a>反转链表前n个节点</h2><p>&emsp;&emsp;比如说对于下图链表，执行 <code>reverseN(head, 3)</code>：</p>
-<p><img lazyload src="/images/loading.svg" data-src="6.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/6.jpg" alt="avatar"></p>
 <ul>
 <li>递归</li>
 </ul>
