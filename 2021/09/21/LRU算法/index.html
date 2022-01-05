@@ -198,7 +198,7 @@
                     <div class="author">
                         <span class="name">洪笳淏</span>
                         
-                            <span class="author-label">Lv3</span>
+                            <span class="author-label">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -251,9 +251,9 @@
 <p>&emsp;&emsp;举一个实际例子，安卓手机都可以把软件放到后台运行，比如我先后打开了「设置」「手机管家」「日历」，那么现在他们在后台排列的顺序是这样的：</p>
 <p><img lazyload src="/images/loading.svg" data-src="1.jpg#pic_center" alt="avatar"></p>
 <p>&emsp;&emsp;但是这时候如果我访问了一下「设置」界面，那么「设置」就会被提前到第一个，变成这样：</p>
-<p><img lazyload src="/images/loading.svg" data-src="2.jpg#pic_center" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg#pic_center" alt="avatar"></p>
 <p>&emsp;&emsp;假设我的手机只允许我同时开 3 个应用程序，现在已经满了。那么如果我新开了一个应用「时钟」，就必须关闭一个应用为「时钟」腾出一个位置，关那个呢？按照 LRU 的策略，就关最底下的「手机管家」，因为那是最久未使用的，然后把新开的应用放到最上面：</p>
-<p><img lazyload src="/images/loading.svg" data-src="3.jpg#pic_center" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg#pic_center" alt="avatar"></p>
 <h1 id="LRU算法的函数签名"><a href="#LRU算法的函数签名" class="headerlink" title="LRU算法的函数签名"></a>LRU算法的函数签名</h1><p>&emsp;&emsp;函数签名可以参考<a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lru-cache/">146. LRU 缓存机制<i class="fas fa-external-link-alt"></i></a>的题目要求：</p>
 <p>运用你所掌握的数据结构，设计和实现一个 <a class="link" target="_blank" rel="noopener" href="https://baike.baidu.com/item/LRU">LRU (最近最少使用) 缓存机制<i class="fas fa-external-link-alt"></i></a> 。</p>
 <p>实现 <code>LRUCache</code> 类：</p>
@@ -280,7 +280,7 @@
 <li>每次访问 <code>cache</code> 中的某个 <code>key</code>，需要将这个元素变为最近使用的，也就是说 <code>cache</code> 要支持在任意位置快速插入和删除元素。</li>
 </ol>
 <p>&emsp;&emsp;那么，什么数据结构同时符合上述条件呢？哈希表查找快，但是数据无固定顺序；链表有顺序之分，插入删除快，但是查找慢。所以结合一下，形成一种新的数据结构：哈希链表 <code>LinkedHashMap</code>。LRU 缓存算法的核心数据结构就是哈希链表，双向链表和哈希表的结合体。这个数据结构长这样：</p>
-<p><img lazyload src="/images/loading.svg" data-src="4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;借助这个结构，我们来逐一分析上面的 3 个条件：</p>
 <ol>
 <li>如果我们每次默认从链表尾部添加元素，那么显然越靠尾部的元素就是最近使用的，越靠头部的元素就是最久未使用的。</li>
@@ -495,7 +495,7 @@
             
               <span>2021</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

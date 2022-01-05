@@ -198,7 +198,7 @@
                     <div class="author">
                         <span class="name">洪笳淏</span>
                         
-                            <span class="author-label">Lv3</span>
+                            <span class="author-label">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -296,7 +296,7 @@
 <h1 id="微服务设计"><a href="#微服务设计" class="headerlink" title="微服务设计"></a>微服务设计</h1><h2 id="API-Gateway"><a href="#API-Gateway" class="headerlink" title="API Gateway"></a>API Gateway</h2><ol>
 <li>按照垂直功能进行拆分，对外暴露了一批微服务，但是因为缺乏统一的出口面临不少问题：</li>
 </ol>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="Go%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5/1.png" alt="avatar"></p>
 <ul>
 <li>客户端到微服务直接通信，强耦合：不利于服务的更新迭代，要始终保留过往版本的接口</li>
 <li>需要多次请求，客户端聚合数据，工作量巨大，延迟高</li>
@@ -338,7 +338,7 @@
 </ul>
 <p>&emsp;&emsp;限界上下文DDD中用来划分不同业务边界的元素，这里业务边界的含义是“解决不同业务问题”的问题域和对应的解决方案域，为了解决某种类型的业务问题，贴近领域知识，也就是业务。</p>
 <p>这本质上也促进了组织结构的演进：Service per team</p>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="Go%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5/5.png" alt="avatar"></p>
 <ul>
 <li><p>CQRS</p>
 <p>将应用程序分为两部分：命令端和查询端。命令端处理程序创建，更新和删除请求，并在数据更改时发出事件。查询端通过针对一个或多个物化视图执行查询来处理查询，这些物化视图通过订阅数据更改时发出的事件流而保持最新。(其实就是读写分离)</p>
@@ -526,7 +526,7 @@
             
               <span>2021</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

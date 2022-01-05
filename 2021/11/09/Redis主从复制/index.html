@@ -198,7 +198,7 @@
                     <div class="author">
                         <span class="name">洪笳淏</span>
                         
-                            <span class="author-label">Lv3</span>
+                            <span class="author-label">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -248,7 +248,7 @@
 
         <div class="article-content markdown-body">
             <h1 id="Redis主从复制"><a href="#Redis主从复制" class="headerlink" title="Redis主从复制"></a>Redis主从复制</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>&emsp;&emsp;主从复制，是指将一台Redis服务器上的数据，复制到其他的Redis服务器上。前者称为主节点（Master），后者称为从节点（Slave）。数据的复制是单向的，只能从主节点到从节点。Master以写为主，Slave以读为主。</p>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="Go%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5/1.png" alt="avatar"></p>
 <p>主从复制，读写分离，80%的情况都是读操作，可以减缓服务器的压力。</p>
 <p>&emsp;&emsp;默认情况下，每台Redis服务器都是主节点，且一个主节点可以有多个从节点（或没有从节点），但一个从节点只能有一个主节点。主从复制的作用主要包括：</p>
 <ul>
@@ -270,7 +270,7 @@
 
 
 <p>&emsp;&emsp;将redis的配置文件复制若干次（要配置的从节点个数）：</p>
-<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
 <p>然后修改每个配置文件中的项目如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">port 6380  <span class="comment"># 端口号要改成从服务的节点</span></span><br><span class="line">pidfile /var/run/redis_6380.pid  <span class="comment"># pid file也要改成对应的名字</span></span><br><span class="line">logfile <span class="string">&quot;6380.log&quot;</span>	<span class="comment"># 日志文件名也要对应</span></span><br><span class="line">dbfilename dump6380.rdb  <span class="comment"># rdb文件命名也要修改</span></span><br></pre></td></tr></table></figure>
 
@@ -347,7 +347,7 @@
 <li>当哨兵监测到Master宕机，会自动将Slave切换成Master，然后通过发布订阅模式通知其他的从服务器，修改配置文件，让他们切换主机。</li>
 </ol>
 <p>&emsp;&emsp;然而一个哨兵进程对Redis服务器进行监控，可能会出现问题，为此，我们可以使用多个哨兵进行监控。哥哥哨兵之间还会进行监控，这样就形成了多哨兵模式。</p>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="Go%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5/5.png" alt="avatar"></p>
 <p>&emsp;&emsp;假设主服务器宕机，哨兵1监测到这个结果，系统不会马上进行failover过程，仅仅是哨兵1主观认为主服务器不可用，这个现象称为<strong>主观下线</strong>，当其他的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover（故障转移）操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的主服务器实现切换主机，这个过程称为<strong>客观下线</strong>。</p>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>&emsp;&emsp;采用一主二从的方式。</p>
 <ol>
@@ -510,7 +510,7 @@
             
               <span>2021</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -198,7 +198,7 @@
                     <div class="author">
                         <span class="name">洪笳淏</span>
                         
-                            <span class="author-label">Lv3</span>
+                            <span class="author-label">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -294,12 +294,12 @@
 <h1 id="Mac下Redis的运行环境"><a href="#Mac下Redis的运行环境" class="headerlink" title="Mac下Redis的运行环境"></a>Mac下Redis的运行环境</h1><p>&emsp;&emsp;在Mac中，Redis的安装目录在<code>/usr/local/bin</code>下,Redis默认不是后台启动的，修改配置文件<code>redis.conf</code>中的<code>daemonize</code>项为yes，如下图：</p>
 <p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
 <h2 id="启动Redis"><a href="#启动Redis" class="headerlink" title="启动Redis"></a>启动Redis</h2><p>&emsp;&emsp;在<code>/usr/local/bin</code>目录下启动Redis，并使用之前修改后的配置文件：</p>
-<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;使用<code>redis-cli</code>进行连接并验证Redis服务是否正常启动：</p>
-<p><img lazyload src="/images/loading.svg" data-src="3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;输入<code>Ping</code>后返回<code>Pong</code>说明连接成功。</p>
 <p>&emsp;&emsp;查看redis进程是否开启：</p>
-<p><img lazyload src="/images/loading.svg" data-src="4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
 <h2 id="关闭Redis服务"><a href="#关闭Redis服务" class="headerlink" title="关闭Redis服务"></a>关闭Redis服务</h2><p>&emsp;&emsp;使用<code>shutdown</code>命令关闭服务：</p>
 <p><img lazyload src="/images/loading.svg" data-src="5.jpg" alt="avatar"></p>
 <h1 id="Redis-benchmark"><a href="#Redis-benchmark" class="headerlink" title="Redis-benchmark"></a>Redis-benchmark</h1><p>&emsp;&emsp;官方自带的性能测试工具，redis 性能测试工具可选参数如下所示：</p>
@@ -578,7 +578,7 @@
 
 
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 线程1</span></span><br><span class="line">127.0.0.1:6379&gt; watch money	<span class="comment"># 监视money</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; DECRBY money 10</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; INCRBY out 10</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; EXEC	<span class="comment"># 执行之前，另外一个县城修改了money的值，会导致事务执行失败</span></span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; UNWATCH	 <span class="comment"># 解锁</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; watch money	<span class="comment"># 重新加锁</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI	<span class="comment"># 开启新事务</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; DECRBY money 1</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; INCRBY money 1</span><br><span class="line">QUEUED	</span><br><span class="line">127.0.0.1:6379(TX)&gt; EXEC	<span class="comment"># 比对监视的值是否发生了变化，如果没有发生变化，可以执行成功</span></span><br><span class="line">1) (<span class="built_in">integer</span>) 999</span><br><span class="line">2) (<span class="built_in">integer</span>) 1000</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 线程1</span></span><br><span class="line">127.0.0.1:6379&gt; watch money	<span class="comment"># 监视money</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; DECRBY money 10</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; INCRBY out 10</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; EXEC	<span class="comment"># 执行之前，另外一个线程修改了money的值，会导致事务执行失败</span></span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; UNWATCH	 <span class="comment"># 解锁</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; watch money	<span class="comment"># 重新加锁</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI	<span class="comment"># 开启新事务</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; DECRBY money 1</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; INCRBY money 1</span><br><span class="line">QUEUED	</span><br><span class="line">127.0.0.1:6379(TX)&gt; EXEC	<span class="comment"># 比对监视的值是否发生了变化，如果没有发生变化，可以执行成功</span></span><br><span class="line">1) (<span class="built_in">integer</span>) 999</span><br><span class="line">2) (<span class="built_in">integer</span>) 1000</span><br></pre></td></tr></table></figure>
 
 <p>如果修改失败，获取最新的值就好。</p>
 <h2 id="Redis-conf详解"><a href="#Redis-conf详解" class="headerlink" title="Redis.conf详解"></a>Redis.conf详解</h2><p>1、配置文件 unit单位，对大小写不敏感</p>
@@ -829,7 +829,7 @@
             
               <span>2021</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

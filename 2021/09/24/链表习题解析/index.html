@@ -198,7 +198,7 @@
                     <div class="author">
                         <span class="name">洪笳淏</span>
                         
-                            <span class="author-label">Lv3</span>
+                            <span class="author-label">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -349,9 +349,9 @@
 <p><img lazyload src="/images/loading.svg" data-src="1.jpg" alt="avatar"></p>
 <p>现在的 <code>p1</code>，只要再走 <code>n - k</code> 步，就能走到链表末尾的空指针了对吧？</p>
 <p>趁这个时候，再用一个指针 <code>p2</code> 指向链表头节点 <code>head</code>：</p>
-<p><img lazyload src="/images/loading.svg" data-src="2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
 <p>接下来就很显然了，让 <code>p1</code> 和 <code>p2</code> 同时向前走，<code>p1</code> 走到链表末尾的空指针时走了 <code>n - k</code> 步，<code>p2</code> 也走了 <code>n - k</code> 步，也就是链表的倒数第 <code>k</code> 个节点：</p>
-<p><img lazyload src="/images/loading.svg" data-src="3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
 <p>这样，只遍历了一次链表，就获得了倒数第 <code>k</code> 个节点 <code>p2</code>。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeNthFromEnd</span><span class="params">(head *ListNode, n <span class="keyword">int</span>)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    fast, slow := head, head</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">        fast = fast.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> fast == <span class="literal">nil</span> &#123;	<span class="comment">//fast指向nil，说明n=链表的节点数，即删除第一个节点</span></span><br><span class="line">        <span class="keyword">return</span> head.Next</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> fast.Next != <span class="literal">nil</span> &#123;	<span class="comment">// 定位到要删除节点的前一个节点</span></span><br><span class="line">        fast = fast.Next</span><br><span class="line">        slow = slow.Next</span><br><span class="line">    &#125;</span><br><span class="line">    slow.Next = slow.Next.Next</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -621,7 +621,7 @@
             
               <span>2021</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
