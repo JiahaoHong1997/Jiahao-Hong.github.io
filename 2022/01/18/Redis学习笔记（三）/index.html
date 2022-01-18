@@ -9,7 +9,7 @@
     
     <title>
         
-            SQL学习笔记 |
+            Redis学习笔记（三） |
         
         Hao&#39;s Blog
     </title>
@@ -186,7 +186,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">SQL学习笔记</span>
+            <span class="title-hover-animation">Redis学习笔记（三）</span>
         </div>
 
         
@@ -204,7 +204,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2022-01-05 20:31:00
+        <i class="fas fa-edit"></i>&nbsp;2022-01-18 15:35:00
     </span>
     
         <span class="article-categories article-meta-item">
@@ -212,7 +212,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/SQL/">SQL</a>&nbsp;
+                        <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>&nbsp;
                     </li>
                 
             </ul>
@@ -224,7 +224,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/MySQL/">MySQL</a>&nbsp;
+                        <a href="/tags/Redis/">Redis</a>&nbsp;
                     </li>
                 
             </ul>
@@ -247,28 +247,38 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="MySQL中的SQL是如何执行的"><a href="#MySQL中的SQL是如何执行的" class="headerlink" title="MySQL中的SQL是如何执行的"></a>MySQL中的SQL是如何执行的</h1><p>&emsp;&emsp;MySQL是典型的 Client/Server 架构，服务器端程序使用的是 mysqld。整体的 MySQL 流程如下图所示：<br><img lazyload src="/images/loading.svg" data-src="mysql1.jpg" alt="avatar"><br>&emsp;&emsp;可以看到的MySQL三层：</p>
+            <h1 id="String-类型的底层数据结构"><a href="#String-类型的底层数据结构" class="headerlink" title="String 类型的底层数据结构"></a>String 类型的底层数据结构</h1><h2 id="为什么-String-类型内存开销大"><a href="#为什么-String-类型内存开销大" class="headerlink" title="为什么 String 类型内存开销大"></a>为什么 String 类型内存开销大</h2><p>&emsp;&emsp;除了记录实际数据，string 类型还需要额外的内存空间记录数据长度、空间使用等信息，这些信息也叫作元数据。当实际保存的数据较小时，元数据的空间开销就显得比较大了。<br>&emsp;&emsp;string 类型是如何保存数据的呢？</p>
 <ol>
-<li>==连接层==：客户端和服务端建立连接（例如tcp），客户端发送 SQL 至服务端；</li>
-<li>==SQL 层==：对 SQL 语句进行查询处理；</li>
-<li>==存储引擎层==：与数据库文件打交道，负责数据的存储和读取。</li>
+<li>当保存 64 位有符号整数时，string 类型会把它保存为一个 8 字节的 Long 类型整数，这种保存方式通常也叫作 int 编码方式。</li>
+<li>当保存的数据中包含字符时，String 类型就会用简单动态字符串（Simple Dynamic String，SDS）结构体来保存，如下图所示：</li>
 </ol>
-<h2 id="SQL-层"><a href="#SQL-层" class="headerlink" title="SQL 层"></a>SQL 层</h2><p>其中 SQL 层与数据库文件的存储方式无关，我们来看下 SQL 层的结构：<br><img lazyload src="/images/loading.svg" data-src="mysql2.jpg" alt="avatar"><br>&emsp;&emsp;其流程总结如下：</p>
+<p><img lazyload src="/images/loading.svg" data-src="redis43.jpg" alt="avatar"><br><strong>这里其实类似 Go 的 slice 类型的底层数据结构</strong><br>buf：字节数组，保存实际数据。为了表示字节数组的结束，Redis 会自动在数组最后加一个“\0”，这就会额外占用 1 个字节的开销。<br>len：占 4 个字节，表示 buf 的已用长度。<br>alloc：也占个 4 字节，表示 buf 的实际分配长度，一般大于 len。</p>
+<p>&emsp;&emsp;可以看到，在 SDS 中，buf 保存实际数据，而 len 和 alloc 本身其实是 SDS 结构体的额外开销。另外，对于 String 类型来说，除了 SDS 的额外开销，还有一个来自于 RedisObject 结构体的开销。因为 Redis 的数据类型有很多，而且，不同数据类型都有些相同的元数据要记录（比如最后一次访问的时间、被引用的次数等），所以，Redis 会用一个 RedisObject 结构体来统一记录这些元数据，同时指向实际数据。<br>&emsp;&emsp;一个 RedisObject 包含了 8 字节的元数据和一个 8 字节指针，这个指针再进一步指向具体数据类型的实际数据所在，例如指向 String 类型的 SDS 结构所在的内存地址，可以看一下下面的示意图。<br><img lazyload src="/images/loading.svg" data-src="redis44.jpg" alt="avatar"><br>&emsp;&emsp;为了节省内存空间，Redis 还对 Long 类型整数和 SDS 的内存布局做了专门的设计。</p>
+<ul>
+<li>一方面，当保存的是 Long 类型整数时，RedisObject 中的指针就直接赋值为整数数据了，这样就不用额外的指针再指向整数了，节省了指针的空间开销。</li>
+<li>另一方面，当保存的是字符串数据，并且字符串小于等于 44 字节时，RedisObject 中的元 数据、指针和 SDS 是一块连续的内存区域，这样就可以避免内存碎片。这种布局方式也被 称为 embstr 编码方式。</li>
+<li>当字符串大于 44 字节时，SDS 的数据量就开始变多了，Redis 就不再把 SDS 和RedisObject 布局在一起了，而是会给 SDS 分配独立的空间，并用指针指向 SDS 结构。这种布局方式被称为 raw 编码模式。</li>
+</ul>
+<p>如下图所示：<br><img lazyload src="/images/loading.svg" data-src="redis45.jpg" alt="avatar"></p>
+<p>举例说明一下：我们用 10 位数来表示图片 ID 和图片存储对象 ID，例如，图片 ID 为 1101000051，它在存储系统中对应的 ID 号是 3301000051。可以看到，图片 ID 和图片存储对象 ID 正好一一对应，是典型的“键 - 单值”模式。因为 10 位数的图片 ID 和图片存储对象 ID 是 Long 类型整数，所以可以直接用 int 编码的 RedisObject 保存。每个 int 编码的 RedisObject 元数据部分占 8 字节，指针部分被直接赋值为 8 字节的整数了。此时，每个 ID 会使用 16 字节，加起来一共是 32 字节。同时，Redis 会使用一个全局哈希表保存所有键值对，哈希表的每一项是一个 dictEntry 的结构体，用来指向一个键值对。dictEntry 结构中有三个 8 字节的指针， 分别指向 key、value 以及下一个 dictEntry，三个指针共 24 字节，如下图所示：<br><img lazyload src="/images/loading.svg" data-src="redis46.jpg" alt="avatar"><br>&emsp;&emsp;此时，这三个指针占据了 24 字节，但是实际上会占用 32 字节，这就要提到 Redis 使用的内存分配库 jemalloc 了。jemalloc 在分配内存时，会根据我们申请的字节数 N，找一个比 N 大，但是最接近 N 的 2 的幂次数作为分配的空间，这样可以减少频繁分配的次数。如果你申请 24 字节空间，jemalloc 则会分配 32 字节。所以存储这样一个 “键 - 值”对要使用 64 个字节。<br>&emsp;&emsp;明明有效信息只有 16 字节，使用 String 类型保存时，却需要 64 字节的内存空间，有 48 字节都没有用于保存实际的数据。</p>
+<h2 id="用什么数据结构可以节省内存？"><a href="#用什么数据结构可以节省内存？" class="headerlink" title="用什么数据结构可以节省内存？"></a>用什么数据结构可以节省内存？</h2><p>&emsp;&emsp;Redis 有一种底层数据结构，叫压缩列表（ziplist），这是一种非常节省内存的结构。我们先回顾下压缩列表的构成。表头有三个字段 zlbytes、zltail 和 zllen，分别表示列表长度、列表尾的偏移量，以及列表中的 entry 个数。压缩列表尾还有一个 zlend，表示列表结束。<br><img lazyload src="/images/loading.svg" data-src="redis47.jpg" alt="avatar"><br>&emsp;&emsp;压缩列表之所以能够节省内存，是因为它是用一系列连续的 entry 保存数据。每个 entry 的元数据包括下面几部分。</p>
+<ul>
+<li>prev_len：表示前一个 entry 的长度。prev_len 有两种取值情况：1 字节或 5 字节。取值 1 字节时，表示上一个 entry 的长度小于 254 字节。虽然 1 字节的值能表示的数值范围是 0 到 255，但是压缩列表中 zlend 的取值默认是 255，因此，就默认用 255 表示整个压缩列表的结束，其他表示长度的地方就不能再用 255 这个值了。所以，当上一个 entry 长度小于 254 字节时，prev_len 取值为 1 字节，否则，就取值为 5 字节；</li>
+<li>len：表示自身长度，4 字节；</li>
+<li>encoding：表示编码方式，1 字节；</li>
+<li>content：保存实际数据。</li>
+</ul>
+<p>&emsp;&emsp;这些 entry 会挨个儿放置在内存中，不需要再用额外的指针进行连接，这样就可以节省指针所占用的空间。我们以保存图片存储对象 ID 为例，来分析一下压缩列表是如何节省内存空间的。每个 entry 保存一个图片存储对象 ID（8 字节），此时，每个 entry 的 prev_len 只需要 1 个字节就行，因为每个 entry 的前一个 entry 长度都只有 8 字节，小于 254 字节。这样一来，一个图片的存储对象 ID 所占用的内存大小是 14 字节（1+4+1+8=14），实际分配 16 字节。</p>
+<p>&emsp;&emsp;我们以一个全局的视角去看使用 string 类型的存储形式，每张图片 ID 都会占用一个哈希桶位，这就增加了哈希冲突的概率。并且，元数据和指针会占用大量的空间。<br><img lazyload src="/images/loading.svg" data-src="redis48.png" alt="avatar"></p>
+<p>&emsp;&emsp;若使用 Hash 类型来存储，可以采取二级编码方法。这里说的二级编码， 就是把一个单值的数据拆分成两部分，前一部分作为 Hash 集合的 key，后一部分作为 Hash 集合的 value，这样一来，我们就可以把单值数据保存到 Hash 集合中了。<br>&emsp;&emsp;以图片 ID 1101000060 和图片存储对象 ID 3302000080 为例，我们可以把图片 ID 的前 7 位（1101000）作为 Hash 类型的键，把图片 ID 的最后 3 位（060）和图片存储对象 ID 分别作为 Hash 类型值中的 key 和 value。<br>&emsp;&emsp;按照这种设计方法，在存储了大量的图片和对象的数据后，在 Redis 中插入了一组图片 ID 及其存储对象 ID 的记录，并且用 info 命令查看了内存开销，发现，增加一条记录后，内存占用只增加了 16 字节，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info memory </span><br><span class="line"><span class="comment"># Memory </span></span><br><span class="line">used_memory:1039120</span><br><span class="line">127.0.0.1:6379&gt; hset 1101000 060 3302000080 </span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; info memory </span><br><span class="line"><span class="comment"># Memory </span></span><br><span class="line">used_memory:1039136</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这是因为图片 ID 的前 7 位（1101000）作为 key 在之前已经存储过了，采用 以 压缩列表为底层数据结构的 hash 类型，就可以根据 key 的后三位 （060）存储在压缩列表中，增加的内存仅仅是压缩列表中一个 entry 的大小。而以 string 类型来存储“键 - 值”对，都要新分配一个哈希桶，开辟一个哈希桶下的新 entry 节点来存储。<br><img lazyload src="/images/loading.svg" data-src="redis49.png" alt="avatar"></p>
+<p>&emsp;&emsp;最后，你可能也会有疑惑：“二级编码一定要把图片 ID 的前 7 位作为 Hash 类型的键，把最后 3 位作为 Hash 类型值中的 key 吗？”其实，二级编码方法中采用的 ID 长度是有讲究的。Redis Hash 类型的两种底层实现结构，分别是压缩列表和哈希表。Hash 类型设置了用压缩列表保存数据时的两个阈值，一旦超过了阈值，Hash 类型就会用哈希表来保存数据了。这两个阈值分别对应以下两个配置项：</p>
 <ol>
-<li>==查询缓存==：服务端接收到客户端的 SQL 语句后，先在缓存中查询该语句，有结果命中缓存就直接返回给客户端；如果没有就进入到解析器阶段；</li>
-<li>==解析器==：在解析器中对 SQL 语句进行语法分析、语义分析；</li>
-<li>==优化器==：在优化器中会确定 SQL 语句的执行路径，比如是根据全表检索，还是根据索引来检索等；</li>
-<li>==执行器==：在执行之前需要判断该用户是否具备权限，如果具备权限就执行 SQL 查询并返回结果。如果设置了查询缓存，这时会将查询结果进行缓存。</li>
+<li>hash-max-ziplist-entries：表示用压缩列表保存时哈希集合中的最大元素个数。</li>
+<li>hash-max-ziplist-value：表示用压缩列表保存时哈希集合中单个元素的最大长度。</li>
 </ol>
-<p>SQL 语句→缓 存查询→解析器→优化器→执行器</p>
-<h2 id="存储引擎层"><a href="#存储引擎层" class="headerlink" title="存储引擎层"></a>存储引擎层</h2><p>&emsp;&emsp;MySQL 的存储引擎采用了插件的形 式，每个存储引擎都面向一种特定的数据库应用环境。同时开源的 MySQL 还允许开发人员设置自己的存储引擎。</p>
-<ol>
-<li>==InnoDB 存储引擎==：MySQL 5.5 版本之后默认的存储引擎，最大的特点是支持事务、行级锁定、外键约束等。</li>
-<li>==MyISAM 存储引擎==：MySQL 5.5 版本之前是默认的存储引擎，不支持事务，也不支持外键，最大的特点是速度快，占用资源少。</li>
-<li>Memory 存储引擎：使用系统内存作为存储介质，以便得到更快的响应速度。不过如果 mysqld 进程崩溃，则会导致所有的数据丢失，因此我们只有当数据是临时的情况下才使用 Memory 存储引擎。</li>
-<li>NDB 存储引擎：也叫做 NDB Cluster 存储引擎，主要用于 MySQL Cluster 分布式集群环境，类似于 Oracle 的 RAC 集群。</li>
-<li>Archive 存储引擎：它有很好的压缩机制，用于文件归档，在请求写入时会进行压缩，所以也经常用来做仓库。</li>
-</ol>
+<p>&emsp;&emsp;如果我们往 Hash 集合中写入的元素个数超过了 hash-max-ziplist-entries，或者写入的单个元素大小超过了 hash-max-ziplist-value，Redis 就会自动把 Hash 类型的实现结构由压缩列表转为哈希表。一旦从压缩列表转为了哈希表，Hash 类型就会一直用哈希表进行保存，而不会再转回压缩列表了。在节省内存空间方面，哈希表就没有压缩列表那么高效了。<strong>为了能充分使用压缩列表的精简内存布局，我们一般要控制保存在 Hash 集合中的元素个数</strong>。所以，在刚才的二级编码中，我们只用图片 ID 最后 3 位作为 Hash 集合的 key，也就 保证了 Hash 集合的元素个数不超过 1000，同时，我们把 hash-max-ziplist-entries 设置 为 1000，这样一来，Hash 集合就可以一直使用压缩列表来节省内存空间了。</p>
 
         </div>
 
@@ -276,11 +286,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：SQL学习笔记</li>
+        <li>Post title：Redis学习笔记（三）</li>
         <li>Post author：洪笳淏</li>
-        <li>Create time：2022-01-05 20:31:00</li>
+        <li>Create time：2022-01-18 15:35:00</li>
         <li>
-            Post link：https://jiahaohong1997.github.io/2022/01/05/SQL学习笔记/
+            Post link：https://jiahaohong1997.github.io/2022/01/18/Redis学习笔记（三）/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -294,29 +304,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/01/18/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Redis学习笔记（三）</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/01/05/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/"
+                           href="/2022/01/05/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Redis学习笔记（二）</span>
+                                <span class="post-nav-title-item">SQL学习笔记</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -501,7 +496,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%E4%B8%AD%E7%9A%84SQL%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">MySQL中的SQL是如何执行的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-%E5%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">SQL 层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E5%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">存储引擎层</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String-%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">String 类型的底层数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-String-%E7%B1%BB%E5%9E%8B%E5%86%85%E5%AD%98%E5%BC%80%E9%94%80%E5%A4%A7"><span class="nav-number">1.1.</span> <span class="nav-text">为什么 String 类型内存开销大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BB%80%E4%B9%88%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%AF%E4%BB%A5%E8%8A%82%E7%9C%81%E5%86%85%E5%AD%98%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">用什么数据结构可以节省内存？</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
