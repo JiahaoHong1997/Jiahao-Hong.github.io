@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            Golang 重点问题 |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Golang 重点问题</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2022-02-09 23:50:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/go%E8%AF%AD%E8%A8%80/">go语言</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/golang/">golang</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="Golang-Map-的底层实现"><a href="#Golang-Map-的底层实现" class="headerlink" title="Golang Map 的底层实现"></a>Golang Map 的底层实现</h1><h2 id="一般的-map-的实现"><a href="#一般的-map-的实现" class="headerlink" title="一般的 map 的实现"></a>一般的 map 的实现</h2><p>&emsp;&emsp;一般的Map会包含两个主要结构：</p>
+<ul>
+<li>数组：数组里的值指向一个链表，一般称为桶🪣位</li>
+<li>链表：目的解决hash冲突的问题，并存放键值</li>
+</ul>
+<p>大致结构如下：<br><img lazyload src="/images/loading.svg" data-src="origin_map.jpg" alt="avatar"><br>读取一个key值的过程大致如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> 				  key</span><br><span class="line">				   |</span><br><span class="line">				   v                 </span><br><span class="line">+------------------------------------+</span><br><span class="line">|      key通过<span class="built_in">hash</span>函数得到key的<span class="built_in">hash</span>    |</span><br><span class="line">+------------------+-----------------+</span><br><span class="line">				   |</span><br><span class="line">				   v</span><br><span class="line">+------------------------------------+</span><br><span class="line">|       key的<span class="built_in">hash</span>通过取模或者位操作     |</span><br><span class="line">|          得到key在数组上的索引        |</span><br><span class="line">+------------------------------------+</span><br><span class="line">				   |</span><br><span class="line">				   v</span><br><span class="line">+------------------------------------+</span><br><span class="line">|         通过索引找到对应的链表         |</span><br><span class="line">+------------------+-----------------+</span><br><span class="line">				   |</span><br><span class="line">				   v</span><br><span class="line">+------------------------------------+</span><br><span class="line">|       遍历链表对比key和目标key        |</span><br><span class="line">+------------------+-----------------+</span><br><span class="line">				   |</span><br><span class="line">				   v</span><br><span class="line">+------------------------------------+</span><br><span class="line">|              相等则返回value         |</span><br><span class="line">+------------------+-----------------+</span><br><span class="line">                   |</span><br><span class="line">                   v </span><br><span class="line">                 value</span><br></pre></td></tr></table></figure>
+
+<h2 id="Go-语言中-Map-的实现思路"><a href="#Go-语言中-Map-的实现思路" class="headerlink" title="Go 语言中 Map 的实现思路"></a>Go 语言中 Map 的实现思路</h2><p>&emsp;&emsp;Go语言解决hash冲突不是链表，实际<strong>主要</strong>用的数组(内存上的连续空间)，如下图所示：</p>
+<p><img lazyload src="/images/loading.svg" data-src="go_map.png" alt="avatar"></p>
+<p>&emsp;&emsp;但是并不是只使用一个数组(连续内存空间)存放键和值，而是使用了两个数组分别存储键和值，图示如下：<br><img lazyload src="/images/loading.svg" data-src="origin_map1.png" alt="avatar"><br>&emsp;&emsp;上图中：-   分别对应的是两个核心的结构体<code>hmap</code>和<code>bmap</code>， <code>bmap</code>里有两个数组分别存放key和value</p>
+<p>&emsp;&emsp;我们通过一次<code>读操作</code>为例，看看读取某个key的值的一个<strong>大致过程</strong>：</p>
+<ol>
+<li>通过hash函数获取目标key的<strong>哈希</strong>，哈希和数组的长度通过位操作获取数组位置的<strong>索引</strong>(备注：获取索引值的方式一般有取模或位操作，位操作的性能好些)</li>
+<li>遍历bmap里的键，和目标key对比获取<strong>key的索引</strong>(找不到则返回空值)</li>
+<li>根据<strong>key的索引</strong>通过计算偏移量，获取到对应value<br><img lazyload src="/images/loading.svg" data-src="origin_map2.png" alt="avatar"></li>
+</ol>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><h3 id="核心结构体-hmap"><a href="#核心结构体-hmap" class="headerlink" title="核心结构体 hmap"></a>核心结构体 hmap</h3><p>&emsp;&emsp;<code>hmap</code>的结构其实刚开始看起来其实还是比较复杂的，有不少的字段，具体字段如下图所示：<br><img lazyload src="/images/loading.svg" data-src="hmap.png" alt="avatar"><br>字段释义如下：</p>
+<ol>
+<li>count：键值对的数量</li>
+<li>B：2^B=len(buckets)</li>
+<li>hash0：hash因子</li>
+<li>buckets：指向一个数组(连续内存空间)，数组的类型为[]bmap，bmap类型就是存在键值对的结构下面会详细介绍，这个字段我们可以称之为正常桶。</li>
+<li>oldbuckets：扩容时，存放之前的buckets(Map扩容相关字段)</li>
+<li>extra：溢出桶结构，正常桶里面某个bmap存满了，会使用这里面的内存空间存放键值对</li>
+<li>noverflow：溢出桶里bmap大致的数量</li>
+<li>nevacuate：分流次数，成倍扩容分流操作计数的字段(Map扩容相关字段)</li>
+<li>flags：状态标识，比如正在被写、buckets和oldbuckets在被遍历、等量扩容(Map扩容相关字段)</li>
+</ol>
+<p><img lazyload src="/images/loading.svg" data-src="bmap.png" alt="avatar"><br>&emsp;&emsp;<code>buckets</code>指向了一个数组(连续的内存空间)，数组的元素是<code>bmap</code>类型，这个字段我们称之为正常桶。</p>
+<h3 id="核心结构体-bmap"><a href="#核心结构体-bmap" class="headerlink" title="核心结构体 bmap"></a>核心结构体 bmap</h3><p>&emsp;&emsp;正常桶<code>hmap.buckets</code>的元素是一个<code>bmap</code>结构。<code>bmap</code>的具体字段如下图所示：<br><img lazyload src="/images/loading.svg" data-src="bmap1.png" alt="avatar"><br>字段释义如下：</p>
+<ol>
+<li>topbits：长度为8的数组，[]uint8，元素为：key获取的hash的高8位，遍历时对比使用，提高性能。<strong>如下图所示</strong></li>
+<li>keys：长度为8的数组，[]keytype，元素为：具体的key值。<strong>如下图所示</strong></li>
+<li>elems：长度为8的数组，[]elemtype，元素为：键值对的key对应的值。</li>
+<li>overflow：指向的<code>hmap.extra.overflow</code>溢出桶里的<code>bmap</code>，上面的字段<code>topbits</code>、<code>keys</code>、<code>elems</code>长度为8，最多存8组键值对，存满了就往指向的这个<code>bmap</code>里存</li>
+<li>pad：对齐内存使用的，不是每个bmap都有会这个字段，需要满足一定条件<br><img lazyload src="/images/loading.svg" data-src="bmap2.png" alt="avatar"></li>
+</ol>
+<p>&emsp;&emsp;<strong>结论：每个<code>bmap</code>结构最多存放8组键值对。</strong></p>
+<h3 id="hmap-和-bmap-的基本结构合起来"><a href="#hmap-和-bmap-的基本结构合起来" class="headerlink" title="hmap 和 bmap 的基本结构合起来"></a>hmap 和 bmap 的基本结构合起来</h3><p>&emsp;&emsp;分别了解了<code>hmap</code>和<code>bmap</code>的基本结构后，我们把上面的内容合并起来，就得到如下的Map结构图：<br><img lazyload src="/images/loading.svg" data-src="combine_map.png" alt="avatar"></p>
+<h3 id="溢出桶"><a href="#溢出桶" class="headerlink" title="溢出桶"></a>溢出桶</h3><p>&emsp;&emsp;上面讲<code>bmap</code>的时候，我们不是得到了个结论么“每个<code>bmap</code>结构最多存放8组键值对。”，所以问题来了：</p>
+<blockquote>
+<p>正常桶里的<code>bmap</code>存满了怎么办?</p>
+</blockquote>
+<p>&emsp;&emsp;解决这个问题我们就要说到<code>hmap.extra</code>结构了，<code>hmap.extra</code>是个结构体，结构图示和字段释义如下：<br><img lazyload src="/images/loading.svg" data-src="overflow.png" alt="avatar"></p>
+<ol>
+<li>overflow：称之为<strong>溢出桶</strong>。和<code>hmap.buckets</code>的类型一样也是数组<code>[]bmap</code>，当正常桶<code>bmap</code>存满了的时候就使用<code>hmap.extra.overflow</code>的<code>bmap</code>。</li>
+<li>oldoverflow：扩容时存放之前的overflow(Map扩容相关字段)</li>
+<li>nextoverflow：指向溢出桶里下一个可以使用的<code>bmap</code></li>
+</ol>
+<blockquote>
+<p>问题：正常桶<code>hmap.buckets</code>里的<code>bmap</code>是<strong>怎么关联上</strong>溢出桶<code>hmap.extra.overflow</code>的<code>bmap</code>呢？</p>
+</blockquote>
+<p>答：就是我们介绍<code>bmap</code>结构时里的<code>bmap.overflow</code>字段(如下图所示)。<code>bmap.overflow</code>是个指针类型，存放了对应使用的溢出桶<code>hmap.extra.overflow</code>里的<code>bmap</code>的地址。</p>
+<p><strong>问题又来了</strong>：</p>
+<blockquote>
+<p>正常桶<code>hmap.buckets</code>里的<code>bmap</code>是<strong>什么时候关联上</strong>溢出桶<code>hmap.extra.overflow</code>的<code>bmap</code>呢？</p>
+</blockquote>
+<p>答：Map写操作的时候。</p>
+<p>&emsp;&emsp;<strong>当<code>hmap</code>存在溢出桶时，且当前溢出桶只被使用了一个bmap</strong>时，我们可以得到如下的关系图：<br><img lazyload src="/images/loading.svg" data-src="overflow1.png" alt="avatar"><br>&emsp;&emsp;同时我们可以看出正常桶的<code>bmap</code>和溢出桶的<code>bmap</code>实际构成了链表关系，所以这也解释了开篇我们说到的“Go里面Map的实现<strong>主要</strong>用到了数组”，其次还用到了链表。</p>
+<h2 id="再次分析Map的读"><a href="#再次分析Map的读" class="headerlink" title="再次分析Map的读"></a>再次分析Map的读</h2><p>&emsp;&emsp;我们再次通过一次读操作为例，看看读取某个key的值的一个大致过程：<br><img lazyload src="/images/loading.svg" data-src="read_map.go" alt="avatar"><br>&emsp;&emsp;Go 语言中 map 采用的是哈希查找表，由一个 key 通过哈希函数得到哈希值，64 位系统中就生成一个 64bit 的哈希值，由这个哈希值将 key 对应到不同的桶 （bucket）中，当有多个哈希映射到相同的的桶中时，使用链表解决哈希冲 突。key 经过 hash 后共 64 位，根据 hmap 中 B 的值，计算它到底要落在哪个桶 时，桶的数量为 2^B，如 B=5，那么用 64 位最后 5 位表示第几号桶，在用 hash 值的高 8 位确定在 bucket 中的存储位置，当前 bmap 中的 bucket 未找到，则查 询对应的 overflow bucket，对应位置有数据则对比完整的哈希值，确定是否 是要查找的数据。 如果两个不同的 key 落在的同一个桶上，hash 冲突使用链表法接近，遍历 bucket 中的 key 如果当前处于 map 进行了扩容，处于数据搬移状态，则优先从 oldbuckets 查找。</p>
+<h2 id="Golang-Map-如何扩容"><a href="#Golang-Map-如何扩容" class="headerlink" title="Golang Map 如何扩容"></a>Golang Map 如何扩容</h2><p>装载因子：count/2^B<br>触发条件：</p>
+<ol>
+<li>装填因子是否大于 6.5</li>
+<li>overflow bucket 是否太多</li>
+</ol>
+<p>解决方法：</p>
+<ol>
+<li>双倍扩容：扩容采取了一种称为“渐进式”地方式，原有的 key 并不会一 次性搬迁完毕，每次最多只会搬迁 2 个 bucket</li>
+<li>等量扩容：重新排列，极端情况下，重新排列也解决不了，map 成了链表， 性能大大降低，此时哈希种子 hash0 的设置，可以降低此类极端场景的发 生。</li>
+</ol>
+<h1 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h1><p>&emsp;&emsp;在 Go 语言中，不要通过共享内存来通信，而要通过通信来实现内存共享。Go 的 CSP（Communicating Sequential Process）并发模型，中文叫做通信顺序进程，是通过 goroutine 和 channel 来实现的。所以 channel 收发遵循先进先出 FIFO，分为有缓存和无缓存，channel 中大致有 buffer(当缓冲区大小不为 0 时，是个 ring buffer)、sendq、recvq 当前 channel 因为缓冲区不足而阻塞的队列、使用双向链表存储、还有一个 mutex 锁控制并发、其他原属等。</p>
+<h2 id="channel-的特性"><a href="#channel-的特性" class="headerlink" title="channel 的特性"></a>channel 的特性</h2><ol>
+<li>给一个 nil channel 发送数据，造成永远阻塞</li>
+<li>从一个 nil channel 接收数据，造成永远阻塞</li>
+<li>给一个已经关闭的 channel 发送数据，引起 panic</li>
+<li>从一个已经关闭的 channel 接收数据，如果缓冲区中为空，则返回一个零值</li>
+<li>无缓冲的 channel 是同步的，而有缓冲的 channel 是非同步的</li>
+<li>关闭一个 nil channel 将会发生 panic</li>
+</ol>
+<p><img lazyload src="/images/loading.svg" data-src="channel.jpg" alt="avatar"></p>
+<h2 id="Channel-的-ring-buffer-实现"><a href="#Channel-的-ring-buffer-实现" class="headerlink" title="Channel 的 ring buffer 实现"></a>Channel 的 ring buffer 实现</h2><p>&emsp;&emsp;channel 中使用了 ring buffer(环形缓冲区) 来缓存写入的数据。ring buffer 有很多好处，而且非常适合用来实现 FIFO 式的固定长度队列。在 channel 中，ring buffer 的实现如下：<br><img lazyload src="/images/loading.svg" data-src="ring_buffer.jpg" alt="avatar"><br>&emsp;&emsp;有两个与 buffer 相关的变量:recvx 和 sendx。其中 sendx 表示 buffer 中可写的 index，recvx 表示 buffer 中可读的 index。 从 recvx 到 sendx 之间的元素，表示已正常存放入 buffer 中的数据。 我们可以直接使用 buf[recvx]来读取到队列的第一个元素，使用 buf[sendx] = x 来将元素放到队尾。</p>
+<h1 id="Go-并发编程"><a href="#Go-并发编程" class="headerlink" title="Go 并发编程"></a>Go 并发编程</h1><h2 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h2><h3 id="Mutex-的几种状态"><a href="#Mutex-的几种状态" class="headerlink" title="Mutex 的几种状态"></a>Mutex 的几种状态</h3><ol>
+<li>mutexLocked — 表示互斥锁的锁定状态；</li>
+<li>mutexWoken — 表示从正常模式被从唤醒；</li>
+<li>mutexStarving — 当前的互斥锁进入饥饿状态；</li>
+<li>waitersCount — 当前互斥锁上等待的 Goroutine 个数；</li>
+</ol>
+<h3 id="Mutex-正常模式和饥饿模式"><a href="#Mutex-正常模式和饥饿模式" class="headerlink" title="Mutex 正常模式和饥饿模式"></a>Mutex 正常模式和饥饿模式</h3><ul>
+<li><p><strong>正常模式(非公平锁)</strong><br>&emsp;&emsp;正常模式下，所有等待锁的 goroutine 按照 FIFO(先进先出)顺序等待。唤醒的 goroutine 不会直接拥有锁，而是会和新请求锁的 goroutine 竞争锁的拥有。新请求锁的 goroutine 具有优势：它正在 CPU 上执行，而且可能有好几个，所以刚刚唤醒的 goroutine 有很大可能在锁竞争中失败。在这种情况下，这个被 唤醒的 goroutine 会加入到等待队列的前面。 如果一个等待的 goroutine 超过 1ms 没有获取锁，那么它将会把锁转变为饥饿模式。</p>
+</li>
+<li><p><strong>饥饿模式(公平锁)</strong><br>&emsp;&emsp;为了解决了等待 G 队列的长尾问题。饥饿模式下，直接由 unlock 把锁交给等待队列中排在第一位的 G(队头)，同时，饥饿模式下，新进来的 G 不会参与抢锁也不会进入自旋状态，会直接进入等待队列的尾部，这样很好的解决了老的 G 一直抢不到锁的场景。 饥饿模式的触发条件，当一个 G 等待锁时间超过 1 毫秒时，或者当前队列只剩 下一个 G 的时候，Mutex 切换到饥饿模式。</p>
+</li>
+</ul>
+<blockquote>
+<p>总结：对于两种模式，正常模式下的性能是最好的，goroutine 可以连续多次获取 锁，饥饿模式解决了取锁公平的问题，但是性能会下降，其实是性能和公平的 一个平衡模式。</p>
+</blockquote>
+<h3 id="Mutex-允许自旋的条件"><a href="#Mutex-允许自旋的条件" class="headerlink" title="Mutex 允许自旋的条件"></a>Mutex 允许自旋的条件</h3><p>&emsp;&emsp;在1个协程获取锁时，另一个协程一直尝试，直到能够获取锁（不断循环），这就是自旋锁。</p>
+<ol>
+<li>锁已被占用，并且锁不处于饥饿模式。</li>
+<li>积累的自旋次数小于最大自旋次数（active_spin=4）。</li>
+<li>cpu 核数大于 1。</li>
+<li>有空闲的 P。</li>
+<li>当前 goroutine 所挂载的 P 下，本地待运行队列为空。</li>
+</ol>
+<h3 id="RWMutex"><a href="#RWMutex" class="headerlink" title="RWMutex"></a>RWMutex</h3><ul>
+<li><p>实现原理<br>&emsp;&emsp;通过记录 readerCount 读锁的数量来进行控制，当有一个写锁的时候，会将读锁数量设置为负数 1&lt;&lt;30。目的是让新进入的读锁等待写锁之后释放通知读锁。同样的写锁也会等等待之前的读锁都释放完毕，才会开始进行后续的操作。 而等写锁释放完之后，会将值重新加上 1&lt;&lt;30, 并通知刚才新进入的读锁 (rw.readerSem)，两者互相限制。</p>
+</li>
+<li><p>注意事项</p>
+</li>
+</ul>
+<ol>
+<li>RWMutex 是单写多读锁，该锁可以加多个读锁或者一个写锁</li>
+<li>读锁占用的情况下会阻止写，不会阻止读，多个 goroutine 可以同时获取读锁</li>
+<li>写锁会阻止其他 goroutine（无论读和写）进来，整个锁由该 goroutine 独占</li>
+<li>适用于读多写少的场景</li>
+<li>RWMutex 的一个写锁 Lock 去锁定临界区的共享资源，如果临界区的共享资源已被（读锁或写锁）锁定，这个写锁操作的 goroutine 将被阻塞直到 解锁。</li>
+<li>RWMutex 的读锁或写锁在未锁定状态，解锁操作都会引发 panic</li>
+<li>RWMutex 在首次被使用之后就不能再被拷贝</li>
+<li>写锁被解锁后，所有因操作锁定读锁而被阻塞的 goroutine 会被唤醒，并都可以成功锁定读锁。</li>
+<li>读锁被解锁后，在没有被其他读锁锁定的前提下，所有因操作锁定写锁而被阻塞的 goroutine，其中等待时间最长的一个 goroutine 会被唤醒。</li>
+</ol>
+<h1 id="Go-runtime"><a href="#Go-runtime" class="headerlink" title="Go runtime"></a>Go runtime</h1><h2 id="协程调度"><a href="#协程调度" class="headerlink" title="协程调度"></a>协程调度</h2><h3 id="Gorutine"><a href="#Gorutine" class="headerlink" title="Gorutine"></a>Gorutine</h3><h3 id="GM-模型"><a href="#GM-模型" class="headerlink" title="GM 模型"></a>GM 模型</h3><h3 id="GMP-模型"><a href="#GMP-模型" class="headerlink" title="GMP 模型"></a>GMP 模型</h3><h2 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h2><h2 id="Go-GC（垃圾回收）"><a href="#Go-GC（垃圾回收）" class="headerlink" title="Go GC（垃圾回收）"></a>Go GC（垃圾回收）</h2>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Golang 重点问题</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2022-02-09 23:50:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2022/02/09/Golang 重点问题/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/02/10/combine_map.go/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/18/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Redis学习笔记（三）</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Golang-Map-%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">Golang Map 的底层实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E7%9A%84-map-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">一般的 map 的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-%E8%AF%AD%E8%A8%80%E4%B8%AD-Map-%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Go 语言中 Map 的实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-number">1.3.</span> <span class="nav-text">实现细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9E%84%E4%BD%93-hmap"><span class="nav-number">1.3.1.</span> <span class="nav-text">核心结构体 hmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9E%84%E4%BD%93-bmap"><span class="nav-number">1.3.2.</span> <span class="nav-text">核心结构体 bmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hmap-%E5%92%8C-bmap-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84%E5%90%88%E8%B5%B7%E6%9D%A5"><span class="nav-number">1.3.3.</span> <span class="nav-text">hmap 和 bmap 的基本结构合起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%A2%E5%87%BA%E6%A1%B6"><span class="nav-number">1.3.4.</span> <span class="nav-text">溢出桶</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E5%88%86%E6%9E%90Map%E7%9A%84%E8%AF%BB"><span class="nav-number">1.4.</span> <span class="nav-text">再次分析Map的读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang-Map-%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9"><span class="nav-number">1.5.</span> <span class="nav-text">Golang Map 如何扩容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Channel"><span class="nav-number">2.</span> <span class="nav-text">Channel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#channel-%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">channel 的特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel-%E7%9A%84-ring-buffer-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">Channel 的 ring buffer 实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">Go 并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mutex"><span class="nav-number">3.1.</span> <span class="nav-text">Mutex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutex-%E7%9A%84%E5%87%A0%E7%A7%8D%E7%8A%B6%E6%80%81"><span class="nav-number">3.1.1.</span> <span class="nav-text">Mutex 的几种状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutex-%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E5%92%8C%E9%A5%A5%E9%A5%BF%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.2.</span> <span class="nav-text">Mutex 正常模式和饥饿模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutex-%E5%85%81%E8%AE%B8%E8%87%AA%E6%97%8B%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.1.3.</span> <span class="nav-text">Mutex 允许自旋的条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RWMutex"><span class="nav-number">3.1.4.</span> <span class="nav-text">RWMutex</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go-runtime"><span class="nav-number">4.</span> <span class="nav-text">Go runtime</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="nav-number">4.1.</span> <span class="nav-text">协程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gorutine"><span class="nav-number">4.1.1.</span> <span class="nav-text">Gorutine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GM-%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.2.</span> <span class="nav-text">GM 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GMP-%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.3.</span> <span class="nav-text">GMP 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="nav-number">4.2.</span> <span class="nav-text">内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-GC%EF%BC%88%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">Go GC（垃圾回收）</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
