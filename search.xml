@@ -4249,11 +4249,6 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/12/28/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>gin开发中踩过的坑</title>
     <url>/2021/12/13/gin%E5%BC%80%E5%8F%91%E4%B8%AD%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/</url>
     <content><![CDATA[<h1 id="gin框架操作Cookie"><a href="#gin框架操作Cookie" class="headerlink" title="gin框架操作Cookie"></a>gin框架操作Cookie</h1><p>坑：c.SetCookie 中的的 domain 定义成什么就要用什么访问 cookie 才会生效，例如，定义的 127.0.0.1，浏览器访问时也必须输入 127.0.0.1 才行，localhost 都不行。</p>
