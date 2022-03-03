@@ -3754,7 +3754,7 @@
 </li>
 </ul>
 </blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="Go%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5/1.png" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="overviewMySql.png" alt="avatar"></p>
 <h1 id="MySQL索引原理"><a href="#MySQL索引原理" class="headerlink" title="MySQL索引原理"></a>MySQL索引原理</h1><h2 id="索引的目的"><a href="#索引的目的" class="headerlink" title="索引的目的"></a>索引的目的</h2><p>&emsp;&emsp;索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。</p>
 <h2 id="索引原理"><a href="#索引原理" class="headerlink" title="索引原理"></a>索引原理</h2><p>&emsp;&emsp;除了词典，生活中随处可见索引的例子，如火车站的车次表、图书的目录等。它们的原理都是一样的，通过不断的缩小想要获得数据的范围来筛选出最终想要的结果，同时把随机的事件变成顺序的事件，也就是我们总是通过同一种查找方式来锁定数据。</p>
 <p>&emsp;&emsp;数据库也是一样，但显然要复杂许多，因为不仅面临着等值查询，还有范围查询(&gt;、&lt;、between、in)、模糊查询(like)、并集查询(or)等等。数据库应该选择怎么样的方式来应对所有的问题呢？我们回想字典的例子，能不能把数据分成段，然后分段查询呢？最简单的如果1000条数据，1到100分成第一段，101到200分成第二段，201到300分成第三段……这样查第250条数据，只要找第三段就可以了，一下子去除了90%的无效数据。但如果是1千万的记录呢，分成几段比较好？我们会想到搜索树，其平均复杂度是lgN，具有不错的查询性能。但这里我们忽略了一个关键的问题，复杂度模型是基于每次相同的操作成本来考虑的，数据库实现比较复杂，数据保存在磁盘上，而为了提高性能，每次又可以把部分数据读入内存来计算，因为我们知道访问磁盘的成本大概是访问内存的十万倍左右，所以简单的搜索树难以满足复杂的应用场景。</p>
@@ -5887,7 +5887,7 @@
 </blockquote>
 <p>答：Map写操作的时候。</p>
 <p>&emsp;&emsp;<strong>当<code>hmap</code>存在溢出桶时，且当前溢出桶只被使用了一个bmap</strong>时，我们可以得到如下的关系图：<br><img lazyload src="/images/loading.svg" data-src="overflow1.png" alt="avatar"><br>&emsp;&emsp;同时我们可以看出正常桶的<code>bmap</code>和溢出桶的<code>bmap</code>实际构成了链表关系，所以这也解释了开篇我们说到的“Go里面Map的实现<strong>主要</strong>用到了数组”，其次还用到了链表。</p>
-<h2 id="再次分析Map的读"><a href="#再次分析Map的读" class="headerlink" title="再次分析Map的读"></a>再次分析Map的读</h2><p>&emsp;&emsp;我们再次通过一次读操作为例，看看读取某个key的值的一个大致过程：<br><img lazyload src="/images/loading.svg" data-src="read_map.go" alt="avatar"><br>&emsp;&emsp;Go 语言中 map 采用的是哈希查找表，由一个 key 通过哈希函数得到哈希值，64 位系统中就生成一个 64bit 的哈希值，由这个哈希值将 key 对应到不同的桶 （bucket）中，当有多个哈希映射到相同的的桶中时，使用链表解决哈希冲 突。key 经过 hash 后共 64 位，根据 hmap 中 B 的值，计算它到底要落在哪个桶 时，桶的数量为 2^B，如 B=5，那么用 64 位最后 5 位表示第几号桶，在用 hash 值的高 8 位确定在 bucket 中的存储位置，当前 bmap 中的 bucket 未找到，则查 询对应的 overflow bucket，对应位置有数据则对比完整的哈希值，确定是否 是要查找的数据。 如果两个不同的 key 落在的同一个桶上，hash 冲突使用链表法接近，遍历 bucket 中的 key 如果当前处于 map 进行了扩容，处于数据搬移状态，则优先从 oldbuckets 查找。</p>
+<h2 id="再次分析Map的读"><a href="#再次分析Map的读" class="headerlink" title="再次分析Map的读"></a>再次分析Map的读</h2><p>&emsp;&emsp;我们再次通过一次读操作为例，看看读取某个key的值的一个大致过程：<br><img lazyload src="/images/loading.svg" data-src="readmap.png" alt="avatar"><br>&emsp;&emsp;Go 语言中 map 采用的是哈希查找表，由一个 key 通过哈希函数得到哈希值，64 位系统中就生成一个 64bit 的哈希值，由这个哈希值将 key 对应到不同的桶 （bucket）中，当有多个哈希映射到相同的的桶中时，使用链表解决哈希冲 突。key 经过 hash 后共 64 位，根据 hmap 中 B 的值，计算它到底要落在哪个桶 时，桶的数量为 2^B，如 B=5，那么用 64 位最后 5 位表示第几号桶，在用 hash 值的高 8 位确定在 bucket 中的存储位置，当前 bmap 中的 bucket 未找到，则查 询对应的 overflow bucket，对应位置有数据则对比完整的哈希值，确定是否 是要查找的数据。 如果两个不同的 key 落在的同一个桶上，hash 冲突使用链表法接近，遍历 bucket 中的 key 如果当前处于 map 进行了扩容，处于数据搬移状态，则优先从 oldbuckets 查找。</p>
 <h2 id="Golang-Map-如何扩容"><a href="#Golang-Map-如何扩容" class="headerlink" title="Golang Map 如何扩容"></a>Golang Map 如何扩容</h2><p>装载因子：count/2^B<br>触发条件：</p>
 <ol>
 <li>装填因子是否大于 6.5</li>
@@ -5896,9 +5896,14 @@
 <p>解决方法：</p>
 <ol>
 <li>双倍扩容：扩容采取了一种称为“渐进式”地方式，原有的 key 并不会一 次性搬迁完毕，每次最多只会搬迁 2 个 bucket</li>
-<li>等量扩容：重新排列，极端情况下，重新排列也解决不了，map 成了链表， 性能大大降低，此时哈希种子 hash0 的设置，可以降低此类极端场景的发 生。</li>
+<li>等量扩容：重新排列，极端情况下，重新排列也解决不了，map 成了链表，性能大大降低，此时哈希种子 hash0 的设置，可以降低此类极端场景的发生。</li>
 </ol>
 <h1 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h1><p>&emsp;&emsp;在 Go 语言中，不要通过共享内存来通信，而要通过通信来实现内存共享。Go 的 CSP（Communicating Sequential Process）并发模型，中文叫做通信顺序进程，是通过 goroutine 和 channel 来实现的。所以 channel 收发遵循先进先出 FIFO，分为有缓存和无缓存，channel 中大致有 buffer(当缓冲区大小不为 0 时，是个 ring buffer)、sendq、recvq 当前 channel 因为缓冲区不足而阻塞的队列、使用双向链表存储、还有一个 mutex 锁控制并发、其他原属等。</p>
+<h2 id="channel-的底层实现"><a href="#channel-的底层实现" class="headerlink" title="channel 的底层实现"></a>channel 的底层实现</h2><p><img lazyload src="/images/loading.svg" data-src="hchan.png" alt="avatar"><br>简单说明：<br><code>buf</code>是有缓冲的channel所特有的结构，用来存储缓存数据。是个循环链表<br><code>sendx</code>和<code>recvx</code>用于记录<code>buf</code>这个循环链表中的 index<br><code>lock</code>是个互斥锁<br><code>recvq</code>和<code>sendq</code>分别是接收(&lt;-channel)或者发送(channel &lt;- xxx)的goroutine抽象出来的结构体(sudog)的队列。是个双向链表</p>
+<p>下面我们来详细介绍<code>hchan</code>中各部分是如何使用的。</p>
+<ol>
+<li>先从创建开始<br>我们首先创建一个channel：ch := make(chan int, 3)<br><img lazyload src="/images/loading.svg" data-src="hchan1.png" alt="avatar"></li>
+</ol>
 <h2 id="channel-的特性"><a href="#channel-的特性" class="headerlink" title="channel 的特性"></a>channel 的特性</h2><ol>
 <li>给一个 nil channel 发送数据，造成永远阻塞</li>
 <li>从一个 nil channel 接收数据，造成永远阻塞</li>
@@ -6188,7 +6193,7 @@
 <ul>
 <li>整理过程较为复杂，需要多次遍历内存导致<code>STW</code>时间比标记-清除算法更长</li>
 </ul>
-<h3 id="Golang-的-GC-算法"><a href="#Golang-的-GC-算法" class="headerlink" title="Golang 的 GC 算法"></a>Golang 的 GC 算法</h3><h4 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h4><p>&emsp;&emsp;前面提到的“标记”类算法都有一个共同的瑕疵，即在进行垃圾回收的时候会暂停整个程序（<code>STW</code>问题）。三色标记法是对“标记”阶段的改进，在不暂停程序的情况下即可完成对象的可达性分析。<code>GC</code>线程将所有对象分为三类：</p>
+<h3 id="Golang-的-GC-算法"><a href="#Golang-的-GC-算法" class="headerlink" title="Golang 的 GC 算法"></a>Golang 的 GC 算法</h3><h4 id="三色标记法（go-1-3）"><a href="#三色标记法（go-1-3）" class="headerlink" title="三色标记法（go 1.3）"></a>三色标记法（go 1.3）</h4><p>&emsp;&emsp;前面提到的“标记”类算法都有一个共同的瑕疵，即在进行垃圾回收的时候会暂停整个程序（<code>STW</code>问题）。三色标记法是对“标记”阶段的改进，在不暂停程序的情况下即可完成对象的可达性分析。<code>GC</code>线程将所有对象分为三类：</p>
 <ul>
 <li>白色：未搜索的对象，在回收周期开始时所有对象都是白色，在回收周期结束时所有的白色都是垃圾对象</li>
 <li>灰色：正在搜索的对象，但是对象身上还有一个或多个引用没有扫描</li>
@@ -6233,8 +6238,8 @@
 <blockquote>
 <p>只要能够避免其中任何一个条件，则不会出现对象丢失的情况，因为：</p>
 <ul>
-<li>  如果条件 1被避免，则所有白色对象均被灰色对象引用，没有白色对象会被遗漏；</li>
-<li>  如果条件 2 被避免，即便白色对象的指针被写入到黑色对象中，但从灰色对象出发，总存在一条没有访问过的路径，从而找到到达白色对象的路径，白色对象最终不会被遗漏。</li>
+<li>  如果条件 1被避免，则所有白色对象均被灰色对象引用，没有白色对象会被遗漏；<strong>强三色不变性</strong></li>
+<li>  如果条件 2 被避免，即便白色对象的指针被写入到黑色对象中，但从灰色对象出发，总存在一条没有访问过的路径，从而找到到达白色对象的路径，白色对象最终不会被遗漏。<strong>弱三色不变性</strong></li>
 </ul>
 </blockquote>
 <p><strong>可能的解决方法：</strong> 整个过程STW，浪费资源，且对用户程序影响较大，由此引入了<strong>屏障机制</strong>；</p>
@@ -6245,15 +6250,15 @@
 <li>黑色赋值器：已经由回收器扫描过，不会再次对其进行扫描。</li>
 <li>灰色赋值器：尚未被回收器扫描过或尽管已经扫描过，但仍需要重新扫描。</li>
 </ul>
-<h5 id="Dijkstra插入写屏障"><a href="#Dijkstra插入写屏障" class="headerlink" title="Dijkstra插入写屏障"></a>Dijkstra插入写屏障</h5><p>&emsp;&emsp;<code>Dijkstra</code>插入写屏障避免了前面提到的条件1，即防止黑色对象指向白色对象。一个对象可以存储在内存中的“栈”或者“堆”，由于“栈”空间容量小且要求相应速度较高，因此“插入写屏障”不适合用于“栈”空间。在“插入写屏障”保护下的三色标记法执行例子如下：<br><img lazyload src="/images/loading.svg" data-src="step1.jpeg" alt="avatar"><br><img lazyload src="/images/loading.svg" data-src="step2.jpeg" alt="avatar"><br><img lazyload src="/images/loading.svg" data-src="step3.jpeg" alt="avatar"></p>
-<p>&emsp;&emsp;尽管<code>Dijkstra</code>插入写屏障可以实现垃圾回收和用户程序的并发执行，但是它存在两个缺点。一方面它是一种比较保守的垃圾回收方法，把有可能存活的对象都标记成灰色了以满足“强三色不变性”。以下图为例，用户程序<code>Mutator</code>将对象A原本指向B对象的指针改成指向C对象，尽管在修改后B对象已经是一个垃圾对象，但是它在本轮垃圾回收过程中不会被回收。<br><img lazyload src="/images/loading.svg" data-src="dj.jpeg" alt="avatra"></p>
-<h5 id="Yuasa删除屏障"><a href="#Yuasa删除屏障" class="headerlink" title="Yuasa删除屏障"></a>Yuasa删除屏障</h5><p>&emsp;&emsp;<code>Yuasa</code>删除写屏障避免了前面提到的条件2，防止丢失灰色对象到白色对象的可达路径。<br><img lazyload src="/images/loading.svg" data-src="yuasa.jpeg" alt="avatar"></p>
+<h5 id="Dijkstra插入写屏障（go-1-5）"><a href="#Dijkstra插入写屏障（go-1-5）" class="headerlink" title="Dijkstra插入写屏障（go 1.5）"></a>Dijkstra插入写屏障（go 1.5）</h5><p>&emsp;&emsp;<code>Dijkstra</code>插入写屏障避免了前面提到的条件1，即防止黑色对象指向白色对象。一个对象可以存储在内存中的“栈”或者“堆”，<strong>由于“栈”空间容量小且要求相应速度较高，因此“插入写屏障”不适合用于“栈”空间</strong>。在“插入写屏障”保护下的三色标记法执行例子如下：<br><img lazyload src="/images/loading.svg" data-src="step1.jpeg" alt="avatar"><br><img lazyload src="/images/loading.svg" data-src="step2.jpeg" alt="avatar"><br><img lazyload src="/images/loading.svg" data-src="step3.jpeg" alt="avatar"></p>
+<p>&emsp;&emsp;尽管<code>Dijkstra</code>插入写屏障可以<strong>实现垃圾回收和用户程序的并发执行</strong>，但是它存在两个缺点。一方面它是一种比较保守的垃圾回收方法，<strong>把有可能存活的对象都标记成灰色了以满足“强三色不变性”</strong>。以下图为例，用户程序<code>Mutator</code>将对象A原本指向B对象的指针改成指向C对象，尽管在修改后B对象已经是一个垃圾对象，但是它在本轮垃圾回收过程中不会被回收。<br><img lazyload src="/images/loading.svg" data-src="dj.jpeg" alt="avatra"></p>
+<h5 id="Yuasa删除屏障"><a href="#Yuasa删除屏障" class="headerlink" title="Yuasa删除屏障"></a>Yuasa删除屏障</h5><p>&emsp;&emsp;<code>Yuasa</code>删除写屏障避免了前面提到的条件2，防止丢失灰色对象到白色对象的可达路径。<strong>满足了弱三色不变性</strong><br><img lazyload src="/images/loading.svg" data-src="yuasa.jpeg" alt="avatar"></p>
 <p>下图简单绘制了<code>Yuasa</code>删除写屏障是如何保证用户程序<code>Mutator</code>和垃圾回收器<code>Collector</code>的并发执行的：</p>
 <ul>
 <li>  第二步中<code>Mutator</code>将对象<code>A</code>原本指向对象<code>B</code>的指针指向<code>C</code>，由于对象<code>B</code>本身就是灰色的，因此不需要对它重新着色</li>
 <li>  第三步中<code>Mutator</code>删除了对象<code>B</code>指向对象<code>C</code>的指针，删除写屏障将下游对象<code>C</code>标记为灰色<br><img lazyload src="/images/loading.svg" data-src="yuasa1.jpeg" alt="avatar"><br>&emsp;&emsp;<code>Yuasa</code>删除写屏障和<code>Dijkstra</code>插入写屏障相比优点在于不需要在一轮三色标记后对栈空间上的对象进行重新扫描，缺点在于<code>Collector</code>会悲观地认为所有被删除的对象都可能被黑色对象引用，比如上图中第三步<code>Mutator</code>删除了对象<code>B</code>指向对象<code>C</code>的指针，如果此时还有一个单独的对象<code>E</code>指向<code>C</code>，那么本该被删除的对象<code>E</code>却可以在本轮垃圾回收中存活。</li>
 </ul>
-<h5 id="混合写屏障"><a href="#混合写屏障" class="headerlink" title="混合写屏障"></a>混合写屏障</h5><blockquote>
+<h5 id="混合写屏障（go-1-8）"><a href="#混合写屏障（go-1-8）" class="headerlink" title="混合写屏障（go 1.8）"></a>混合写屏障（go 1.8）</h5><blockquote>
 <p><strong>混合写屏障也是仅在堆空间启动的，防止降低栈空间的运行效率</strong></p>
 </blockquote>
 <p>回顾一下之前提到的两种写屏障的劣势：</p>
