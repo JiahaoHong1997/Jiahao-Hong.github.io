@@ -6328,7 +6328,7 @@
   </entry>
   <entry>
     <title>早起刷题（Day 1）</title>
-    <url>/2021/03/30/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%201%EF%BC%89/</url>
+    <url>/2022/03/30/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%201%EF%BC%89/</url>
     <content><![CDATA[<h2 id="LeetCode179-最大数"><a href="#LeetCode179-最大数" class="headerlink" title="LeetCode179. 最大数"></a><a class="link" href="https://leetcode-cn.com/problems/largest-number/">LeetCode179. 最大数<i class="fas fa-external-link-alt"></i></a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
 <p>给定一组非负整数 <code>nums</code>，重新排列每个数的顺序（每个数不可拆分）使之组成一个最大的整数。<br>注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。</p>
 </blockquote>
@@ -6382,7 +6382,7 @@
   </entry>
   <entry>
     <title>早起刷题（Day 1）</title>
-    <url>/2021/03/31/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%202%EF%BC%89/</url>
+    <url>/2022/03/31/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%202%EF%BC%89/</url>
     <content><![CDATA[<h2 id="LeetCode63-不同路径-II"><a href="#LeetCode63-不同路径-II" class="headerlink" title="LeetCode63. 不同路径 II"></a><a class="link" href="https://leetcode-cn.com/problems/unique-paths-ii/">LeetCode63. 不同路径 II<i class="fas fa-external-link-alt"></i></a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
 <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。<br>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。<br>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？<br>网格中的障碍物和空位置分别用 1 和 0 来表示。</p>
 </blockquote>
@@ -6417,6 +6417,17 @@
 <h3 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 要删除重复的节点，那么就要实时维护三个位置的节点 <code>pre</code>、<code>cur</code>、<code>next</code>，假设要删除 <code>cur</code>，那么删除之后还要将 <code>cur</code> 重新指向 <code>next</code>；<br>(2). 如果 <code>pre</code> 和 <code>cur</code> 的值不相等，那么同时向后移动一位。</p>
 <h3 id="时间复杂度-2"><a href="#时间复杂度-2" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>O(N).</p>
 <h3 id="解题代码-2"><a href="#解题代码-2" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">* Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">* type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">* 	Val int</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">* 	Next *ListNode</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleteDuplicates</span><span class="params">(head *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> head == <span class="literal">nil</span> || head.Next == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> head</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pre, cur := head, head.Next</span><br><span class="line">	<span class="keyword">for</span> cur != <span class="literal">nil</span> &#123;</span><br><span class="line">		next := cur.Next</span><br><span class="line">		<span class="keyword">if</span> cur.Val == pre.Val &#123;</span><br><span class="line">			pre.Next = next</span><br><span class="line">			cur = next</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			pre = cur</span><br><span class="line">			cur = next</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>早起刷题</category>
+      </categories>
+      <tags>
+        <tag>算法和数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>早起刷题（Day 3）</title>
+    <url>/2022/04/01/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%203%EF%BC%89/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>早起刷题</category>
       </categories>
