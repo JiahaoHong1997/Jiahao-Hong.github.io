@@ -461,7 +461,7 @@
 </ul>
 <p><strong>解题思路：</strong></p>
 <p>&emsp;&emsp;对于一个子串而言，如果它是回文串，并且长度大于 2，那么将它首尾的两个字母去除之后，它仍然是个回文串。例如对于字符串 “ababa”，如果我们已经知道 “bab” 是回文串，那么 “ababa” 一定是回文串，这是因为它的首尾两个字母都是 “a”。据这样的思路，我们就可以用动态规划的方法解决本题。我们用 <code>dp(i,j)</code> 表示字符串 s 的第 i 到 j 个字母组成的串（下文表示成 <code>s[i:j]</code>）是否为回文串：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <p>这里的「其它情况」包含两种可能性：</p>
 <ul>
 <li><p><code>s[i,j]</code> 本身不是一个回文串；</p>
@@ -470,9 +470,9 @@
 </li>
 </ul>
 <p>那么我们就可以写出动态规划的状态转移方程：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>也就是说，只有 s[i+1:j−1] 是回文串，并且 s 的第 i 和 j 个字母相同时，s[i:j] 才会是回文串。上文的所有讨论是建立在子串长度大于 2 的前提之上的，我们还需要考虑动态规划中的边界条件，即子串的长度为 1 或 2。对于长度为 1 的子串，它显然是个回文串；对于长度为 2 的子串，只要它的两个字母相同，它就是一个回文串。因此我们就可以写出动态规划的边界条件：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"><br><strong>注意：在状态转移方程中，我们是从长度较短的字符串向长度较长的字符串进行转移的，因此一定要注意动态规划的循环顺序。</strong></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"><br><strong>注意：在状态转移方程中，我们是从长度较短的字符串向长度较长的字符串进行转移的，因此一定要注意动态规划的循环顺序。</strong></p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">longestPalindrome</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(s)</span><br><span class="line">    dp := <span class="built_in">make</span>([][]<span class="keyword">bool</span>,n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i :=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">        dp[i] = <span class="built_in">make</span>([]<span class="keyword">bool</span>,n)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">        dp[i][i] = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    length := <span class="number">0</span></span><br><span class="line">    subStr := s[:<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> L:=<span class="number">2</span>; L&lt;=n; L++ &#123;</span><br><span class="line">        <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;=n-L; i++ &#123;</span><br><span class="line">            j := i+L<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> s[i] != s[j] &#123;</span><br><span class="line">                dp[i][j] = <span class="literal">false</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> L == <span class="number">2</span> &#123;</span><br><span class="line">                    dp[i][j] = <span class="literal">true</span></span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[i][j] = dp[i+<span class="number">1</span>][j<span class="number">-1</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> dp[i][j] &amp;&amp; j-i+<span class="number">1</span> &gt; length &#123;</span><br><span class="line">                length = j-i+<span class="number">1</span></span><br><span class="line">                subStr = s[i:j+<span class="number">1</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> subStr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -521,7 +521,7 @@
 <ul>
 <li><p>情况1:<code>s[i−1]==&#39;(&#39;</code></p>
 <p>即 <code>s[i]</code> 和 <code>s[i−1]</code> 组成一对有效括号，有效括号长度新增长度2，i位置对最长有效括号长度为 其之前2个位置的最长括号长度加上当前位置新增的2，我们无需知道 <code>i−2</code> 位置对字符是否可以组成有效括号对。那么有：<code>dp[i]=dp[i−2]+2</code></p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 </li>
 <li><p>情况2:<code>s[i-1]==&#39;)&#39;</code></p>
 <p>这种情况下，如果前面有和 <code>s[i]</code> 组成有效括号对的字符，即形如 <code>((....))</code>，这样的话，就要求 <code>s[i−1]</code>位置必然是有效的括号对，否则 <code>s[i]</code> 无法和前面对字符组成有效括号对。这时，我们只需要找到和 <code>s[i]</code> 配对对位置，并判断其是否是 <code>(</code> 即可。和其配对对位置为：<code>i−dp[i−1]−1</code>。</p>
@@ -2201,7 +2201,7 @@
     <content><![CDATA[<h1 id="图论基础"><a href="#图论基础" class="headerlink" title="图论基础"></a>图论基础</h1><h2 id="图的逻辑结构和具体实现"><a href="#图的逻辑结构和具体实现" class="headerlink" title="图的逻辑结构和具体实现"></a>图的逻辑结构和具体实现</h2><ol>
 <li>图的逻辑结构</li>
 </ol>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;为了方便研究图，我们将图可以抽象为下面的形式：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">  	id					<span class="keyword">int</span></span><br><span class="line">  	neighbors		[]*Vertex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -2209,7 +2209,7 @@
 <ol start="2">
 <li>具体实现方式</li>
 </ol>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <ul>
 <li>邻接表：邻接表很直观，我把每个节点 <code>x</code> 的邻居都存到一个列表里，然后把 <code>x</code> 和这个列表关联起来，这样就可以通过一个节点 <code>x</code> 找到它的所有相邻节点。</li>
 <li>邻接矩阵：邻接矩阵是一个二维布尔数组，将其称为<code>matrix</code>，如果节点 <code>x</code> 和 <code>y</code> 是相连的，那么就把 <code>matrix[x][y]</code> 设为 <code>true</code>（上图中绿色的方格代表 <code>true</code>）。如果想找节点 <code>x</code>的邻居，去扫一圈 <code>matrix[x][..]</code> 就行了。</li>
@@ -2251,11 +2251,11 @@
 <h2 id="797-所有可能的路径"><a href="#797-所有可能的路径" class="headerlink" title="797. 所有可能的路径"></a><a class="link" href="https://leetcode-cn.com/problems/all-paths-from-source-to-target/">797. 所有可能的路径<i class="fas fa-external-link-alt"></i></a></h2><p>给你一个有 <code>n</code> 个节点的 <strong>有向无环图（DAG）</strong>，请你找出所有从节点 <code>0</code> 到节点 <code>n-1</code> 的路径并输出（<strong>不要求按特定顺序</strong>）</p>
 <p>二维数组的第 <code>i</code> 个数组中的单元都表示有向图中 <code>i</code> 号节点所能到达的下一些节点，空就是没有下一个结点了。</p>
 <p><strong>示例 1</strong></p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[1,2],[3],[3],[]]</span><br><span class="line">输出：[[0,1,3],[0,2,3]]</span><br><span class="line">解释：有两条路径 0 -&gt; 1 -&gt; 3 和 0 -&gt; 2 -&gt; 3</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：graph &#x3D; [[4,3,1],[3,2,4],[3],[4],[]]</span><br><span class="line">输出：[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 3：</strong></p>
@@ -2295,7 +2295,7 @@
 <p>&emsp;&emsp;什么时候无法修完所有课程？当存在循环依赖的时候。其实这种场景在现实生活中也十分常见，比如我们写代码 import 包也是一个例子，必须合理设计代码目录结构，否则会出现循环依赖，编译器会报错，所以编译器实际上也使用了类似算法来判断你的代码是否能够成功编译。</p>
 <p>&emsp;&emsp;<strong>看到依赖问题，首先想到的就是把问题转化成「有向图」这种数据结构，只要图中存在环，那就说明存在循环依赖</strong>。具体来说，我们首先可以把课程看成「有向图」中的节点，节点编号分别是 <code>0, 1, ..., numCourses-1</code>，把课程之间的依赖关系看做节点之间的有向边。</p>
 <p>&emsp;&emsp;比如说必须修完课程 <code>1</code> 才能去修课程 <code>3</code>，那么就有一条有向边从节点 <code>1</code> 指向 <code>3</code>。所以我们可以根据题目输入的 <code>prerequisites</code> 数组生成一幅类似这样的图：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;<strong>如果发现这幅有向图中存在环，那就说明课程之间存在循环依赖，肯定没办法全部上完；反之，如果没有环，那么肯定能上完全部课程</strong>。所以第一步，我们要讲本题的这种依赖关系转换成图。</p>
 <ul>
 <li>先写一个建图函数</li>
@@ -2354,7 +2354,7 @@
 <li>若是非连通图，需从图中多个顶点出发。每次从一个新顶点出发所访问的顶点集序列恰好是各个连通分量的顶点集。</li>
 </ul>
 <p>&emsp;&emsp;比如下面这幅图，总共有 10 个节点，他们互不相连，分别用 0~9 标记：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;「连通」是一种等价关系，也就是说具有如下三个性质：</p>
 <ol>
 <li>自反性：节点 <code>p</code> 和 <code>p</code> 是连通的。</li>
@@ -2370,16 +2370,16 @@
 <li>如果现在调用 <code>union(0, 1)</code>，那么 0 和 1 被连通，连通分量降为 9 个。</li>
 <li>再调用 <code>union(1, 2)</code>，这时 0,1,2 都被连通，调用 <code>connected(0, 2)</code> 也会返回 true，连通分量变为 8 个。</li>
 </ul>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;判断这种「等价关系」非常实用，比如说编译器判断同一个变量的不同引用，比如社交网络中的朋友圈计算等等。</p>
 <h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>&emsp;&emsp;我们使用森林（若干棵树）来表示图的动态连通性，用数组来具体实现这个森林。怎么用森林来表示连通性呢？我们设定树的每个节点有一个指针指向其父节点，如果是根节点的话，这个指针指向自己。比如说刚才那幅 10 个节点的图，一开始的时候没有相互连通，就是这样：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> UF <span class="keyword">struct</span> &#123;</span><br><span class="line">  	count			<span class="keyword">int</span>		<span class="comment">// 记录连通分量</span></span><br><span class="line">  	parent		[]<span class="keyword">int</span>	<span class="comment">// 节点x的父节点是parent[x]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">construct</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">UF</span></span> &#123;</span><br><span class="line">  	p := <span class="built_in">make</span>([]<span class="keyword">int</span>,n)</span><br><span class="line">  	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">    	p[i] = i</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> UF&#123;</span><br><span class="line">      count : n		<span class="comment">// 一开始互不连通</span></span><br><span class="line">      parent : p	<span class="comment">// 父节点指针初始指向自己</span></span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p><strong>如果某两个节点被连通，则让其中的（任意）一个节点的根节点接到另一个节点的根节点上</strong>：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u UF)</span> <span class="title">union</span><span class="params">(p,q <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">  	rootP := u.find(p)</span><br><span class="line">  	rootQ := u.find(q)</span><br><span class="line">  	<span class="keyword">if</span> rootP == rootQ &#123;</span><br><span class="line">    	<span class="keyword">return</span></span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 将两棵树合为一棵树</span></span><br><span class="line">  	u.parent[rootP] = rootQ</span><br><span class="line">  	<span class="comment">// u.parent[rootQ] = rootP也一样</span></span><br><span class="line">  	u.count--</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(u UF)</span> <span class="title">find</span><span class="params">(x <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 根节点的u.parent[x]=x</span></span><br><span class="line">  	<span class="keyword">for</span> u.parent[x] != x &#123;</span><br><span class="line">    	x = u.parent[x]</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -2451,11 +2451,11 @@
     <url>/2021/09/21/LRU%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<h1 id="LRU算法介绍"><a href="#LRU算法介绍" class="headerlink" title="LRU算法介绍"></a>LRU算法介绍</h1><p>&emsp;&emsp;LRU算法(Least Recently Used)算法实质上是一种缓存机制，常用于操作系统的缓存。计算机的缓存容量是有限的，如果缓存满了就要给新的内容腾位置。那淘汰哪些缓存，哪些继续以何种方式留在缓存中就是一个策略性的问题。LRU算法就是其中一种淘汰策略。其内核就是<strong>认为最近使用过的数据是最有用的，很久都没使用的数据是无用的，内存满了就应该优先淘汰很久没用过的数据</strong>。</p>
 <p>&emsp;&emsp;举一个实际例子，安卓手机都可以把软件放到后台运行，比如我先后打开了「设置」「手机管家」「日历」，那么现在他们在后台排列的顺序是这样的：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg#pic_center" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg#pic_center" alt="avatar"></p>
 <p>&emsp;&emsp;但是这时候如果我访问了一下「设置」界面，那么「设置」就会被提前到第一个，变成这样：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg#pic_center" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg#pic_center" alt="avatar"></p>
 <p>&emsp;&emsp;假设我的手机只允许我同时开 3 个应用程序，现在已经满了。那么如果我新开了一个应用「时钟」，就必须关闭一个应用为「时钟」腾出一个位置，关那个呢？按照 LRU 的策略，就关最底下的「手机管家」，因为那是最久未使用的，然后把新开的应用放到最上面：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg#pic_center" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg#pic_center" alt="avatar"></p>
 <h1 id="LRU算法的函数签名"><a href="#LRU算法的函数签名" class="headerlink" title="LRU算法的函数签名"></a>LRU算法的函数签名</h1><p>&emsp;&emsp;函数签名可以参考<a class="link" href="https://leetcode-cn.com/problems/lru-cache/">146. LRU 缓存机制<i class="fas fa-external-link-alt"></i></a>的题目要求：</p>
 <p>运用你所掌握的数据结构，设计和实现一个 <a class="link" href="https://baike.baidu.com/item/LRU">LRU (最近最少使用) 缓存机制<i class="fas fa-external-link-alt"></i></a> 。</p>
 <p>实现 <code>LRUCache</code> 类：</p>
@@ -2482,7 +2482,7 @@
 <li>每次访问 <code>cache</code> 中的某个 <code>key</code>，需要将这个元素变为最近使用的，也就是说 <code>cache</code> 要支持在任意位置快速插入和删除元素。</li>
 </ol>
 <p>&emsp;&emsp;那么，什么数据结构同时符合上述条件呢？哈希表查找快，但是数据无固定顺序；链表有顺序之分，插入删除快，但是查找慢。所以结合一下，形成一种新的数据结构：哈希链表 <code>LinkedHashMap</code>。LRU 缓存算法的核心数据结构就是哈希链表，双向链表和哈希表的结合体。这个数据结构长这样：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;借助这个结构，我们来逐一分析上面的 3 个条件：</p>
 <ol>
 <li>如果我们每次默认从链表尾部添加元素，那么显然越靠尾部的元素就是最近使用的，越靠头部的元素就是最久未使用的。</li>
@@ -2772,12 +2772,12 @@
 </ul>
 <p><strong>解题思路：</strong></p>
 <p>&emsp;&emsp;这个逻辑就很简单了，要删除倒数第 <code>n</code> 个节点，就得获得倒数第 <code>n + 1</code> 个节点的引用，首先，我们先让一个指针 <code>p1</code> 指向链表的头节点 <code>head</code>，然后走 <code>k</code> 步：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <p>现在的 <code>p1</code>，只要再走 <code>n - k</code> 步，就能走到链表末尾的空指针了对吧？</p>
 <p>趁这个时候，再用一个指针 <code>p2</code> 指向链表头节点 <code>head</code>：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>接下来就很显然了，让 <code>p1</code> 和 <code>p2</code> 同时向前走，<code>p1</code> 走到链表末尾的空指针时走了 <code>n - k</code> 步，<code>p2</code> 也走了 <code>n - k</code> 步，也就是链表的倒数第 <code>k</code> 个节点：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <p>这样，只遍历了一次链表，就获得了倒数第 <code>k</code> 个节点 <code>p2</code>。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeNthFromEnd</span><span class="params">(head *ListNode, n <span class="keyword">int</span>)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    fast, slow := head, head</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;n; i++ &#123;</span><br><span class="line">        fast = fast.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> fast == <span class="literal">nil</span> &#123;	<span class="comment">//fast指向nil，说明n=链表的节点数，即删除第一个节点</span></span><br><span class="line">        <span class="keyword">return</span> head.Next</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> fast.Next != <span class="literal">nil</span> &#123;	<span class="comment">// 定位到要删除节点的前一个节点</span></span><br><span class="line">        fast = fast.Next</span><br><span class="line">        slow = slow.Next</span><br><span class="line">    &#125;</span><br><span class="line">    slow.Next = slow.Next.Next</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -2948,7 +2948,7 @@
 <li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
 </ul>
 <h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>&emsp;&emsp;我们可以用 <code>serialize</code> 方法将二叉树序列化成字符串，用 <code>deserialize</code> 方法将序列化的字符串反序列化成二叉树，至于以什么格式序列化和反序列化，这个完全由你决定。比如说输入如下这样一棵二叉树：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;<code>serialize</code> 方法也许会把它序列化成字符串 <code>2,1,#,6,3,#,#</code>，其中 <code>#</code> 表示 <code>null</code> 指针，那么把这个字符串再输入 <code>deserialize</code> 方法，依然可以还原出这棵二叉树。也就是说，这两个方法会成对儿使用，你只要保证他俩能够自洽就行了。</p>
 <p>&emsp;&emsp;想象一下，二叉树结该是一个二维平面内的结构，而序列化出来的字符串是一个线性的一维结构。<strong>所谓的序列化不过就是把结构化的数据「打平」，其实就是在考察二叉树的遍历方式</strong>。</p>
 <p>&emsp;&emsp;二叉树的遍历方式有哪些？递归遍历方式有前序遍历，中序遍历，后序遍历；迭代方式一般是层级遍历。本文就把这些方式都尝试一遍，来实现 <code>serialize</code> 方法和 <code>deserialize</code> 方法。</p>
@@ -2959,7 +2959,7 @@
 
 
 <h1 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h1><h2 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h2><p>&emsp;&emsp;如下二叉树（<code>#</code> 代表空指针 null），可以直观看出前序遍历做的事情：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;那么 <code>res = [1,2,-1,4,-1,-1,3,-1,-1]</code>，这就是将二叉树「打平」到了一个列表中，其中 -1 代表 null。</p>
 <p>那么，将二叉树打平到一个字符串中也是完全一样的，至此，我们已经可以写出序列化函数 <code>serialize</code> 的代码了：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Serializes a tree to a single string.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">serialize</span><span class="params">(root *TreeNode)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        this.s = this.s + this.null + this.sep</span><br><span class="line">        <span class="keyword">return</span> this.s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    node := strconv.Itoa(root.Val)</span><br><span class="line">    this.s = this.s + node + this.sep</span><br><span class="line">    this.serialize(root.Left)</span><br><span class="line">    this.serialize(root.Right)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> this.s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2989,7 +2989,7 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">serialize</span><span class="params">(root *TreeNode)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        this.s = this.s + this.null + this.sep</span><br><span class="line">        <span class="keyword">return</span> this.s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    q := []*TreeNode&#123;root&#125;</span><br><span class="line">    nodeNum := <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; nodeNum&gt;<span class="number">0</span>; i++ &#123;</span><br><span class="line">        p := []*TreeNode&#123;&#125;</span><br><span class="line">        nodeNum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;<span class="built_in">len</span>(q); j++ &#123;</span><br><span class="line">            node := q[j]</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node == <span class="literal">nil</span> &#123;</span><br><span class="line">                this.s = this.s + this.null + this.sep</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            this.s = this.s + strconv.Itoa(node.Val) + this.sep</span><br><span class="line">            <span class="keyword">if</span> node.Left != <span class="literal">nil</span> &#123;</span><br><span class="line">                nodeNum++</span><br><span class="line">                p = <span class="built_in">append</span>(p,node.Left)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                p = <span class="built_in">append</span>(p,<span class="literal">nil</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node.Right != <span class="literal">nil</span> &#123;</span><br><span class="line">                nodeNum++</span><br><span class="line">                p = <span class="built_in">append</span>(p,node.Right)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                p = <span class="built_in">append</span>(p,<span class="literal">nil</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        q = p</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> this.s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>层级遍历序列化得出的结果如下图：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;可以看到，每一个非空节点都会对应两个子节点，<strong>那么反序列化的思路也是用队列进行层级遍历，同时用索引 <code>i</code> 记录对应子节点的位置</strong>：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Codec)</span> <span class="title">deserialize</span><span class="params">(data <span class="keyword">string</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    m := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        f = <span class="number">0</span></span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(data);i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> data[i] == <span class="string">&#x27;,&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;#&#x27;</span> &#123;</span><br><span class="line">            m = <span class="built_in">append</span>(m,math.MinInt32)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> data[i] == <span class="string">&#x27;-&#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j=i+<span class="number">1</span>; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span> + x</span><br><span class="line">            &#125;</span><br><span class="line">            m = <span class="built_in">append</span>(m,<span class="number">-1</span>*f)</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">            i = j</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j=i; data[j] != <span class="string">&#x27;,&#x27;</span>; j++ &#123;</span><br><span class="line">                x = <span class="keyword">int</span>(data[j]) - <span class="string">&#x27;0&#x27;</span></span><br><span class="line">                f = f*<span class="number">10</span> + x</span><br><span class="line">            &#125;</span><br><span class="line">            m = <span class="built_in">append</span>(m,f)</span><br><span class="line">            f = <span class="number">0</span></span><br><span class="line">            i = j</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> helper(m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helper</span><span class="params">(m []<span class="keyword">int</span>)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(m) == <span class="number">0</span> || m[<span class="number">0</span>] == math.MinInt32 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    root := &amp;TreeNode&#123;m[<span class="number">0</span>],<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">    q := []*TreeNode&#123;root&#125;</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">1</span>; i&lt;<span class="built_in">len</span>(m); &#123;</span><br><span class="line">        parent := q[<span class="number">0</span>]</span><br><span class="line">        q = q[<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> m[i] != math.MinInt32 &#123;	<span class="comment">// 左子树</span></span><br><span class="line">            parent.Left = &amp;TreeNode&#123;m[i],<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">            q = <span class="built_in">append</span>(q,parent.Left)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parent.Left = <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        i++</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> m[i] != math.MinInt32 &#123;	<span class="comment">// 右子树</span></span><br><span class="line">            parent.Right = &amp;TreeNode&#123;m[i],<span class="literal">nil</span>,<span class="literal">nil</span>&#125;</span><br><span class="line">            q = <span class="built_in">append</span>(q,parent.Right)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parent.Right = <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -3191,7 +3191,7 @@
 
 
 <h1 id="LeetCode经典题目"><a href="#LeetCode经典题目" class="headerlink" title="LeetCode经典题目"></a>LeetCode经典题目</h1><h2 id="实现一个优先队列"><a href="#实现一个优先队列" class="headerlink" title="实现一个优先队列"></a>实现一个优先队列</h2><p>&emsp;&emsp;优先队列中的每个元素都有各自的优先级，优先级最高的元素最先得到服务；优先级相同的元素按照其在优先队列中的顺序得到服务。 优先队列往往用堆来实现。我们在上一节实现了一个int类型的堆，它的排序规则是直接根据存入的数据的值来决定的。对于优先队列而言，我们存入的数据可能是一个切片的索引数组，其排序规则是该切片的值的大小，只不过体现在堆中，存入的是其索引。这样我们就可以通过其索引控制出入优先队列是时机，并保证能够适时地得到堆顶的值。如下图所示：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;接下来我们来看一道很经典的题。</p>
 <p><a class="link" href="https://leetcode-cn.com/problems/sliding-window-maximum/">239. 滑动窗口最大值<i class="fas fa-external-link-alt"></i></a></p>
 <p>给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。</p>
@@ -3283,7 +3283,7 @@
 
 
 <p>&emsp;&emsp;将redis的配置文件复制若干次（要配置的从节点个数）：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>然后修改每个配置文件中的项目如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">port 6380  <span class="comment"># 端口号要改成从服务的节点</span></span><br><span class="line">pidfile /var/run/redis_6380.pid  <span class="comment"># pid file也要改成对应的名字</span></span><br><span class="line">logfile <span class="string">&quot;6380.log&quot;</span>	<span class="comment"># 日志文件名也要对应</span></span><br><span class="line">dbfilename dump6380.rdb  <span class="comment"># rdb文件命名也要修改</span></span><br></pre></td></tr></table></figure>
 
@@ -3759,7 +3759,7 @@
 <p>&emsp;&emsp;数据库也是一样，但显然要复杂许多，因为不仅面临着等值查询，还有范围查询(&gt;、&lt;、between、in)、模糊查询(like)、并集查询(or)等等。数据库应该选择怎么样的方式来应对所有的问题呢？我们回想字典的例子，能不能把数据分成段，然后分段查询呢？最简单的如果1000条数据，1到100分成第一段，101到200分成第二段，201到300分成第三段……这样查第250条数据，只要找第三段就可以了，一下子去除了90%的无效数据。但如果是1千万的记录呢，分成几段比较好？我们会想到搜索树，其平均复杂度是lgN，具有不错的查询性能。但这里我们忽略了一个关键的问题，复杂度模型是基于每次相同的操作成本来考虑的，数据库实现比较复杂，数据保存在磁盘上，而为了提高性能，每次又可以把部分数据读入内存来计算，因为我们知道访问磁盘的成本大概是访问内存的十万倍左右，所以简单的搜索树难以满足复杂的应用场景。</p>
 <p>&emsp;&emsp;考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，当一次IO时，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。</p>
 <h3 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h3><p>&emsp;&emsp;前面讲了生活中索引的例子，索引的基本原理，数据库的复杂性，又讲了操作系统的相关知识，目的就是让大家了解，任何一种数据结构都不是凭空产生的，一定会有它的背景和使用场景，我们现在总结一下，我们需要这种数据结构能够做些什么，其实很简单，那就是：每次查找数据时把磁盘IO次数控制在一个很小的数量级，最好是常数数量级。那么我们就想到如果一个高度可控的多路搜索树是否能满足需求呢？就这样，b+树应运而生。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;如上图，是一颗b+树，关于b+树的定义可以参见<a class="link" href="http://zh.wikipedia.org/wiki/B%2B%E6%A0%91">B+树<i class="fas fa-external-link-alt"></i></a>，这里只说一些重点，浅蓝色的块我们称之为一个磁盘块，可以看到每个磁盘块包含几个数据项（深蓝色所示）和指针（黄色所示），如磁盘块1包含数据项17和35，包含指针P1、P2、P3，P1表示小于17的磁盘块，P2表示在17和35之间的磁盘块，P3表示大于35的磁盘块。真实的数据存在于叶子节点即3、5、9、10、13、15、28、29、36、60、75、79、90、99。非叶子节点只不存储真实的数据，只存储指引搜索方向的数据项，如17、35并不真实存在于数据表中。</p>
 <ul>
 <li>b+树的查找过程</li>
@@ -4169,8 +4169,8 @@
 <li>应用程序处理错误，保证100%完整性。</li>
 <li>之后不再报告当前错误。</li>
 </ul>
-<h2 id="使用-github-com-pkg-errors-库"><a href="#使用-github-com-pkg-errors-库" class="headerlink" title="使用 github.com/pkg/errors 库"></a>使用 github.com/pkg/errors 库</h2><p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<h2 id="使用-github-com-pkg-errors-库"><a href="#使用-github-com-pkg-errors-库" class="headerlink" title="使用 github.com/pkg/errors 库"></a>使用 github.com/pkg/errors 库</h2><p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;通过使用 pkg/errors 包，可以想错误值添加上下文，这种方式既可以由人也可以由机器检查。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Write</span><span class="params">(w io.Writer, buf []<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    _, err := w.Write(buf)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">// annotated error goes to log file</span></span><br><span class="line">        log.Println(<span class="string">&quot;unable to write:&quot;</span>, err)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// unannotated error returned to caller</span></span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -4264,11 +4264,11 @@
 <li>结构</li>
 </ul>
 <p>&emsp;&emsp;布隆过滤器是一个 bit 向量或者说 bit 数组，长这样：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;如果我们要映射一个值到布隆过滤器中，我们需要使用<strong>多个不同的哈希函数</strong>生成<strong>多个哈希值，</strong>并对每个生成的哈希值指向的 bit 位置 1，例如针对值 “baidu” 和三个不同的哈希函数分别生成了哈希值 1、4、7，则上图转变为：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;我们现在再存一个值 “tencent”，如果哈希函数返回 3、4、8 的话，图继续变为：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;值得注意的是，4 这个 bit 位由于两个值的哈希函数都返回了这个 bit 位，因此它被覆盖了。现在我们如果想查询 “dianping” 这个值是否存在，哈希函数返回了 1、5、8三个值，结果我们发现 5 这个 bit 位上的值为 0，<strong>说明没有任何一个值映射到这个 bit 位上</strong>，因此我们可以很确定地说 “dianping” 这个值不存在。而当我们需要查询 “baidu” 这个值是否存在的话，那么哈希函数必然会返回 1、4、7，然后我们检查发现这三个 bit 位上的值均为 1，那么我们可以说 “baidu” <strong>存在了么？答案是不可以，只能是 “baidu” 这个值可能存在。</strong></p>
 <p>&emsp;&emsp;这是为什么呢？答案跟简单，因为随着增加的值越来越多，被置为 1 的 bit 位也会越来越多，这样某个值 “taobao” 即使没有被存储过，但是万一哈希函数返回的三个 bit 位都被其他值置位了 1 ，那么程序还是会判断 “taobao” 这个值存在。</p>
 <ul>
@@ -4897,14 +4897,14 @@
 <li>InfoGrid</li>
 </ul>
 <h1 id="Mac下Redis的运行环境"><a href="#Mac下Redis的运行环境" class="headerlink" title="Mac下Redis的运行环境"></a>Mac下Redis的运行环境</h1><p>&emsp;&emsp;在Mac中，Redis的安装目录在<code>/usr/local/bin</code>下,Redis默认不是后台启动的，修改配置文件<code>redis.conf</code>中的<code>daemonize</code>项为yes，如下图：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <h2 id="启动Redis"><a href="#启动Redis" class="headerlink" title="启动Redis"></a>启动Redis</h2><p>&emsp;&emsp;在<code>/usr/local/bin</code>目录下启动Redis，并使用之前修改后的配置文件：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;使用<code>redis-cli</code>进行连接并验证Redis服务是否正常启动：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;输入<code>Ping</code>后返回<code>Pong</code>说明连接成功。</p>
 <p>&emsp;&emsp;查看redis进程是否开启：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 <h2 id="关闭Redis服务"><a href="#关闭Redis服务" class="headerlink" title="关闭Redis服务"></a>关闭Redis服务</h2><p>&emsp;&emsp;使用<code>shutdown</code>命令关闭服务：</p>
 <p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/5.jpg" alt="avatar"></p>
 <h1 id="Redis-benchmark"><a href="#Redis-benchmark" class="headerlink" title="Redis-benchmark"></a>Redis-benchmark</h1><p>&emsp;&emsp;官方自带的性能测试工具，redis 性能测试工具可选参数如下所示：</p>

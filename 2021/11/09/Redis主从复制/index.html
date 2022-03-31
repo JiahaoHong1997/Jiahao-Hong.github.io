@@ -270,7 +270,7 @@
 
 
 <p>&emsp;&emsp;将redis的配置文件复制若干次（要配置的从节点个数）：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>然后修改每个配置文件中的项目如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">port 6380  <span class="comment"># 端口号要改成从服务的节点</span></span><br><span class="line">pidfile /var/run/redis_6380.pid  <span class="comment"># pid file也要改成对应的名字</span></span><br><span class="line">logfile <span class="string">&quot;6380.log&quot;</span>	<span class="comment"># 日志文件名也要对应</span></span><br><span class="line">dbfilename dump6380.rdb  <span class="comment"># rdb文件命名也要修改</span></span><br></pre></td></tr></table></figure>
 

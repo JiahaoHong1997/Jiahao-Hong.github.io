@@ -292,14 +292,14 @@
 <li>InfoGrid</li>
 </ul>
 <h1 id="Mac下Redis的运行环境"><a href="#Mac下Redis的运行环境" class="headerlink" title="Mac下Redis的运行环境"></a>Mac下Redis的运行环境</h1><p>&emsp;&emsp;在Mac中，Redis的安装目录在<code>/usr/local/bin</code>下,Redis默认不是后台启动的，修改配置文件<code>redis.conf</code>中的<code>daemonize</code>项为yes，如下图：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/1.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph1.jpg" alt="avatar"></p>
 <h2 id="启动Redis"><a href="#启动Redis" class="headerlink" title="启动Redis"></a>启动Redis</h2><p>&emsp;&emsp;在<code>/usr/local/bin</code>目录下启动Redis，并使用之前修改后的配置文件：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/2.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph2.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;使用<code>redis-cli</code>进行连接并验证Redis服务是否正常启动：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/3.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph3.jpg" alt="avatar"></p>
 <p>&emsp;&emsp;输入<code>Ping</code>后返回<code>Pong</code>说明连接成功。</p>
 <p>&emsp;&emsp;查看redis进程是否开启：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%9B%BE%E7%AE%97%E6%B3%95/4.jpg" alt="avatar"></p>
+<p><img lazyload src="/images/loading.svg" data-src="graphAlph4.jpg" alt="avatar"></p>
 <h2 id="关闭Redis服务"><a href="#关闭Redis服务" class="headerlink" title="关闭Redis服务"></a>关闭Redis服务</h2><p>&emsp;&emsp;使用<code>shutdown</code>命令关闭服务：</p>
 <p><img lazyload src="/images/loading.svg" data-src="%E9%93%BE%E8%A1%A8%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/5.jpg" alt="avatar"></p>
 <h1 id="Redis-benchmark"><a href="#Redis-benchmark" class="headerlink" title="Redis-benchmark"></a>Redis-benchmark</h1><p>&emsp;&emsp;官方自带的性能测试工具，redis 性能测试工具可选参数如下所示：</p>
