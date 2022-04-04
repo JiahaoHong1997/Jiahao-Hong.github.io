@@ -27,80 +27,19 @@
 
 
 <body>
-.progress-bar-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: $z-index-9;
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
 
-  if (hexo-config('pjax.enable') == true) {
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
 
-    .pjax-progress-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 2px;
-      width: 0;
-      background: var(--pjax-progress-bar-color);
-      visibility: hidden;
-      opacity: 0;
-      z-index: $z-index-8;
-      transition-t("width", "0", "0.1", "linear");
-
-
-      &.show {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-
-
-    .pjax-progress-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: $z-index-8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 6px 0 0;
-      visibility: hidden;
-      font-size: 1.1rem;
-      color: var(--default-text-color);
-
-      +keep-tablet() {
-        padding: 6px 5px 0 0;
-        font-size: 1rem;
-      }
-
-      &.show {
-        visibility: visible;
-      }
-    }
-
-  }
-
-  if (hexo-config('style.scroll.progress_bar.enable') == true) {
-
-    .scroll-progress-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: $scroll-progress-bar-height;
-      visibility: hidden;
-      z-index: $z-index-7;
-      background: var(--primary-color);
-      transition-t("width", "0", "0.1", "linear");
-
-      &.hide {
-        display: none !important;
-      }
-    }
-
-  }
-}
 
 <main class="page-container">
 
@@ -243,6 +182,126 @@
                 
                     <div class="home-content-container fade-in-down-animation">
     <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2021/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/">
+                        数据库三大范式
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        数据库三大范式为什么需要数据库规范化？
+信息重复
+更新异常
+插入异常
+无法正常显示信息
+
+
+删除异常
+丢失有效信息
+
+
+
+三大范式第一范式（1NF）&emsp;&emsp;第一范式是最基本的范式。如果数据库表中的所有字段值都是不可分解的原子值，就说明...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Sep 13 2021 20:03:00 GMT+0800">2021-09-13</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/SQL%E6%95%B0%E6%8D%AE%E5%BA%93/">SQL数据库</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2021/09/12/%E5%BE%AA%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/">
+                        循转数组相关题目
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        &emsp;&emsp;本文是对旋转数组类型的题目的总结，一共6道，基本都是二分法的套路。
+189. 旋转数组给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+进阶：
+
+尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Sep 12 2021 18:30:00 GMT+0800">2021-09-12</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E6%95%B0%E7%BB%84/">数组</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/09/12/%E5%BE%AA%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
         
             <li class="home-article-item">
 
@@ -668,111 +727,6 @@ HTTP协议介绍&emsp;&emsp;HTTP协议是一种让web服务器与浏览器(客�
     </div>
 
     <a href="/2021/05/08/%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/04/28/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/">
-                        滑动窗口(Sliding Window)算法框架
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        &emsp;&emsp;滑动窗口主要应用于子串问题，遇到这类问题不要犹豫，直接考虑使用滑动窗口。作为双指针类问题最难掌握的技巧，其设计思路其实非常简单，就是通过两个指针维护一个窗口，通过前后指针的不断向前滑动，然后更新答案。该算法的大致逻辑如下：
-1...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Apr 28 2021 14:47:30 GMT+0800">2021-04-28</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/04/28/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3(Sliding-Window)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/04/11/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(Dynamic-Programming)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/">
-                        动态规划(Dynamic Programming)算法框架
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        &emsp;&emsp;在一开始学习算法的时候，我对动态规划和贪心算法一直都只有个模糊的概念，不明白两者到底有什么区别，感觉思路都差不太多。于是在本文的开头，我想对比一下贪心算法和动态规划的区别和联系。动态规划和贪心算法都是用来求最优化问题，且二者都...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Apr 11 2021 15:30:30 GMT+0800">2021-04-11</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-DP/">动态规划(DP)</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/04/11/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(Dynamic-Programming)%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
