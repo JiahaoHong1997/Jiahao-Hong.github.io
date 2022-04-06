@@ -6573,4 +6573,35 @@
         <tag>算法和数据结构</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MIT6.824 Lab 踩坑记录</title>
+    <url>/2022/04/06/MIT6.824%20Lab%20%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h1 id="Lab1"><a href="#Lab1" class="headerlink" title="Lab1"></a>Lab1</h1><h2 id="go-plugin"><a href="#go-plugin" class="headerlink" title="go plugin"></a>go plugin</h2><h3 id="踩坑场景"><a href="#踩坑场景" class="headerlink" title="踩坑场景"></a>踩坑场景</h3><p>&emsp;&emsp;项目的初始化就是将 Map 和 Reduce 方法分别打包成插件的形式供 worker 端调用。这样设计的理由是测试用例中包含了不同的 Map 和 Reduce 方法，要通过所有的测试用例，使用插件的形式更加自由。<br>&emsp;&emsp;但是在启动项目的一开始就报错：<code>plugin was built with a different version of package runtime</code>。在网上查了很久，只能知道是作为 plugin 的插件文件和调用这个插件的文件编译环境不同导致的。但是问题是我都是在本地编译的，怎么还存在这个问题呢？</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>&emsp;&emsp;无他，重新装了 go 的环境。。。成功解决该问题。巨 tm 魔幻。<br>&emsp;&emsp;另外，<code>mr</code> 包下的任何改动都需要重新 <code>go build --plugin</code>，否则 worker 无法继续使用这个插件编译。</p>
+<h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><p>&emsp;&emsp;go plugin 目前还是一个不成熟的方案，受限因素太多，可能会出现各种莫名其妙的问题，建议之后自己的开发中还是避免是用 go plugin。</p>
+<h2 id="for-select-中的break、continue、return"><a href="#for-select-中的break、continue、return" class="headerlink" title="for-select 中的break、continue、return"></a>for-select 中的break、continue、return</h2><h3 id="踩坑场景-1"><a href="#踩坑场景-1" class="headerlink" title="踩坑场景"></a>踩坑场景</h3><p>&emsp;&emsp;在 worker 内部实现 map task 的时候，写了一个外层的 for 函数，里面是一个 select，case 1 是当出现超时（10s），那么就直接返回 false，否则就是 default 执行操作；当读到文件末尾 <code>EOF</code>时，完成操作后需要 break 跳出 for 循环。此时就出现了问题：break只能跳出select，无法跳出for，导致出现死循环。</p>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><p>方案一：标签<br>看如下代码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestBreak</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	tick := time.Tick(time.Second)</span><br><span class="line"><span class="comment">//FOR是标签</span></span><br><span class="line">FOR:</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> t := &lt;-tick:</span><br><span class="line">			fmt.Println(t)</span><br><span class="line">			<span class="comment">//break出FOR标签标识的代码</span></span><br><span class="line">			<span class="keyword">break</span> FOR</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;end&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方案二：goto</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestBreak</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	tick := time.Tick(time.Second)</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> t := &lt;-tick:</span><br><span class="line">			fmt.Println(t)</span><br><span class="line">			<span class="comment">//跳到指定位置</span></span><br><span class="line">			<span class="keyword">goto</span> END</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">END:</span><br><span class="line">	fmt.Println(<span class="string">&quot;end&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这两种方式都能够成功跳出 for 循环，我选择了方案二。</p>
+<blockquote>
+<p>continue：单独在select中是不能使用continue，会编译错误，只能用在for-select中。  <strong>continue的语义就类似for中的语义，select后的代码不会被执行到。</strong><br>return：和函数中的return一样，跳出select，和for，后续代码都不执行</p>
+</blockquote>
+<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><h3 id="踩坑场景-2"><a href="#踩坑场景-2" class="headerlink" title="踩坑场景"></a>踩坑场景</h3><p>&emsp;&emsp;Map 任务需要打开文件后统计单词出现频率，此时有两种读文件的方式。第一种是打开文件后逐行读取，第二种是打开文件后直接全部加载到内存中。第一种方式是用时间换空间的做法，在文件是个超大型文件，但是内存不够的情况下只能使用这种方法，唯一的问题就是很慢，IO 操作相当密集，很影响速度；第二种方式需要占用较大的内存，但是只需要一次性将文件全部加载到内存中即可，时间上会快很多。</p>
+<h3 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h3><p>&emsp;&emsp;在本 lab 的场景下，每个 job 只有 10s 的时间处理文件，那么显然应该采用第二种方式。我一开始就是采用的逐行读取的方式，发现有的文件在单 worker 运算时甚至完全无法在 10s 内统计完。<br>&emsp;&emsp;同时还采用了临时文件的方式，临时文件会默认保存在系统的<code>/tmp</code> 路径下，如果要放在当前目录下需要指定，每个临时文件的末尾会带上一串随机的数字，可以在命名的时候做一些约定，方便之后的处理。<br>&emsp;&emsp;对文件的命名带上了递增的 jobId，那么就避免了冲突问题。</p>
+<h3 id="建议-1"><a href="#建议-1" class="headerlink" title="建议"></a>建议</h3><ul>
+<li>因为命名规则可能存在缺陷，采用临时文件的形式可以避免任务失败后，任务被其他的 <code>worker</code> 接管造成的文件冲突；</li>
+<li>还可以通过约定命名规则，比如带上自增的 JobId，那么在之后的流程中只会对成功的 JobId 的文件进行处理。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>web开发</category>
+      </categories>
+      <tags>
+        <tag>踩坑</tag>
+      </tags>
+  </entry>
 </search>
