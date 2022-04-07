@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            早起刷题（Day 7） |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">早起刷题（Day 7）</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2022-04-06 17:38:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98/">早起刷题</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>今天没早起刷题，早起抢菜去了。淦！</p>
+<h2 id="253-会议室-II"><a href="#253-会议室-II" class="headerlink" title="253. 会议室 II"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/meeting-rooms-ii/">253. 会议室 II<i class="fas fa-external-link-alt"></i></a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给你一个会议时间安排的数组 intervals ，每个会议时间都会包括开始和结束的时间 intervals[i] = [starti, endi] ，返回 所需会议室的最小数量 。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：intervals &#x3D; [[0,30],[5,10],[15,20]]</span><br><span class="line">输出：2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：intervals &#x3D; [[7,10],[2,4]]</span><br><span class="line">输出：1</span><br><span class="line"> </span><br><span class="line">提示：</span><br><span class="line">1 &lt;&#x3D; intervals.length &lt;&#x3D; 104</span><br><span class="line">0 &lt;&#x3D; starti &lt; endi &lt;&#x3D; 106</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 按照最朴素的想法，要给公司部门安排会议，那么一定是优先考虑会议开始得早的部门，那么首先就是要排序。排序的条件就是开始时间越早越靠前；<br>(2). 安排新会议室的原则是所有已申请的会议室都被占用。那么就可以使用一个最小堆，堆中保存的是每场会议的结束时间；<br>(3). 当当前会议开始时，堆顶的会议还没结束，说明堆中所有的会议都不可能结束，那么就要申请新的会议室；<br>(4). 遍历完整个会议的记录，就可以得到要开辟的最大会议室数量。</p>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>O(Nlog(N))</p>
+<h3 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> intHeap []<span class="keyword">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h intHeap)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(h)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h intHeap)</span> <span class="title">Swap</span><span class="params">(i, j <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	h[i], h[j] = h[j], h[i]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h intHeap)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h[i] &lt; h[j]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *intHeap)</span> <span class="title">Push</span><span class="params">(x <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	*h = <span class="built_in">append</span>(*h, x.(<span class="keyword">int</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *intHeap)</span> <span class="title">Pop</span><span class="params">()</span> <span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">	old := *h</span><br><span class="line">	n := <span class="built_in">len</span>(old)</span><br><span class="line">	x := old[n<span class="number">-1</span>]</span><br><span class="line">	*h = old[:n<span class="number">-1</span>]</span><br><span class="line">	<span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minMeetingRooms</span><span class="params">(intervals [][]<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	</span><br><span class="line">	sort.Slice(intervals, <span class="function"><span class="keyword">func</span><span class="params">(i,j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> intervals[i][<span class="number">0</span>] == intervals[j][<span class="number">0</span>] &#123;</span><br><span class="line">			<span class="keyword">return</span> intervals[i][<span class="number">1</span>] &lt; intervals[j][<span class="number">1</span>]</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> intervals[i][<span class="number">0</span>] &lt; intervals[j][<span class="number">0</span>]</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> h intHeap</span><br><span class="line">	heap.Push(&amp;h, intervals[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">	room := <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">1</span>; i&lt;<span class="built_in">len</span>(intervals); i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> intervals[i][<span class="number">0</span>] &gt;= h[<span class="number">0</span>] &#123;</span><br><span class="line">			heap.Pop(&amp;h)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			room++</span><br><span class="line">		&#125;</span><br><span class="line">		heap.Push(&amp;h, intervals[i][<span class="number">1</span>])</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> room</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="163-缺失的区间"><a href="#163-缺失的区间" class="headerlink" title="163. 缺失的区间"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/missing-ranges/">163. 缺失的区间<i class="fas fa-external-link-alt"></i></a></h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给定一个排序的整数数组 _<strong>nums</strong>_ ，其中元素的范围在 <strong>闭区间</strong> <strong>[<em>lower, upper</em>]</strong> 当中，返回不包含在数组中的缺失区间。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line">输入: nums &#x3D; [0, 1, 3, 50, 75], lower &#x3D; 0 和 upper &#x3D; 99,</span><br><span class="line">输出: [&quot;2&quot;, &quot;4-&gt;49&quot;, &quot;51-&gt;74&quot;, &quot;76-&gt;99&quot;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 这道模拟题挺恶心的，边界处理是关键；<br>(2). 根据数据范围遍历 <code>nums</code>，不能按从 <code>lower</code> 到 <code>upper</code>。</p>
+<h3 id="时间复杂度-1"><a href="#时间复杂度-1" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>O(N)</p>
+<h3 id="解题代码-1"><a href="#解题代码-1" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findMissingRanges</span><span class="params">(nums []<span class="keyword">int</span>, lower <span class="keyword">int</span>, upper <span class="keyword">int</span>)</span> []<span class="title">string</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ret := []<span class="keyword">string</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> lower == upper &#123;</span><br><span class="line">			s := strconv.Itoa(lower)</span><br><span class="line">			ret = <span class="built_in">append</span>(ret, s)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			s := strconv.Itoa(lower) + <span class="string">&quot;-&gt;&quot;</span> + strconv.Itoa(upper)</span><br><span class="line">			ret = <span class="built_in">append</span>(ret, s)</span><br><span class="line">	&#125;</span><br><span class="line">		<span class="keyword">return</span> ret</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pre := lower</span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">		<span class="keyword">var</span> s <span class="keyword">string</span></span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">0</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> nums[i] != pre &#123;</span><br><span class="line">				<span class="keyword">if</span> nums[i] == pre+<span class="number">1</span> &#123;</span><br><span class="line">					s = strconv.Itoa(pre)</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					s = strconv.Itoa(pre) + <span class="string">&quot;-&gt;&quot;</span> + strconv.Itoa(nums[i]<span class="number">-1</span>)</span><br><span class="line">				&#125;</span><br><span class="line">				ret = <span class="built_in">append</span>(ret, s)</span><br><span class="line">				pre = nums[i]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> nums[i] == pre + <span class="number">2</span> &#123;</span><br><span class="line">				s = strconv.Itoa(nums[i]<span class="number">-1</span>)</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[i] == pre + <span class="number">1</span> &#123;</span><br><span class="line">				s = <span class="string">&quot;&quot;</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				s = strconv.Itoa(pre+<span class="number">1</span>) + <span class="string">&quot;-&gt;&quot;</span> + strconv.Itoa(nums[i]<span class="number">-1</span>)</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			pre = nums[i]</span><br><span class="line">			<span class="keyword">if</span> s != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line">				ret = <span class="built_in">append</span>(ret, s)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> i == <span class="built_in">len</span>(nums)<span class="number">-1</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> nums[i] != upper &#123;</span><br><span class="line">				<span class="keyword">if</span> nums[i] == upper<span class="number">-1</span> &#123;</span><br><span class="line">					s = strconv.Itoa(upper)</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					s = strconv.Itoa(nums[i]+<span class="number">1</span>) + <span class="string">&quot;-&gt;&quot;</span> + strconv.Itoa(upper)</span><br><span class="line">				&#125;</span><br><span class="line">				ret = <span class="built_in">append</span>(ret, s)</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="694-不同岛屿的数量"><a href="#694-不同岛屿的数量" class="headerlink" title="694. 不同岛屿的数量"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/number-of-distinct-islands/">694. 不同岛屿的数量<i class="fas fa-external-link-alt"></i></a></h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给定一个非空 01 二维数组表示的网格，一个岛屿由四连通（上、下、左、右四个方向）的 1 组成，你可以认为网格的四周被海水包围。<br>请你计算这个网格中共有多少个形状不同的岛屿。两个岛屿被认为是相同的，当且仅当一个岛屿可以通过平移变换（不可以旋转、翻转）和另一个岛屿重合。</p>
+</blockquote>
+<p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">11000</span><br><span class="line">11000</span><br><span class="line">00011</span><br><span class="line">00011</span><br><span class="line">给定上图，返回结果 1 。</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">11011</span><br><span class="line">10000</span><br><span class="line">00001</span><br><span class="line">11011</span><br><span class="line">给定上图，返回结果 3 。</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line"></span><br><span class="line">11</span><br><span class="line">1</span><br><span class="line">和</span><br><span class="line"></span><br><span class="line"> 1</span><br><span class="line">11</span><br><span class="line">是不同的岛屿，因为我们不考虑旋转、翻转操作。</span><br></pre></td></tr></table></figure></p>
+<h3 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 海岛问题的拓展，一般思路就两种：dfs 或 bfs；<br>(2). 这道题要求输出的是不同形状海岛的数量，那么关键问题就是怎样表示海岛的形状；<br>(3). 回忆一下我们通过 dfs 找海岛的过程，每次都是先找到海岛最左上角的点，然后根据我们预设的方向数组来控制寻找的路径，那么通过这条寻找路径，就能确定海岛的形状；<br>(4). 要注意的是每个海岛左上角的起始点都是其坐标，要将其归零才可以在同一数值范围内进行判断，我们只需要在遍历 <code>grid</code> 的点的时候记录下此时的坐标，就可以计算该海岛上每个点相对于左上角点的坐标位置。</p>
+<h3 id="时间复杂度-2"><a href="#时间复杂度-2" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>O(N^2)</p>
+<h3 id="解题代码-2"><a href="#解题代码-2" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">numDistinctIslands</span><span class="params">(grid [][]<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line">	h_idx := []<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>&#125;</span><br><span class="line">	w_idx := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">-1</span>&#125;</span><br><span class="line"></span><br><span class="line">	height, weight := <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">	s := <span class="string">&quot;&quot;</span></span><br><span class="line">	bi, bj := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> dfs <span class="function"><span class="keyword">func</span><span class="params">(<span class="keyword">int</span>,<span class="keyword">int</span>)</span></span></span><br><span class="line">	dfs = <span class="function"><span class="keyword">func</span><span class="params">(i, j <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">		grid[i][j] = <span class="number">0</span></span><br><span class="line">		s += fmt.Sprintf(<span class="string">&quot;-%d-%d&quot;</span>, i-bi, j-bj)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> k:=<span class="number">0</span>; k&lt;<span class="number">4</span>; k++ &#123;</span><br><span class="line">			h, w := i+h_idx[k], j+w_idx[k]</span><br><span class="line">			<span class="keyword">if</span> h &gt;= <span class="number">0</span> &amp;&amp; h &lt; height &amp;&amp; w &gt;= <span class="number">0</span> &amp;&amp; w &lt; weight &amp;&amp; grid[h][w] == <span class="number">1</span> &#123;</span><br><span class="line">				dfs(h,w)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;height; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;weight; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> grid[i][j] == <span class="number">1</span> &#123;</span><br><span class="line">				bi, bj, s = i, j, <span class="string">&quot;&quot;</span></span><br><span class="line">				dfs(i,j)</span><br><span class="line">				m[s] = <span class="keyword">struct</span>&#123;&#125;&#123;&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// for k, _ := range m &#123;</span></span><br><span class="line">	<span class="comment">// 		fmt.Println(k)</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(m)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="164-最大间距"><a href="#164-最大间距" class="headerlink" title="164. 最大间距"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-gap/">164. 最大间距<i class="fas fa-external-link-alt"></i></a></h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给定一个无序的数组 nums，返回 数组在排序之后，相邻元素之间最大的差值 。如果数组元素个数小于 2，则返回 0 。<br>您必须编写一个在「线性时间」内运行并使用「线性额外空间」的算法。</p>
+</blockquote>
+<p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> 示例 1:</span><br><span class="line">输入: nums &#x3D; [3,6,9,1]</span><br><span class="line">输出: 3</span><br><span class="line">解释: 排序后的数组是 [1,3,6,9], 其中相邻元素 (3,6) 和 (6,9) 之间都存在最大差值 3。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line">输入: nums &#x3D; [10]</span><br><span class="line">输出: 0</span><br><span class="line">解释: 数组元素个数小于 2，因此返回 0。</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">提示:</span><br><span class="line">1 &lt;&#x3D; nums.length &lt;&#x3D; 105</span><br><span class="line">0 &lt;&#x3D; nums[i] &lt;&#x3D; 109</span><br></pre></td></tr></table></figure></p>
+<h3 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 首先注意题目的要求：<strong>您必须编写一个在「线性时间」内运行并使用「线性额外空间」的算法。</strong> 这就对选择的算法有了限制。快排和堆排的时间复杂度都是 O(Nlog(N))，基数排序时间复杂度是 O(N)，空间复杂度是 O(N)，符合题目要求；<br>(2). 那么这道题就转化成一道基数排序的算法了。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：早起刷题（Day 7）</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2022-04-06 17:38:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2022/04/06/早起刷题（Day 7）/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/07/%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">常用排序算法</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/06/MIT6.824%20Lab%20%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">MIT6.824 Lab 踩坑记录</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#253-%E4%BC%9A%E8%AE%AE%E5%AE%A4-II"><span class="nav-number">1.</span> <span class="nav-text">253. 会议室 II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">解题代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#163-%E7%BC%BA%E5%A4%B1%E7%9A%84%E5%8C%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">163. 缺失的区间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">2.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6-1"><span class="nav-number">2.3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.4.</span> <span class="nav-text">解题代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#694-%E4%B8%8D%E5%90%8C%E5%B2%9B%E5%B1%BF%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">694. 不同岛屿的数量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-2"><span class="nav-number">3.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6-2"><span class="nav-number">3.3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81-2"><span class="nav-number">3.4.</span> <span class="nav-text">解题代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#164-%E6%9C%80%E5%A4%A7%E9%97%B4%E8%B7%9D"><span class="nav-number">4.</span> <span class="nav-text">164. 最大间距</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-3"><span class="nav-number">4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-3"><span class="nav-number">4.2.</span> <span class="nav-text">解题思路</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
