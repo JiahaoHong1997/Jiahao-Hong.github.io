@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            MIT6.824 Lab1 |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">MIT6.824 Lab1</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2022-04-06 12:36:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/mit6-824/">mit6.824</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="任务梳理"><a href="#任务梳理" class="headerlink" title="任务梳理"></a>任务梳理</h1><h2 id="mapreduce-介绍及部署"><a href="#mapreduce-介绍及部署" class="headerlink" title="mapreduce 介绍及部署"></a>mapreduce 介绍及部署</h2><p><img lazyload src="/images/loading.svg" data-src="mapreduce.jpg" alt="avatar"></p>
+<h3 id="lab1-简介"><a href="#lab1-简介" class="headerlink" title="lab1 简介"></a>lab1 简介</h3><p>&emsp;&emsp;实现一个 <code>mapreduce</code> 的 demo，也就是在单机上部署的分布式词频统计系统。至于和实际生产场景上最大的区别就在于文件系统。在单机上部署共用一套文件系统，而实际生产端要复杂很多。</p>
+<h3 id="实际部署"><a href="#实际部署" class="headerlink" title="实际部署"></a>实际部署</h3><p>&emsp;&emsp;完整的部署流程以及实验细节详见 <a class="link" target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">6.824 Lab 1: MapReduce<i class="fas fa-external-link-alt"></i></a></p>
+<ol>
+<li><p>串行化的部署流程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://g.csail.mit.edu/6.824-golabs-2022 6.824</span><br><span class="line">$ <span class="built_in">cd</span> 6.824</span><br><span class="line">$ ls</span><br><span class="line">Makefile src</span><br><span class="line">$</span><br><span class="line">$ <span class="built_in">cd</span> ~/6.824</span><br><span class="line">$ <span class="built_in">cd</span> src/main</span><br><span class="line">$ go build -race -buildmode=plugin ../mrapps/wc.go</span><br><span class="line">$ rm mr-out*</span><br><span class="line">$ go run -race mrsequential.go wc.so pg*.txt</span><br><span class="line">$ more mr-out-0</span><br><span class="line">A 509</span><br><span class="line">ABOUT 2</span><br><span class="line">ACT 8</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+<li><p>mapreduce 部署流程<br>(1). 使用 go plugin 将 <code>map</code> 和 <code>reduce</code> 函数插件化<br>恶心的 go plugin，是个不成熟的方案，差点让我倒在了第一步，具体的踩坑情况见<a href="https://jiahaohong1997.github.io/2022/04/06/MIT6.824%20Lab%20%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">MIT6.824 Lab 踩坑记录</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go build -race -buildmode=plugin ../mrapps/wc.go</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>(2). 启动 <code>coordinator</code> 进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm mr-out*</span><br><span class="line">$ go run -race mrcoordinator.go pg-*.txt</span><br></pre></td></tr></table></figure>
+
+<p>(3). 开启多个终端窗口，启动多个 <code>worker</code> 进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go run -race mrworker.go wc.so</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>最终测试结果展示<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ bash test-mr.sh       </span><br><span class="line">*** Starting wc <span class="built_in">test</span>.</span><br><span class="line">--- wc <span class="built_in">test</span>: PASS</span><br><span class="line">*** Starting indexer <span class="built_in">test</span>.</span><br><span class="line">--- indexer <span class="built_in">test</span>: PASS</span><br><span class="line">*** Starting map parallelism <span class="built_in">test</span>.</span><br><span class="line">--- map parallelism <span class="built_in">test</span>: PASS</span><br><span class="line">*** Starting reduce parallelism <span class="built_in">test</span>.</span><br><span class="line">--- reduce parallelism <span class="built_in">test</span>: PASS</span><br><span class="line">*** Starting job count <span class="built_in">test</span>.</span><br><span class="line">--- job count <span class="built_in">test</span>: PASS</span><br><span class="line">*** Starting early <span class="built_in">exit</span> <span class="built_in">test</span>.</span><br><span class="line">--- early <span class="built_in">exit</span> <span class="built_in">test</span>: PASS</span><br><span class="line">*** Starting crash <span class="built_in">test</span>.</span><br><span class="line">--- crash <span class="built_in">test</span>: PASS</span><br><span class="line">*** PASSED ALL TESTS</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h2><p>&emsp;&emsp;整个系统中 <code>worker</code> 和 <code>coordinator</code> 的交互状态包含下图所示的一系列情况：<br><img lazyload src="/images/loading.svg" data-src="keyStatus.png" alt="avatar"></p>
+<h3 id="RPC-通信"><a href="#RPC-通信" class="headerlink" title="RPC 通信"></a>RPC 通信</h3><ol>
+<li>建立连接，给每个 <code>worker</code> 分配专属工号<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Ask for WorkerNum and Contruct Connection  </span></span><br><span class="line"><span class="keyword">type</span> HelloArgs <span class="keyword">struct</span> &#123;  </span><br><span class="line">   X <span class="keyword">string</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> HelloReply <span class="keyword">struct</span> &#123;  </span><br><span class="line">   Y <span class="keyword">int</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>&emsp;&emsp;<code>HelloArgs</code> 的 <code>X</code> 元素是双方约定好的字符串，<code>coordinator</code> 只有在收到约定的信息后才能建立连接，分配工号。</p>
+<ol start="2">
+<li>map 任务的请求与完成<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Map tasks Arguments and Reply  </span></span><br><span class="line"><span class="keyword">type</span> MapArgs <span class="keyword">struct</span> &#123;  </span><br><span class="line">	WorkerNum <span class="keyword">int</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> MapReply <span class="keyword">struct</span> &#123;  </span><br><span class="line">	NReducer <span class="keyword">int</span>  </span><br><span class="line">	Finished <span class="keyword">bool</span>  </span><br><span class="line">	FileName <span class="keyword">string</span>  </span><br><span class="line">	JobId <span class="keyword">int</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Finish Map Task  </span></span><br><span class="line"><span class="keyword">type</span> FinishMapArgs <span class="keyword">struct</span> &#123;  </span><br><span class="line">	X <span class="keyword">bool</span>  </span><br><span class="line">	WorkerNum <span class="keyword">int</span>  </span><br><span class="line">	FileName []<span class="keyword">string</span>  </span><br><span class="line">	JobId <span class="keyword">int</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> FinishMapReply <span class="keyword">struct</span> &#123;  </span><br><span class="line">	Y <span class="keyword">int</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>请求 <code>map</code> 任务<br><code>worker</code> 请求 <code>map</code> 任务时带上自己的工号，如果被成功分配了 <code>map</code> 任务，那么将会得到 <code>reducer</code> 的数量、是否完成全部 <code>map</code> 任务的信号、要执行的文件名称、被分配的事务 <code>Id</code>（用于命名中间临时文件，避免 <code>crash</code>）。</p>
+</li>
+<li><p>发送结束 <code>map</code> 任务的信号<br><code>worker</code> 在自己的进程中执行完（或未能成功执行），将生成的临时文件名（地址）转告 <code>coordinator</code> 。</p>
+</li>
+</ul>
+<ol start="3">
+<li>reduce 任务的请求与完成<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Reduce Task  </span></span><br><span class="line"><span class="keyword">type</span> ReduceTaskArgs <span class="keyword">struct</span> &#123;  </span><br><span class="line">	WorkerNum <span class="keyword">int</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> ReduceTaskReply <span class="keyword">struct</span> &#123;  </span><br><span class="line">	Finished <span class="keyword">bool</span>  </span><br><span class="line">	ReducerFile []<span class="keyword">string</span>  </span><br><span class="line">	JobId <span class="keyword">int</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Finish Reduce Task  </span></span><br><span class="line"><span class="keyword">type</span> FinishReduceArgs <span class="keyword">struct</span> &#123;  </span><br><span class="line">	X <span class="keyword">bool</span>  </span><br><span class="line">	WorkerNum <span class="keyword">int</span>  </span><br><span class="line">	File <span class="keyword">string</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> FinishReduceReply <span class="keyword">struct</span> &#123;  </span><br><span class="line">	Y <span class="keyword">int</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>&emsp;&emsp;大体思路和 <code>map</code> 任务的请求和结束一直，不过多赘述。</p>
+<ol start="4">
+<li>map 和 reduce 任务都完成，请求关机<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Ask for shutdown  </span></span><br><span class="line"><span class="keyword">type</span> ExitArgs <span class="keyword">struct</span> &#123;  </span><br><span class="line">   X <span class="keyword">bool</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> ExitReply <span class="keyword">struct</span> &#123;  </span><br><span class="line">   Y <span class="keyword">bool</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="coordinator-进程"><a href="#coordinator-进程" class="headerlink" title="coordinator 进程"></a>coordinator 进程</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Coordinator <span class="keyword">struct</span> &#123;  </span><br><span class="line">   <span class="comment">// Your definitions here.  </span></span><br><span class="line"> fileName       []<span class="keyword">string</span>  <span class="comment">// 初始文件名列表，待分配队列</span></span><br><span class="line"> unfinishedFile []<span class="keyword">string</span>  <span class="comment">// map任务进行中的文件名列表，待完成队列</span></span><br><span class="line"> nReducer       <span class="keyword">int</span>  		</span><br><span class="line"> lock           sync.Mutex  </span><br><span class="line"> jobNum         <span class="keyword">int</span>  	  <span class="comment">// 事务 id，递增不重复</span></span><br><span class="line">  </span><br><span class="line"> workerNum    <span class="keyword">int</span>  		  <span class="comment">// worker 编号，递增不重复</span></span><br><span class="line"> workerDone   []<span class="keyword">chan</span> <span class="keyword">int</span>  <span class="comment">// 对应 worker 的任务执行情况</span></span><br><span class="line"> rejectResult []<span class="keyword">bool</span>  	  <span class="comment">// worker 成功完成任务，但因为通信到达后超时，拒绝该任务</span></span><br><span class="line">  </span><br><span class="line"> mapFinished          <span class="keyword">bool</span>  <span class="comment">// map 完成才能开启 reduce</span></span><br><span class="line"> reduceFiles          [][]<span class="keyword">string</span>  <span class="comment">// [nReducer][]string，待分配队列</span></span><br><span class="line"> unFinishedReduceFile [][]<span class="keyword">string</span>  <span class="comment">// reduce 正在进行中的文件列表，待完成队列</span></span><br><span class="line"> finalFiles           []<span class="keyword">string</span>    <span class="comment">// [nReducer]string，最终文件</span></span><br><span class="line">  </span><br><span class="line"> exitValue atomic.Value  		  <span class="comment">// 原子量，保证 coordinator 正常关机</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要负责的流程如下：</p>
+<ol>
+<li>接收 <code>worker</code> 的建立连接请求并发放工号；</li>
+<li>分配 <code>map</code> 任务：</li>
+</ol>
+<ul>
+<li>建立待分配、待完成文件队列</li>
+<li>给成功“接单”（成功从待分配队列中获取文件）的 <code>worker</code> 分配唯一的 <code>jobId</code>，并反馈是否已完成所有的 <code>map</code> 任务</li>
+<li>开启计时 goroutine，一旦对应的 <code>map</code> 任务超时，则将对应文件名从待完成队列放入待分配队列</li>
+</ul>
+<ol start="3">
+<li>分配 <code>reduce</code> 任务：</li>
+</ol>
+<ul>
+<li>在完成所有 <code>map</code> 任务的前提下才会分配 <code>reduce</code> 任务</li>
+<li>其余流程与 <code>map</code> 任务类似</li>
+</ul>
+<ol start="4">
+<li>shutdown：完成所有 <code>reduce</code> 任务后，<code>worker</code> 会收到结束信号，然后通过 RPC 请求关闭，当所有 <code>worker</code> 都退出后，<code>coordinator</code> 才会关闭。</li>
+</ol>
+<h3 id="worker-进程"><a href="#worker-进程" class="headerlink" title="worker 进程"></a>worker 进程</h3><ol>
+<li>建立与 <code>coordinator</code> 的连接，获取工号；</li>
+<li>请求 <code>map</code> 任务，获得任务后开始执行，响应完成情况后继续请求 <code>map</code> 任务直到再次获取或者所有 <code>map</code> 任务都结束；</li>
+<li>所有 <code>map</code> 任务都结束后，请求 <code>reduce</code> 任务，获得任务后开始执行，响应完成情况后继续请求 <code>reduce</code> 任务直到再次获取 <code>reduce</code> 任务或者所有 <code>reduce</code> 任务结束；</li>
+<li>请求结束连接，关机。</li>
+</ol>
+<h2 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h2><ol>
+<li><p>生成的 <code>nReducer</code> 个中间临时文件可以编码成 <code>json</code> 的格式，方便处理，可以在打开的文件中写入：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enc := json.NewEncoder(file)</span><br><span class="line"><span class="keyword">for</span> _, kv := ... &#123;</span><br><span class="line">    err := enc.Encode(&amp;kv)</span><br></pre></td></tr></table></figure>
+<p>在打开的文件中读取：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dec := json.NewDecoder(file)</span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> kv KeyValue</span><br><span class="line">	<span class="keyword">if</span> err := dec.Decode(&amp;kv); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	&#125;</span><br><span class="line">	kva = <span class="built_in">append</span>(kva, kv)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>worker</code>每次在结束任务后都要重复请求任务（心跳），直到获得任务全部结束的信号。</p>
+</li>
+<li><p>通过维护<code>待分配</code> 和 <code>待完成</code> 两个队列，可以控制任务的发放与 <code>map</code>、<code>reduce</code> 两个大任务的完成情况。</p>
+</li>
+<li><p>可以通过生成临时文件保存临时结果的方式避免因为超时导致的 <code>crash</code>。</p>
+</li>
+<li><p>保存的文件可以带上唯一的 <code>jobId</code> 防止 <code>crash</code>。</p>
+</li>
+<li><p><code>coordinator</code> 对任务的超时控制：采用了一个 select 的结构，第一个分支是超时上下文  <code>ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)</code> 来控制，如果超时，除了处理对应的两个队列外，还需要将对应工号的 <code>rejectResult</code> 置为 <code>true</code>，防止 <code>worker</code> 在规定时间内完成了任务，但是因为 PRC 通信的延迟导致超时出现的   <code>coordinator</code> 和 <code>worker</code> 对临时文件处理不一致的情况；第二个分支是对应工号的 <code>workerDone</code>， <code>coordinator</code> 在规定时间内接收到正确的完成信号后，就会向该无缓冲通道内发送数据，从而选择这一分支，表示任务顺利完成。</p>
+</li>
+<li><p>对锁和原子数据的使用上要注意，避免 <code>data race</code>（编译时通过 <code>-race</code> 进行竞态检测）。</p>
+</li>
+</ol>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：MIT6.824 Lab1</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2022-04-06 12:36:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2022/04/06/MIT6.824 Lab1/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/06/MIT6.824%20Lab%20%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">MIT6.824 Lab 踩坑记录</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/04/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%206%EF%BC%89/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">早起刷题（Day 6）</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%A2%B3%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">任务梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mapreduce-%E4%BB%8B%E7%BB%8D%E5%8F%8A%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">mapreduce 介绍及部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lab1-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">lab1 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.2.</span> <span class="nav-text">实际部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-%E9%80%9A%E4%BF%A1"><span class="nav-number">1.2.1.</span> <span class="nav-text">RPC 通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#coordinator-%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">coordinator 进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#worker-%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">worker 进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82"><span class="nav-number">1.3.</span> <span class="nav-text">一些细节</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

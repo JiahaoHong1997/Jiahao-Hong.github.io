@@ -212,7 +212,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/web%E5%BC%80%E5%8F%91/">web开发</a>&nbsp;
+                        <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>&nbsp;
                     </li>
                 
             </ul>
@@ -267,6 +267,10 @@
 <li>因为命名规则可能存在缺陷，采用临时文件的形式可以避免任务失败后，任务被其他的 <code>worker</code> 接管造成的文件冲突；</li>
 <li>还可以通过约定命名规则，比如带上自增的 JobId，那么在之后的流程中只会对成功的 JobId 的文件进行处理。</li>
 </ul>
+<h2 id="chan-int"><a href="#chan-int" class="headerlink" title="[ ]chan int"></a>[ ]chan int</h2><h3 id="踩坑场景-3"><a href="#踩坑场景-3" class="headerlink" title="踩坑场景"></a>踩坑场景</h3><p>&emsp;&emsp;在 <code>Coordinator</code> 结构体中声明了一个切片：<code>workerDone   []chan int</code>，用于接收对应 <code>worker</code> 在规定时间内完成任务的信号。一开始只是建一个固定长度的切片：<code>workerDone := make([]chan int, 20)</code>，在一个新的 <code>worker</code> 建立连接获得工号后如果超出长度，那么就再扩容 20 个位置。可是忽略了了一个事实，这样建立的切片，每个元素其实是 <code>nil</code>，所以一直不能正确的传递信号。</p>
+<h3 id="解决方案-3"><a href="#解决方案-3" class="headerlink" title="解决方案"></a>解决方案</h3><p>要通过下面的方式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.workerDone[workerNum] = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这样才能正确的完成对应工号的初始化。</p>
 
         </div>
 
@@ -311,10 +315,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/04/04/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%206%EF%BC%89/"
+                           href="/2022/04/06/MIT6.824%20Lab1/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">早起刷题（Day 6）</span>
+                                <span class="post-nav-title-item">MIT6.824 Lab1</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -499,7 +503,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lab1"><span class="nav-number">1.</span> <span class="nav-text">Lab1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#go-plugin"><span class="nav-number">1.1.</span> <span class="nav-text">go plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-select-%E4%B8%AD%E7%9A%84break%E3%80%81continue%E3%80%81return"><span class="nav-number">1.2.</span> <span class="nav-text">for-select 中的break、continue、return</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">读取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">建议</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lab1"><span class="nav-number">1.</span> <span class="nav-text">Lab1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#go-plugin"><span class="nav-number">1.1.</span> <span class="nav-text">go plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-select-%E4%B8%AD%E7%9A%84break%E3%80%81continue%E3%80%81return"><span class="nav-number">1.2.</span> <span class="nav-text">for-select 中的break、continue、return</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">读取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chan-int"><span class="nav-number">1.4.</span> <span class="nav-text">[ ]chan int</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E5%9C%BA%E6%99%AF-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">踩坑场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
         </aside>
