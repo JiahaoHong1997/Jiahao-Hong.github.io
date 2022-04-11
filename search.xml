@@ -6774,6 +6774,9 @@
 <li><p>对锁和原子数据的使用上要注意，避免 <code>data race</code>（编译时通过 <code>-race</code> 进行竞态检测）。</p>
 </li>
 </ol>
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a class="link" href="https://github.com/JiahaoHong1997/MIT6.824">GitHub-MIT6.824<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="关键项目文件结构"><a href="#关键项目文件结构" class="headerlink" title="关键项目文件结构"></a>关键项目文件结构</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">|- doc</span><br><span class="line">|- src</span><br><span class="line">	|- main</span><br><span class="line">		|- mrsequential.go</span><br><span class="line">		|- mrworker.go</span><br><span class="line">		|- mrcoordinator.go</span><br><span class="line">		|- test-mr.sh</span><br><span class="line">	|- mr</span><br><span class="line">		|- coordinator.go	&#x2F;&#x2F; coordinator 控制逻辑</span><br><span class="line">		|- rpc.go			&#x2F;&#x2F; rpc 通信结构</span><br><span class="line">		|- worker.go		&#x2F;&#x2F; worker 控制逻辑</span><br><span class="line">	|- mrapps</span><br><span class="line">		|- wc.go</span><br><span class="line">		|- indexer.go</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>分布式系统</category>
