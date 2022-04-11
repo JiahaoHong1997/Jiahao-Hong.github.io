@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            早起刷题（Day 10） |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">早起刷题（Day 10）</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2022-04-11 06:00:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98/">早起刷题</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="LeetCode28-实现-strStr"><a href="#LeetCode28-实现-strStr" class="headerlink" title="LeetCode28. 实现 strStr()"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/">LeetCode28. 实现 strStr()<i class="fas fa-external-link-alt"></i></a></h2><p>#字符串</p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>实现 strStr() 函数。<br>给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回  -1 。<br>说明：<br>当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。<br>对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与 C 语言的 strstr() 以及 Java 的 indexOf() 定义相符。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：haystack &#x3D; &quot;hello&quot;, needle &#x3D; &quot;ll&quot;</span><br><span class="line">输出：2</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：haystack &#x3D; &quot;aaaaa&quot;, needle &#x3D; &quot;bba&quot;</span><br><span class="line">输出：-1</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line">输入：haystack &#x3D; &quot;&quot;, needle &#x3D; &quot;&quot;</span><br><span class="line">输出：0</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">1 &lt;&#x3D; haystack.length, needle.length &lt;&#x3D; 104</span><br><span class="line">haystack 和 needle 仅由小写英文字符组成</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>直接一次遍历比对即可</p>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>$O(M-N)$</p>
+<h3 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">strStr</span><span class="params">(haystack <span class="keyword">string</span>, needle <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	m, n := <span class="built_in">len</span>(haystack), <span class="built_in">len</span>(needle)</span><br><span class="line">	<span class="keyword">if</span> m &lt; n &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;m-n+<span class="number">1</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> haystack[i:i+n] == needle &#123;</span><br><span class="line">			<span class="keyword">return</span> i</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="LeetCode1442-形成两个异或相等数组的三元组数目"><a href="#LeetCode1442-形成两个异或相等数组的三元组数目" class="headerlink" title="LeetCode1442. 形成两个异或相等数组的三元组数目"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/">LeetCode1442. 形成两个异或相等数组的三元组数目<i class="fas fa-external-link-alt"></i></a></h2><p>#位运算 #前缀异或</p>
+<h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给你一个整数数组 arr 。<br>现需要从数组中取三个下标 i、j 和 k ，其中 (0 &lt;= i &lt; j &lt;= k &lt; arr.length) 。<br>a 和 b 定义如下：<br>a = arr[i] ^ arr[i + 1] ^ … ^ arr[j - 1]<br>b = arr[j] ^ arr[j + 1] ^ … ^ arr[k]<br>注意：^ 表示 按位异或 操作。<br>请返回能够令 a == b 成立的三元组 (i, j , k) 的数目。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：arr &#x3D; [2,3,1,6,7]</span><br><span class="line">输出：4</span><br><span class="line">解释：满足题意的三元组分别是 (0,1,2), (0,2,2), (2,3,4) 以及 (2,4,4)</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：arr &#x3D; [1,1,1,1,1]</span><br><span class="line">输出：10</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line">输入：arr &#x3D; [2,3]</span><br><span class="line">输出：0</span><br><span class="line"></span><br><span class="line">示例 4：</span><br><span class="line">输入：arr &#x3D; [1,3,5,7,9]</span><br><span class="line">输出：3</span><br><span class="line"></span><br><span class="line">示例 5：</span><br><span class="line">输入：arr &#x3D; [7,11,12,9,5,2,7,17,22]</span><br><span class="line">输出：8</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">1 &lt;&#x3D; arr.length &lt;&#x3D; 300</span><br><span class="line">1 &lt;&#x3D; arr[i] &lt;&#x3D; 10^8</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 一开始很直观想到枚举全部三元组，然后再根据规则，从 <code>i</code> 遍历到 <code>j-1</code>，再从 <code>j</code> 遍历到 <code>k</code> 来判断是否是合法三元组，但是时间复杂度是 $O(N^4)$；<br>(2). 然后思考优化的思路，那么在哪里可以简化呢？其实可以从异或的过程入手，我们可能比较熟悉 <code>前缀和</code> 了，那么同样可以思考到 <code>前缀异或</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">假设我们有数组 arr: [1, 2, 3, 4, 7, 9]; </span><br><span class="line">前零项的异或值为: 0 &#x3D; 0</span><br><span class="line">前一项的异或值为: 1 &#x3D; 1</span><br><span class="line">前二项的异或值为: 1 ⊕ 2 &#x3D; 3</span><br><span class="line">前三项的异或值为: 1 ⊕ 2 ⊕ 3 &#x3D; 0</span><br><span class="line">前四项的异或值为: 1 ⊕ 2 ⊕ 3 ⊕ 4 &#x3D; 4</span><br><span class="line">前五项的异或值为: 1 ⊕ 2 ⊕ 3 ⊕ 4 ⊕ 7 &#x3D; 3</span><br><span class="line">前六项的异或值为: 1 ⊕ 2 ⊕ 3 ⊕ 4 ⊕ 7 ⊕ 9 &#x3D; 10</span><br><span class="line"></span><br><span class="line">因此它的前缀异或数组为 preXOR: [0, 1, 3, 0, 4, 3, 10];</span><br><span class="line"></span><br><span class="line">假设现在我们想求第 3 项到第 6 项的异或值， 此时我们不需要去暴力计算 &quot;3 ⊕ 4 ⊕ 7 ⊕ 9&quot;</span><br><span class="line">我们知道 (3 ⊕ 4 ⊕ 7 ⊕ 9) &#x3D; (1 ⊕ 2) ⊕ (1 ⊕ 2 ⊕ 3 ⊕ 4 ⊕ 7 ⊕ 9) </span><br><span class="line">我们可以使用前缀异或的数组来计算第 3 项到第 6 项的异或值</span><br><span class="line">(1 ⊕ 2) 为前 2 项的异或值为 “3”</span><br><span class="line">(1 ⊕ 2 ⊕ 3 ⊕ 4 ⊕ 7 ⊕ 9) 为前 6 项异或值为 “10”</span><br><span class="line">因此第 3 项到第 6 项的异或值为：3 ⊕ 10 &#x3D; 9</span><br><span class="line">所有对于前缀异或我们同样也可以用O(1)的时间计算区间内的异或值</span><br></pre></td></tr></table></figure>
+<p>这样可以有效节省时间开销，此时时间复杂度是 $O(N^3)$；<br>(3). 再考虑进行优化，利用异或的性质 题目让我们找到满足 <code>a == b</code> 的坐标，那么当 <code>a</code> 等于 <code>b</code> 时满足什么性质? <code>a ⊕ b = 0</code>! 我们就可以得到 <code>arr[i] ^...^ arr[j-1]^ arr[j] ^...^ arr[k] = 0</code>。因此在 <code>i</code> 之前的前缀异或值到 <code>k</code> 时不会变。因为<code>[i，k]</code> 的区间异或值为0，可以得到： <code>xor[i] == preXor[k+1]</code>。其另一点重点在于在区间 <code>[i, k]</code>内 <code>j</code> 在哪并不重要， 因为无论 <code>j</code> 在哪，<code>i</code> 到 <code>k</code> 的异或值都等于 0，不影响结果。此时时间复杂度是 <code>O(N^2)</code><br>(4). 对于下标 <code>k</code>，若下标 i=$i_1$,$i_2$,…,$i_m$ 时均满足 $xor_i$ = $xor_{k+1}$，根据之前方法，这些二元组 $(i_1,k),(i_2,k),…,(i_m,k)$对答案的贡献之和为:<br>$\left(k-i_{1}\right)+\left(k-i_{2}\right)+\cdots+\left(k-i_{m}\right)=m \cdot k-\left(i_{1}+i_{2}+\cdots+i_{m}\right)$<br>也就是说，当遍历下标 <code>k</code> 时，我们需要知道所有满足$xor_i$ = $xor_{k+1}$ 的</p>
+<ul>
+<li>下标 <code>i</code> 的出现次数 <code>m</code></li>
+<li>下标 <code>i</code> 之和<br>我们可以在计算异或前缀和的同时计算答案，从而做到仅遍历 <code>arr</code> 一次就计算出答案。此时时间复杂度可以压缩到 $O(N)$</li>
+</ul>
+<h3 id="解题代码-1"><a href="#解题代码-1" class="headerlink" title="解题代码"></a>解题代码</h3><p>暴力：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countTriplets</span><span class="params">(arr []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;  </span><br><span class="line">  </span><br><span class="line">   	<span class="keyword">var</span> opration <span class="function"><span class="keyword">func</span><span class="params">(i, j, k <span class="keyword">int</span>)</span> <span class="title">bool</span></span>  </span><br><span class="line"> 	opration = <span class="function"><span class="keyword">func</span><span class="params">(i, j, k <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;  </span><br><span class="line">		a, b := <span class="number">0</span>, <span class="number">0</span>  </span><br><span class="line">		<span class="keyword">for</span> idx1 := i; idx1 &lt;= j<span class="number">-1</span>; idx1++ &#123;  </span><br><span class="line">			 a ^= arr[idx1]  </span><br><span class="line">		&#125;  </span><br><span class="line">		<span class="keyword">for</span> idx2 := j; idx2 &lt;= k; idx2++ &#123;  </span><br><span class="line">			 b ^= arr[idx2]  </span><br><span class="line">		&#125;  </span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> a == b  </span><br><span class="line">   &#125;  </span><br><span class="line">  </span><br><span class="line">   	count := <span class="number">0</span>  </span><br><span class="line"> 	path := []<span class="keyword">int</span>&#123;&#125;  </span><br><span class="line">   	<span class="keyword">var</span> backTacking <span class="function"><span class="keyword">func</span><span class="params">(start <span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span>  </span><br><span class="line">   	backTacking = <span class="function"><span class="keyword">func</span><span class="params">(start <span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">      	<span class="keyword">if</span> k == <span class="number">0</span> &#123;  </span><br><span class="line">         	<span class="keyword">if</span> opration(path[<span class="number">0</span>], path[<span class="number">1</span>], path[<span class="number">2</span>]) &#123;  </span><br><span class="line">            <span class="comment">// fmt.Println(path)  </span></span><br><span class="line"> 				count++  </span><br><span class="line"> 			&#125;  </span><br><span class="line">       		<span class="keyword">return</span>  </span><br><span class="line"> 		&#125;  </span><br><span class="line">  </span><br><span class="line">      	<span class="keyword">for</span> i := start; i &lt; <span class="built_in">len</span>(arr); i++ &#123;  </span><br><span class="line">         	path = <span class="built_in">append</span>(path, i)  </span><br><span class="line">         	<span class="keyword">if</span> k == <span class="number">3</span> &#123;  </span><br><span class="line">            	backTacking(i+<span class="number">1</span>, k<span class="number">-1</span>)  </span><br><span class="line">         	&#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            	backTacking(i, k<span class="number">-1</span>)  </span><br><span class="line">         	&#125;  </span><br><span class="line">  </span><br><span class="line">         	path = path[:<span class="built_in">len</span>(path)<span class="number">-1</span>]  </span><br><span class="line">      	&#125;  </span><br><span class="line">   	&#125;  </span><br><span class="line">  </span><br><span class="line">   	backTacking(<span class="number">0</span>, <span class="number">3</span>)  </span><br><span class="line">   	<span class="keyword">return</span> count  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>暴力+前缀和优化：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countTriplets</span><span class="params">(arr []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;  </span><br><span class="line">  </span><br><span class="line">   	xor := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="built_in">len</span>(arr)+<span class="number">1</span>)  </span><br><span class="line">   	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="built_in">len</span>(arr); i++ &#123;  </span><br><span class="line">      	xor[i] = xor[i<span class="number">-1</span>] ^ arr[i<span class="number">-1</span>]  </span><br><span class="line">   	&#125;  </span><br><span class="line">  </span><br><span class="line">   	<span class="keyword">var</span> opration <span class="function"><span class="keyword">func</span><span class="params">(i, j, k <span class="keyword">int</span>)</span> <span class="title">bool</span></span>  </span><br><span class="line"> 	opration = <span class="function"><span class="keyword">func</span><span class="params">(i, j, k <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;  </span><br><span class="line">      	a, b := <span class="number">0</span>, <span class="number">0</span>  </span><br><span class="line"> 		a = xor[j] ^ xor[i]  </span><br><span class="line">      	b = xor[k+<span class="number">1</span>] ^ xor[j]  </span><br><span class="line">  </span><br><span class="line">      	<span class="keyword">return</span> a == b  </span><br><span class="line">   &#125;  </span><br><span class="line">  </span><br><span class="line">   	count := <span class="number">0</span>  </span><br><span class="line"> 	path := []<span class="keyword">int</span>&#123;&#125;  </span><br><span class="line">   	<span class="keyword">var</span> backTacking <span class="function"><span class="keyword">func</span><span class="params">(start <span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span>  </span><br><span class="line">   	backTacking = <span class="function"><span class="keyword">func</span><span class="params">(start <span class="keyword">int</span>, k <span class="keyword">int</span>)</span></span> &#123;  </span><br><span class="line">      	<span class="keyword">if</span> k == <span class="number">0</span> &#123;  </span><br><span class="line">         	<span class="keyword">if</span> opration(path[<span class="number">0</span>], path[<span class="number">1</span>], path[<span class="number">2</span>]) &#123;  </span><br><span class="line">            <span class="comment">// fmt.Println(path)  </span></span><br><span class="line"> 				count++  </span><br><span class="line"> 			&#125;  </span><br><span class="line">         	<span class="keyword">return</span>  </span><br><span class="line"> 		&#125;  </span><br><span class="line">  </span><br><span class="line">      	<span class="keyword">for</span> i := start; i &lt; <span class="built_in">len</span>(arr); i++ &#123;  </span><br><span class="line">         	path = <span class="built_in">append</span>(path, i)  </span><br><span class="line">         	<span class="keyword">if</span> k == <span class="number">3</span> &#123;  </span><br><span class="line">            	backTacking(i+<span class="number">1</span>, k<span class="number">-1</span>)  </span><br><span class="line">         	&#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            	backTacking(i, k<span class="number">-1</span>)  </span><br><span class="line">         	&#125;  </span><br><span class="line">  </span><br><span class="line">         	path = path[:<span class="built_in">len</span>(path)<span class="number">-1</span>]  </span><br><span class="line">      	&#125;  </span><br><span class="line">   	&#125;  </span><br><span class="line">  </span><br><span class="line">   	backTacking(<span class="number">0</span>, <span class="number">3</span>)  </span><br><span class="line">   	<span class="keyword">return</span> count  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用异或性质两次遍历</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countTriplets</span><span class="params">(arr []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	xor := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="built_in">len</span>(arr)+<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">1</span>; i&lt;=<span class="built_in">len</span>(arr); i++ &#123;</span><br><span class="line">		xor[i] = xor[i<span class="number">-1</span>]^arr[i<span class="number">-1</span>]</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	count := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(arr)<span class="number">-1</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> k:=i+<span class="number">1</span>; k&lt;<span class="built_in">len</span>(arr); k++ &#123;</span><br><span class="line">			<span class="keyword">if</span> xor[i] == xor[k+<span class="number">1</span>] &#123;</span><br><span class="line">				count += k-i</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> count</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一次遍历</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countTriplets</span><span class="params">(arr []<span class="keyword">int</span>)</span> <span class="params">(ans <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	cnt := <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">	total := <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">	s := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> k, val := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		<span class="keyword">if</span> m, has := cnt[s^val]; has &#123;</span><br><span class="line">			ans += m*k - total[s^val]</span><br><span class="line">		&#125;</span><br><span class="line">		cnt[s]++</span><br><span class="line">		total[s] += k</span><br><span class="line">		s ^= val</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：早起刷题（Day 10）</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2022-04-11 06:00:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2022/04/11/早起刷题（Day 10）/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/10/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98%EF%BC%88Day%209%EF%BC%89/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">早起刷题（Day 9）</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode28-%E5%AE%9E%E7%8E%B0-strStr"><span class="nav-number">1.</span> <span class="nav-text">LeetCode28. 实现 strStr()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">解题代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode1442-%E5%BD%A2%E6%88%90%E4%B8%A4%E4%B8%AA%E5%BC%82%E6%88%96%E7%9B%B8%E7%AD%89%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%89%E5%85%83%E7%BB%84%E6%95%B0%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">LeetCode1442. 形成两个异或相等数组的三元组数目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">2.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.3.</span> <span class="nav-text">解题代码</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
