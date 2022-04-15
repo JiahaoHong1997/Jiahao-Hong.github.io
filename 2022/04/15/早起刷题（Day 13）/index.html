@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="技术，分享， 热爱">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="洪笳淏">
+    
+    <title>
+        
+            早起刷题（Day 13） |
+        
+        Hao&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"jiahaohong1997.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/ay9bh-ow8ve.svg","description":"Go Big or Go Home."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="洪笳淏的个人博客" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/wallhaven-439594_100x100.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Hao&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">早起刷题（Day 13）</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">洪笳淏</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2022-04-15 07:00:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法和数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%97%A9%E8%B5%B7%E5%88%B7%E9%A2%98/">早起刷题</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="LeetCode366-寻找二叉树的叶子节点"><a href="#LeetCode366-寻找二叉树的叶子节点" class="headerlink" title="LeetCode366. 寻找二叉树的叶子节点"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-leaves-of-binary-tree/">LeetCode366. 寻找二叉树的叶子节点<i class="fas fa-external-link-alt"></i></a></h2><p>#二叉树 #DFS </p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给你一棵二叉树，请按以下要求的顺序收集它的全部节点：</p>
+<ol>
+<li> 依次从左到右，每次收集并删除所有的叶子节点</li>
+<li> 重复如上过程直到整棵树为空</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3,4,5]</span><br><span class="line">  </span><br><span class="line">          1</span><br><span class="line">         &#x2F; \</span><br><span class="line">        2   3</span><br><span class="line">       &#x2F; \     </span><br><span class="line">      4   5    </span><br><span class="line"></span><br><span class="line">输出: [[4,5,3],[2],[1]]</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">解释:</span><br><span class="line"></span><br><span class="line">1. 删除叶子节点 [4,5,3] ，得到如下树结构：</span><br><span class="line"></span><br><span class="line">          1</span><br><span class="line">         &#x2F; </span><br><span class="line">        2          </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">2. 现在删去叶子节点 [2] ，得到如下树结构：</span><br><span class="line"></span><br><span class="line">          1          </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">3. 现在删去叶子节点 [1] ，得到空树：</span><br><span class="line"></span><br><span class="line">          []         </span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 将叶子结点收集的过程相当于是收集树高相同的节点，所以只需要统计每个节点的高度并且将相同高度的节点加入同一索引的数组中；<br>(2). 创建一个二维数组 <code>ret [][]int</code> 来保存所有叶子结点，当节点的高度小于 <code>len(ret)</code> 时，可以直接在对应的高度索引数组中插入节点的值；否则就要 <code>append</code> <code>ret</code>  的长度。</p>
+<h3 id="解题代码"><a href="#解题代码" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition for a binary tree node.</span></span><br><span class="line"><span class="comment">* type TreeNode struct &#123;</span></span><br><span class="line"><span class="comment">* 	Val int</span></span><br><span class="line"><span class="comment">* 	Left *TreeNode</span></span><br><span class="line"><span class="comment">* 	Right *TreeNode</span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findLeaves</span><span class="params">(root *TreeNode)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ret := [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> ret</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">var</span> backTracking <span class="function"><span class="keyword">func</span><span class="params">(*TreeNode)</span> <span class="title">int</span></span></span><br><span class="line">	backTracking = <span class="function"><span class="keyword">func</span><span class="params">(p *TreeNode)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> p == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		height := <span class="number">1</span>+max(backTracking(p.Left), backTracking(p.Right))</span><br><span class="line">		<span class="keyword">if</span> height &lt; <span class="built_in">len</span>(ret) &#123;</span><br><span class="line">			ret[height] = <span class="built_in">append</span>(ret[height], p.Val)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			ret = <span class="built_in">append</span>(ret, []<span class="keyword">int</span>&#123;p.Val&#125;)</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> height</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	backTracking(root)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="LeetCode474-一和零"><a href="#LeetCode474-一和零" class="headerlink" title="LeetCode474. 一和零"></a><a class="link" target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ones-and-zeroes/">LeetCode474. 一和零<i class="fas fa-external-link-alt"></i></a></h2><p>#动态规划 </p>
+<h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>给你一个二进制字符串数组 strs 和两个整数 m 和 n 。<br>请你找出并返回 strs 的最大子集的长度，该子集中 最多 有 m 个 0 和 n 个 1 。<br>如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：strs &#x3D; [&quot;10&quot;, &quot;0001&quot;, &quot;111001&quot;, &quot;1&quot;, &quot;0&quot;], m &#x3D; 5, n &#x3D; 3</span><br><span class="line">输出：4</span><br><span class="line">解释：最多有 5 个 0 和 3 个 1 的最大子集是 &#123;&quot;10&quot;,&quot;0001&quot;,&quot;1&quot;,&quot;0&quot;&#125; ，因此答案是 4 。</span><br><span class="line">其他满足题意但较小的子集包括 &#123;&quot;0001&quot;,&quot;1&quot;&#125; 和 &#123;&quot;10&quot;,&quot;1&quot;,&quot;0&quot;&#125; 。&#123;&quot;111001&quot;&#125; 不满足题意，因为它含 4 个 1 ，大于 n 的值 3 。</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：strs &#x3D; [&quot;10&quot;, &quot;0&quot;, &quot;1&quot;], m &#x3D; 1, n &#x3D; 1</span><br><span class="line">输出：2</span><br><span class="line">解释：最大的子集是 &#123;&quot;0&quot;, &quot;1&quot;&#125; ，所以答案是 2 。</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">1 &lt;&#x3D; strs.length &lt;&#x3D; 600</span><br><span class="line">1 &lt;&#x3D; strs[i].length &lt;&#x3D; 100</span><br><span class="line">strs[i] 仅由 &#39;0&#39; 和 &#39;1&#39; 组成</span><br><span class="line">1 &lt;&#x3D; m, n &lt;&#x3D; 100</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><p>(1). 这道题可以看作是背包问题，但是和经典的背包问题只有一种容量不同，这道题有两种容量，即选取的字符串子集中的 0 和 1 的数量上限；<br>(2). 经典的背包问题可以使用二维动态规划求解，两个维度分别是物品和容量。这道题有两种容量，因此需要使用三维动态规划求解，三个维度分别是字符串、0 的容量和 1 的容量；<br>(3). 定义三维数组 <code>dp</code>，其中 <code>dp[i][j][k]</code> 表示在前 i 个字符串中，使用 j 个 0 和 k 个 1 的情况下最多可以得到的字符串数量。假设数组 <code>strs</code> 的长度为 l，则最终答案为 <code>dp[l][m][n]</code>。<br>(4). 当 0 和 1 的容量分别是 j 和 k 时，考虑以下两种情况：</p>
+<ul>
+<li>如果 <code>j&lt;zeros</code> 或 <code>k&lt;ones</code>，则不能选第 i 个字符串，此时有 <code>dp[i][j][k]=dp[i−1][j][k]</code>；</li>
+<li>如果<code>j≥zeros</code> 且 <code>k≥ones</code>，则如果不选第 i 个字符串，有 <code>dp[i][j][k]=dp[i−1][j][k]</code>，如果选第 i 个字符串，有 <code>dp[i][j][k]=dp[i−1][j−zeros][k−ones]+1</code>，<code>dp[i][j][k]</code> 的值应取上面两项中的最大值。<br>因此状态转移方程如下：<br>$d p[i][j][k]= \begin{cases}d p[i-1][j][k], &amp; j&lt;\text { zeros } \mid k&lt;\text { ones } \ \max (d p[i-1][j][k], d p[i-1][j-\text { zeros }][k-\text { ones }]+1), &amp; j \geq \text { zeros } &amp; k \geq \text { ones }\end{cases}$</li>
+</ul>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>O(L*M*N)</p>
+<h3 id="解题代码-1"><a href="#解题代码-1" class="headerlink" title="解题代码"></a>解题代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findMaxForm</span><span class="params">(strs []<span class="keyword">string</span>, m <span class="keyword">int</span>, n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	dp := <span class="built_in">make</span>([][][]<span class="keyword">int</span>, <span class="built_in">len</span>(strs)+<span class="number">1</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">var</span> numCount <span class="function"><span class="keyword">func</span><span class="params">(<span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span></span><br><span class="line">	numCount = <span class="function"><span class="keyword">func</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">		zeros, ones := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[i] == <span class="string">&#x27;0&#x27;</span> &#123;</span><br><span class="line">				zeros++</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				ones++</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> zeros, ones</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;=<span class="built_in">len</span>(strs); i++ &#123;</span><br><span class="line">		dp[i] = <span class="built_in">make</span>([][]<span class="keyword">int</span>, m+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> j:=<span class="number">0</span>; j&lt;=m; j++ &#123;</span><br><span class="line">			dp[i][j] = <span class="built_in">make</span>([]<span class="keyword">int</span>, n+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> k:=<span class="number">0</span>; k&lt;=n; k++ &#123;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> i == <span class="number">0</span> &#123;</span><br><span class="line">					dp[i][j][k] = <span class="number">0</span></span><br><span class="line">					<span class="keyword">continue</span></span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				zeros, ones := numCount(strs[i<span class="number">-1</span>])</span><br><span class="line">				<span class="keyword">if</span> j&lt;zeros || k&lt;ones &#123;</span><br><span class="line">					dp[i][j][k] = dp[i<span class="number">-1</span>][j][k]</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					dp[i][j][k] = max(dp[i<span class="number">-1</span>][j][k], dp[i<span class="number">-1</span>][j-zeros][k-ones]+<span class="number">1</span>)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> dp[<span class="built_in">len</span>(strs)][m][n]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：早起刷题（Day 13）</li>
+        <li>Post author：洪笳淏</li>
+        <li>Create time：2022-04-15 07:00:00</li>
+        <li>
+            Post link：https://jiahaohong1997.github.io/2022/04/15/早起刷题（Day 13）/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/14/GFS%20%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">GFS 论文阅读</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '9f01169dad8b4c5b8cf4',
+                    clientSecret: 'fed95d2960e49d8d37cdf0f41fcc912044c5132d',
+                    repo: 'comment',
+                    owner: 'JiahaoHong1997',
+                    admin: ['JiahaoHong1997'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>&nbsp;-&nbsp;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">洪笳淏</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode366-%E5%AF%BB%E6%89%BE%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">LeetCode366. 寻找二叉树的叶子节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">解题代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode474-%E4%B8%80%E5%92%8C%E9%9B%B6"><span class="nav-number">2.</span> <span class="nav-text">LeetCode474. 一和零</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="nav-number">2.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">2.3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.4.</span> <span class="nav-text">解题代码</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.3/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
